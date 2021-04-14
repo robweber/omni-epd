@@ -1,10 +1,11 @@
+import logging
 from . import VirtualEPD
 
 
 # this is a reference implementation of a display extending VirtualEPD
 # it does not physically write to anything but can be used as a mock testing device
 class MockDisplay(VirtualEPD):
-    pkg_name = 'slowmovie'
+    pkg_name = 'vsmp_epd'
 
     def __init__(self, deviceName):
         super(MockDisplay, self).__init__(deviceName)
@@ -21,16 +22,16 @@ class MockDisplay(VirtualEPD):
         return [f"{MockDisplay.pkg_name}.mock"]
 
     def prepare(self):
-        print(f"preparing {self.__str__()}")
+        logging.info(f"preparing {self.__str__()}")
 
     def display(self, image):
-        print(f"writing image to {self.__str__()}")
+        logging.info(f"writing image to {self.__str__()}")
 
     def sleep(self):
-        print(f"{self.__str__()} is sleeping")
+        logging.info(f"{self.__str__()} is sleeping")
 
     def clear(self):
-        print(f"clearing {self.__str__()}")
+        logging.info(f"clearing {self.__str__()}")
 
     def close(self):
-        print(f"closing {self.__str__()}")
+        logging.info(f"closing {self.__str__()}")

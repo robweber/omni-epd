@@ -1,4 +1,5 @@
 import importlib
+import logging
 from . import VirtualEPD
 from . waveshare_display import WaveshareDisplay  # noqa: F401
 from . mock_display import MockDisplay  # noqa: F401
@@ -43,7 +44,7 @@ def load_display_driver(displayName):
         result = classObj(deviceType[1])
     else:
         # we have a problem
-        print(f"Suitable display device cannot be loaded for {displayName}")
+        logging.critical(f"Suitable display device cannot be loaded for {displayName}")
         exit(1)
 
     return result
