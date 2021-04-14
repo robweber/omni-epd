@@ -1,9 +1,9 @@
 from pkgutil import iter_modules
 import importlib
-from . import VirtualDisplayDevice
+from . import VirtualEPD
 
 
-class WaveshareDisplay(VirtualDisplayDevice):
+class WaveshareDisplay(VirtualEPD):
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName):

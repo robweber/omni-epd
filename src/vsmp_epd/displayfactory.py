@@ -1,5 +1,5 @@
 import importlib
-from . import VirtualDisplayDevice
+from . import VirtualEPD
 from . waveshare_display import WaveshareDisplay  # noqa: F401
 from . mock_display import MockDisplay  # noqa: F401
 
@@ -8,7 +8,7 @@ def list_supported_displays(as_dict=False):
     result = []
 
     # get a list of display classes extending VirtualDisplayDevice
-    displayClasses = [(cls.__module__, cls.__name__) for cls in VirtualDisplayDevice.__subclasses__()]
+    displayClasses = [(cls.__module__, cls.__name__) for cls in VirtualEPD.__subclasses__()]
 
     for modName, className in displayClasses:
         # load the module the class belongs to

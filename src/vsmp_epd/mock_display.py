@@ -1,9 +1,9 @@
-from . import VirtualDisplayDevice
+from . import VirtualEPD
 
 
-# this is a reference implementation of a display extending VirtualDisplayDevice
+# this is a reference implementation of a display extending VirtualEPD
 # it does not physically write to anything but can be used as a mock testing device
-class MockDisplay(VirtualDisplayDevice):
+class MockDisplay(VirtualEPD):
     pkg_name = 'slowmovie'
 
     def __init__(self, deviceName):

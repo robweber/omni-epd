@@ -1,7 +1,7 @@
 import importlib
 
 
-# VirtualDisplayDevice is a wrapper class for a device, or family of devices, that all use the same display code
+# VirtualEPD is a wrapper class for a device, or family of devices, that all use the same display code
 # New devices should extend this class and implement the, at a minimum, the following:
 #
 # pkg_name = set this to the package name of the concrete class
@@ -9,7 +9,7 @@ import importlib
 # height = height of display, can set in __init__
 # get_supported_devices = must return a list of supported devices for this class in the format {pkgname.devicename}
 # display = performs the action of writing the image to the display
-class VirtualDisplayDevice:
+class VirtualEPD:
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
