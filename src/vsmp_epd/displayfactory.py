@@ -1,8 +1,8 @@
 import importlib
 import logging
 from . virtualepd import VirtualEPD
-from . waveshare_display import WaveshareDisplay  # noqa: F401
-from . mock_display import MockDisplay  # noqa: F401
+from . displays.mock_display import MockDisplay  # noqa: F401
+from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 
 
 def list_supported_displays(as_dict=False):
