@@ -1,6 +1,6 @@
 from pkgutil import iter_modules
 import importlib
-from . import VirtualEPD
+from . virtualepd import VirtualEPD
 
 
 class WaveshareDisplay(VirtualEPD):

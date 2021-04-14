@@ -1,6 +1,6 @@
 import importlib
 import logging
-from . import VirtualEPD
+from . virtualepd import VirtualEPD
 from . waveshare_display import WaveshareDisplay  # noqa: F401
 from . mock_display import MockDisplay  # noqa: F401
 

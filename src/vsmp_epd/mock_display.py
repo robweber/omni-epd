@@ -1,5 +1,5 @@
 import logging
-from . import VirtualEPD
+from . virtualepd import VirtualEPD
 
 
 # this is a reference implementation of a display extending VirtualEPD
