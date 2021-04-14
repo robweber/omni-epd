@@ -9,3 +9,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - added project config files like .gitignore, README, License, etc
+- added python project build files (setup.py, setup.cfg, etc)
