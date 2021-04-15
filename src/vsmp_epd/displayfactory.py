@@ -24,6 +24,13 @@ from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 
+class EPDNotFoundError(Exception):
+    """
+    An EPDNotFoundError is thrown when no display can be loaded for the given device name
+    """
+
+    def __init__(self, deviceName):
+        super().__init__(f"A display device for device name {deviceName} cannot be loaded")
 
 def list_supported_displays(as_dict=False):
     result = []
@@ -42,7 +49,7 @@ def list_supported_displays(as_dict=False):
         else:
             # add supported devices of this class
             result = sorted(result + classObj.get_supported_devices())
-
+    print('test')
     return result
 
 
@@ -64,7 +71,6 @@ def load_display_driver(displayName):
         result = classObj(deviceType[1])
     else:
         # we have a problem
-        logging.critical(f"Suitable display device cannot be loaded for {displayName}")
-        exit(1)
+        raise EPDNotFoundError(displayName)
 
     return result
