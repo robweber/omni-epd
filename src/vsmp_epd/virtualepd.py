@@ -1,15 +1,38 @@
+"""
+Copyright 2021 Rob Weber
+
+This file is part of vsmp-epd
+
+vsmp-epd is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+"""
+
 import importlib
 
 
-# VirtualEPD is a wrapper class for a device, or family of devices, that all use the same display code
-# New devices should extend this class and implement the, at a minimum, the following:
-#
-# pkg_name = set this to the package name of the concrete class
-# width = width of display, can set in __init__
-# height = height of display, can set in __init__
-# get_supported_devices = must return a list of supported devices for this class in the format {pkgname.devicename}
-# display = performs the action of writing the image to the display
 class VirtualEPD:
+    """
+    VirtualEPD is a wrapper class for a device, or family of devices, that all use the same display code
+    New devices should extend this class and implement the, at a minimum, the following:
+
+    pkg_name = set this to the package name of the concrete class
+    width = width of display, can set in __init__
+    height = height of display, can set in __init__
+    get_supported_devices() = must return a list of supported devices for this class in the format {pkgname.devicename}
+    display() = performs the action of writing the image to the display
+    """
+
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
