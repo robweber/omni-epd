@@ -50,7 +50,7 @@ def list_supported_displays(as_dict=False):
         else:
             # add supported devices of this class
             result = sorted(result + classObj.get_supported_devices())
-    print('test')
+
     return result
 
 
