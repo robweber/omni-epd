@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.1.1
+
+### Added
+
+- added some license notices per gnu.org
+- added some unit tests
+
+### Changed
+
+- invalid device now throws `EPDNotFoundError` instead of calling exit - let the user deal with it
+
 ## Version 0.1.0 - 2021-04-15
 
 ### Added
