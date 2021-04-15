@@ -36,6 +36,9 @@ allDisplays = displayfactory.list_supported_displays()
 if( display in allDisplays ):
   epd = displayfactory.load_display_driver(displayName)
 
+  # get the width and height
+  print(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
+
   # perform actions on the epd
   epd.prepare()
 
@@ -52,6 +55,7 @@ else:
 
 Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
 
+* `width` and `height` - these are convience attributes to get the width and height of the display in your code. See the above example for their use.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
 * `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains better life of the display.
