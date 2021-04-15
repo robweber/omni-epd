@@ -1,4 +1,5 @@
 # VSMP-EPD Abstraction
+[![pypi-version](https://img.shields.io/pypi/v/vsmp-epd)](https://pypi.org/project/vsmp-epd/)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 
@@ -124,7 +125,7 @@ sudo python3 setup.py install
 ## Implementing Projects
 Below is a list of known projects currently utilizing `vsmp-epd`. If you're interested in building a very small media player, check them out.
 
-* [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration. 
+* [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 
 ## License
 [GPLv3](/LICENSE)
