@@ -1,5 +1,6 @@
 import importlib
 from pkgutil import iter_modules
+from waveshare_epd import epdconfig
 from .. virtualepd import VirtualEPD
 
 
@@ -48,4 +49,5 @@ class WaveshareDisplay(VirtualEPD):
         return True
 
     def close(self):
-        self._device.epdconfig.module_exit()
+        epdconfig.module_init()
+        epdconfig.module_exit()
