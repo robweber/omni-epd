@@ -67,9 +67,8 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 | Device Library | Device Name | VSMP Device Name |
 |:---------------|:------------|:-----------------|
-| VSMP-EPD | Mock Display (used for emulating an EPD, no hardware needed) | __vsmp_epd.mock__ |
-| [Waveshare](https://github.com/waveshare/e-Paper) | 1.02inch E-Ink display module | waveshare_epd.epdlin02 |
-|  | [1.54inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 |
+| [Waveshare](https://github.com/waveshare/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin02 |
+|  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 |
 |  | [1.54inch e-Paper Module B](https://www.waveshare.com/1.54inch-e-Paper-Module-B.htm) | waveshare_epd.epdlin54b <br> waveshare_epd.epdlin54b_V2 |
 |  | [1.54inch e-Paper Module C ](https://www.waveshare.com/1.54inch-e-Paper-Module-C.htm) | waveshare_epd.epdlin54c |
 |  | [2.13inch e-Paper HAT](https://www.waveshare.com/2.13inch-e-Paper-HAT.htm) | waveshare_epd. epd2in13 <br>  waveshare_epd. epd2in13_V2 |
