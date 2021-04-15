@@ -12,7 +12,7 @@ For VSMP project maintainers this expands the number of displays you can use for
 
 ```
 
-sudo python setup.py install
+sudo pip3 install vsmp-epd
 
 ```
 
