@@ -1,6 +1,6 @@
 # VSMP-EPD Abstraction
 [![pypi-version](https://img.shields.io/pypi/v/vsmp-epd)](https://pypi.org/project/vsmp-epd/)
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 
 EPD (electronic paper display) class abstractions for very slow media players
