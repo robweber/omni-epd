@@ -25,6 +25,14 @@ Below is an example utilizing the built in in `MockDisplay` object. This is will
 
 ```
 from vsmp_epd import displayfactory
+import logging
+
+# logging module only necessary to see info messages from the Mock Display
+logging.basicConfig(logging.INFO)
+
+def get_image():
+  # do processing and return your PIL Image here
+  return ""
 
 # the vsmp name of the display you want to load.
 displayName = "vsmp_epd.mock"
@@ -33,11 +41,11 @@ displayName = "vsmp_epd.mock"
 allDisplays = displayfactory.list_supported_displays()
 
 # check if this exists - not necessary but good practice
-if( display in allDisplays ):
+if( displayName in allDisplays ):
   epd = displayfactory.load_display_driver(displayName)
 
   # get the width and height
-  print(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
+  logging.info(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
 
   # perform actions on the epd
   epd.prepare()
@@ -46,8 +54,10 @@ if( display in allDisplays ):
 
   epd.sleep()
 
+  epd.close()
+
 else:
-  print('Couldn't find that display')
+  print("Couldn't find that display")
 
 ```
 
@@ -113,6 +123,8 @@ sudo python3 setup.py install
 
 ## Implementing Projects
 Below is a list of known projects currently utilizing `vsmp-epd`. If you're interested in building a very small media player, check them out.
+
+* [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration. 
 
 ## License
 [GPLv3](/LICENSE)
