@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import importlib
 from pkgutil import iter_modules
-from waveshare_epd import epdconfig
 from .. virtualepd import VirtualEPD
 
 
@@ -69,5 +68,7 @@ class WaveshareDisplay(VirtualEPD):
         return True
 
     def close(self):
+        # can't import this earlier as pkg may not be installed
+        from waveshare_epd import epdconfig
         epdconfig.module_init()
         epdconfig.module_exit()
