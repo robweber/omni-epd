@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from .. virtualepd import VirtualEPD
-from inky import InkyPHAT, WHITE
+from inky import InkyPHAT, InkyWHAT, WHITE
 
 
 class InkyDisplay(VirtualEPD):
@@ -33,6 +33,8 @@ class InkyDisplay(VirtualEPD):
 
         if(dType == 'phat'):
             self._device = InkyPHAT(dColor)
+        elif(dType == 'what'):
+            self._device = InkyWHAT(dColor)
 
         # set the width and height - doesn't matter since we won't write anything
         self.width = self._device.width
@@ -40,7 +42,7 @@ class InkyDisplay(VirtualEPD):
 
     @staticmethod
     def get_supported_devices():
-        return [f"{InkyDisplay.pkg_name}.{n}" for n in ["phat_black", "phat_red", "phat_yellow"]]
+        return [f"{InkyDisplay.pkg_name}.{n}" for n in ["phat_black", "phat_red", "phat_yellow", "what_black", "what_red", "what_yellow"]]
 
     def display(self, image):
         self._device.set_image(image)
