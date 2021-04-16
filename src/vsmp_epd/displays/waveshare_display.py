@@ -65,7 +65,7 @@ class WaveshareDisplay(VirtualEPD):
         self._device.sleep()
 
     def clear(self):
-        return True
+        self._device.Clear()
 
     def close(self):
         # can't import this earlier as pkg may not be installed
