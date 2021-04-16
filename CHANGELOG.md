@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.1.3
+
+### Added
+
+- added `clear()` functionality to waveshare display class
+
+### Fixed
+
+- fixed issue when waveshare lib not installed throwing error due to import ordering
+
+### Changed
+
+- moved `EPDNotFoundError` class so it's easier to import
+
 ## Version 0.1.2
 
 ### Fixed

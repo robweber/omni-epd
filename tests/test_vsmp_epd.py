@@ -1,4 +1,5 @@
 import unittest
+from vsmp_epd import EPDNotFoundError
 from vsmp_epd import displayfactory
 from vsmp_epd.virtualepd import VirtualEPD
 
@@ -13,7 +14,7 @@ class TestVsmpEpd(unittest.TestCase):
         assert len(drivers) > 0
 
     def test_loading_error(self):
-        self.assertRaises(displayfactory.EPDNotFoundError, displayfactory.load_display_driver, self.badEpd)
+        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, self.badEpd)
 
     def test_loading_success(self):
         epd = displayfactory.load_display_driver(self.goodEpd)

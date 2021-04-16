@@ -24,6 +24,11 @@ from .. virtualepd import VirtualEPD
 
 
 class WaveshareDisplay(VirtualEPD):
+    """
+    This is an abstraction for Waveshare EPD devices loaded under the waveshare_epd pkg
+    https://github.com/waveshare/e-Paper
+    """
+
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName):

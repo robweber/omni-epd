@@ -19,18 +19,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import importlib
+from . import EPDNotFoundError
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
-
-
-class EPDNotFoundError(Exception):
-    """
-    An EPDNotFoundError is thrown when no display can be loaded for the given device name
-    """
-
-    def __init__(self, deviceName):
-        super().__init__(f"A display device for device name {deviceName} cannot be loaded")
 
 
 def list_supported_displays(as_dict=False):

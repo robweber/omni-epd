@@ -17,3 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
+
+class EPDNotFoundError(Exception):
+    """
+    An EPDNotFoundError is thrown when no display can be loaded for the given device name
+    """
+
+    def __init__(self, deviceName):
+        super().__init__(f"A display device for device name {deviceName} cannot be loaded")
