@@ -23,7 +23,7 @@ from . import EPDNotFoundError
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
-
+from . displays.inky_display import InkyDisplay  # noqa: F401
 
 def list_supported_displays(as_dict=False):
     result = []
