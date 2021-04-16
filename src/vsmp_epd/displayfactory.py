@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import importlib
-from . import EPDNotFoundError
+from . errors import EPDNotFoundError
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
