@@ -18,5 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from . errors import EPDNotFoundError
-from . test_utility import EPDTestUtility
+
+class EPDNotFoundError(Exception):
+    """
+    An EPDNotFoundError is thrown when no display can be loaded for the given device name
+    """
+
+    def __init__(self, deviceName):
+        super().__init__(f"A display device for device name {deviceName} cannot be loaded")
