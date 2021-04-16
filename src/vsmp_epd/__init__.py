@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+
 class EPDNotFoundError(Exception):
     """
     An EPDNotFoundError is thrown when no display can be loaded for the given device name
