@@ -73,6 +73,21 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
 
+### Display Testing
+
+The `EPDTestUtility` class allows for simple tests to be performed on a given device. This is useful to provide users with a way their hardware is working properly. Many displays have specific library requirements that need to be installed with OS level package utilities and may throw errors until they are resolved. The test utility helps confirm all requirements are met before doing more advanced work with the display.
+
+```
+from vsmp_epd import EPDTestUtility
+
+test = EPDTestUtility('waveshare_epd.epd7in5_V2')  # sub the name of your display from the list below
+
+if(test.isReady()):
+    # this will draw a rectangle in the center of the display
+    test.draw()
+
+```
+
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The VSMP Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models.
 
