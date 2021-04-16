@@ -78,6 +78,12 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 | Device Library | Device Name | VSMP Device Name |
 |:---------------|:------------|:-----------------|
+| [Inky](https://github.com/pimoroni/inky) | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) | inky.phat_red |
+| | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) | inky.phat_yellow |
+| | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) | inky.phat_black |
+| | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | inky.what_red |
+| | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow |
+| | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black |
 | VSMP-EPD | Mock Display (emulates EPD with no hardware) | vsmp_epd.mock |
 | [Waveshare](https://github.com/waveshare/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin02 |
 |  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 |
