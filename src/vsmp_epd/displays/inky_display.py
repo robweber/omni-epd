@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from .. virtualepd import VirtualEPD
-from inky import InkyPHAT
+from inky import InkyPHAT, WHITE
 
 
 class InkyDisplay(VirtualEPD):
@@ -44,4 +44,12 @@ class InkyDisplay(VirtualEPD):
 
     def display(self, image):
         self._device.set_image(image)
+        self._device.show()
+
+    def clear(self):
+        for _ in range(2):
+            for y in range(self.height - 1):
+                for x in range(self.width - 1):
+                    self._device.set_pixel(x, y, WHITE)
+
         self._device.show()
