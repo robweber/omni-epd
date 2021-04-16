@@ -42,7 +42,7 @@ class EPDTestUtility:
             print("\n".join(map(str, validDisplays)))
 
     def isReady(self):
-        return self.epd != None
+        return self.epd is not None
 
     def draw(self):
 
