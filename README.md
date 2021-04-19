@@ -89,16 +89,16 @@ user@server:~ $ vsmp-epd-test -e vsmp_epd.mock
 
 ### Advanced EPD Control
 
-There are scenarios where additional post-processing needs to be done for a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be adjusting the contrast or brightness of a particular image. These are modifications that are specific to a video or display. These can be applied by use of a ini file instead of having to modify code or allow for options via implementing scripts.
+There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always mirroring an image due to how a project is being mounted. These are modifications that are specific to a video or display and can be applied by use of a ini file instead of having to modify code or allow for options via implementing scripts.
 
-A file, name ```vsmp-epd.ini```, must exist in the root directory where the calling script is run. This is the directory given by the ```os.getcwd()``` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate any additional X degrees.
+Two types of __ini__ files can be used in these situations. A global file, named ```vsmp-epd.ini```, or a device specific file; which is the device name from the table below with a ```ini``` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the ```os.getcwd()``` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations.
 
 ```
 # file shown with default values
 [Display]
 rotate=0  # rotate final image written to display by X degrees [0-360]
-flip_x = False  # flip image along x axis
-flip_y = False  # flip image along y axis
+flip_horizontal = False  # flip image horizontally
+flip_vertical = False  # flip image vertically
 
 [Image Enhancements]
 color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert

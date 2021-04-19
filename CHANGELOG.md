@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - added ability to create `vsmp-epd.ini` file to manually set display options for epd that always get applied
+- added device level ini file using `devicename.ini` for syntax
+
+### Changed
+
+- don't use the root logger
+- added additional VirtualEPD class logging
 
 ## Version 0.1.3
 
