@@ -102,6 +102,7 @@ flip_vertical = False  # flip image vertically
 
 [Image Enhancements]
 color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
+total_colors=2  # the total number of colors to use, only works when used with the P color mode. Useful for displays that have more than 2 colors (Inky pHhat or wHat)
 contrast = 1  # adjust image contrast, 1 = no adjustment
 brightness = 1  # adjust image brightness, 1 = no adjustment
 sharpness = 1  # adjust image sharpness, 1 = no adjustment
