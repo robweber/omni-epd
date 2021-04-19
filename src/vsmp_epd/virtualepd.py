@@ -73,8 +73,15 @@ class VirtualEPD:
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
-            self._logger.debug(f"Applying color mode: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'color')}")
+            # use could optionally specifiy a number of colors to use
+            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'total_colors')):
+                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"), palette=Image.ADAPTIVE,
+                                      colors=self._config.getint(IMAGE_ENHANCEMENTS, "total_colors"))
+                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with {self._config.getint(IMAGE_ENHANCEMENTS, 'total_colors')} colors")
+            else:
+                # just apply the color enhancment mode
+                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
+                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')}")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
             enhancer = ImageEnhance.Contrast(image)
