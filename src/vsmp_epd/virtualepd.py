@@ -62,13 +62,13 @@ class VirtualEPD:
             image = image.rotate(self._config.getfloat(IMAGE_DISPLAY, "rotate"))
             self._logger.debug(f"Rotating image {self._config.getfloat(IMAGE_DISPLAY, 'rotate')}")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "flip_x") and self._config.getboolean(IMAGE_DISPLAY, "flip_x")):
+        if(self._config.has_option(IMAGE_DISPLAY, "flip_horizontal") and self._config.getboolean(IMAGE_DISPLAY, "flip_horizontal")):
             image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
-            self._logger.debug(f"Flipping image on X axis")
+            self._logger.debug(f"Flipping image horizontally")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "flip_y") and self._config.getboolean(IMAGE_DISPLAY, "flip_y")):
+        if(self._config.has_option(IMAGE_DISPLAY, "flip_vertical") and self._config.getboolean(IMAGE_DISPLAY, "flip_vertical")):
             image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
-            self._logger.debug(f"Flipping image on Y axis")
+            self._logger.debug(f"Flipping image vertically")
 
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
