@@ -6,6 +6,7 @@ from vsmp_epd import displayfactory
 from vsmp_epd.virtualepd import VirtualEPD
 from vsmp_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
 
+
 class TestVsmpEpd(unittest.TestCase):
     goodEpd = "vsmp_epd.mock"  # this should always be a valid EPD
     badEpd = "vsmp_epd.bad"  # this is not a valid EPD
@@ -30,7 +31,7 @@ class TestVsmpEpd(unittest.TestCase):
 
         epd = displayfactory.load_display_driver(self.goodEpd)
 
-        assert epd._config.has_option(IMAGE_DISPLAY, 'rotate') == True
+        assert epd._config.has_option(IMAGE_DISPLAY, 'rotate')
         assert epd._config.getfloat(IMAGE_DISPLAY, 'rotate') == 90
 
         # reset global config file, wait for file IO
@@ -48,8 +49,8 @@ class TestVsmpEpd(unittest.TestCase):
         epd = displayfactory.load_display_driver(self.goodEpd)
 
         # device should override global
-        assert epd._config.has_option(IMAGE_DISPLAY, 'flip_horizontal') == True
-        assert epd._config.getboolean(IMAGE_DISPLAY, 'flip_horizontal') == False
+        assert epd._config.has_option(IMAGE_DISPLAY, 'flip_horizontal')
+        self.assertFalse(epd._config.getboolean(IMAGE_DISPLAY, 'flip_horizontal'))
 
         # reset global config file, wait for file IO
         os.rename(os.path.join(os.getcwd(), CONFIG_FILE), os.path.join(os.getcwd(), "tests", CONFIG_FILE))
