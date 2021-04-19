@@ -29,14 +29,20 @@ from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 
 
-def __loadConfig():
+def __loadConfig(deviceName):
     logger = logging.getLogger(__name__)
 
     config = configparser.ConfigParser()
 
+    # check for global ini file
     if(os.path.exists(os.path.join(os.getcwd(), CONFIG_FILE))):
         config.read(os.path.join(os.getcwd(), CONFIG_FILE))
         logger.debug(f"Loading {CONFIG_FILE}")
+
+    # check for device specific ini file
+    if(os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
+        config.read(os.path.join(os.getcwd(), f"{deviceName}.ini"))
+        logger.debug(f"Loading {deviceName}.ini")
 
     return config
 
@@ -65,10 +71,6 @@ def list_supported_displays(as_dict=False):
 def load_display_driver(displayName, configDict={}):
     result = None
 
-    # load any config files and merge passed in configs
-    config = __loadConfig()
-    config.read_dict(configDict)
-
     # get a dict of all valid display device classes
     displayClasses = list_supported_displays(True)
     foundClass = list(filter(lambda d: displayName in d['devices'], displayClasses))
@@ -80,6 +82,10 @@ def load_display_driver(displayName, configDict={}):
         # create the class and initialize
         mod = importlib.import_module(foundClass[0]['package'])
         classObj = getattr(mod, foundClass[0]['class'])
+
+        # load any config files and merge passed in configs
+        config = __loadConfig(displayName)
+        config.read_dict(configDict)
 
         result = classObj(deviceType[1], config)
     else:
