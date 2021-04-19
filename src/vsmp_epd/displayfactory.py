@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import configparser
 import importlib
 import os
+import logging
 from . errors import EPDNotFoundError
 from . conf import CONFIG_FILE
 from . virtualepd import VirtualEPD
@@ -29,10 +30,13 @@ from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 
 
 def __loadConfig():
+    logger = logging.getLogger(__name__)
+
     config = configparser.ConfigParser()
 
     if(os.path.exists(os.path.join(os.getcwd(), CONFIG_FILE))):
         config.read(os.path.join(os.getcwd(), CONFIG_FILE))
+        logger.debug(f"Loading {CONFIG_FILE}")
 
     return config
 

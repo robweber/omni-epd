@@ -33,6 +33,8 @@ class MockDisplay(VirtualEPD):
     def __init__(self, deviceName, config):
         super(MockDisplay, self).__init__(deviceName, config)
 
+        self.logger = logging.getLogger(__name__)
+
         # this is normally where you'd load actual device class but nothing to load here
 
         # set the width and height - doesn't matter since we won't write anything
@@ -45,16 +47,16 @@ class MockDisplay(VirtualEPD):
         return [f"{MockDisplay.pkg_name}.mock"]
 
     def prepare(self):
-        logging.info(f"preparing {self.__str__()}")
+        self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
-        logging.info(f"writing image to {self.__str__()}")
+        self.logger.info(f"writing image to {self.__str__()}")
 
     def sleep(self):
-        logging.info(f"{self.__str__()} is sleeping")
+        self.logger.info(f"{self.__str__()} is sleeping")
 
     def clear(self):
-        logging.info(f"clearing {self.__str__()}")
+        self.logger.info(f"clearing {self.__str__()}")
 
     def close(self):
-        logging.info(f"closing {self.__str__()}")
+        self.logger.info(f"closing {self.__str__()}")
