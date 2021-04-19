@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import argparse
 from . import displayfactory
 from PIL import Image, ImageDraw
 
@@ -74,3 +75,18 @@ class EPDTestUtility:
         self.epd.close()
 
         print("Display closed - testing complete")
+
+def main():
+
+    # get the name of the epd driver to use
+    parser = argparse.ArgumentParser(description='EPD Test Utility')
+    parser.add_argument('-e', '--epd', required=True,
+                        help="The type of EPD driver to test")
+
+    args = parser.parse_args()
+
+    test = EPDTestUtility(args.epd)
+
+    if(test.isReady()):
+        # this will draw a rectangle in the center of the display
+        test.draw()
