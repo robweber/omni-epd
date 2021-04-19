@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import importlib
+import logging
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 
@@ -46,6 +47,8 @@ class VirtualEPD:
         self._config = config
         self.__device_name = deviceName
 
+        self._logger = logging.getLogger(self.__str__())
+
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
 
@@ -57,29 +60,36 @@ class VirtualEPD:
 
         if(self._config.has_option(IMAGE_DISPLAY, "rotate")):
             image = image.rotate(self._config.getfloat(IMAGE_DISPLAY, "rotate"))
+            self._logger.debug(f"Rotating image {self._config.getfloat(IMAGE_DISPLAY, 'rotate')}")
 
         if(self._config.has_option(IMAGE_DISPLAY, "flip_x") and self._config.getboolean(IMAGE_DISPLAY, "flip_x")):
             image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
+            self._logger.debug(f"Flipping image on X axis")
 
         if(self._config.has_option(IMAGE_DISPLAY, "flip_y") and self._config.getboolean(IMAGE_DISPLAY, "flip_y")):
             image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
+            self._logger.debug(f"Flipping image on Y axis")
 
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
             image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
+            self._logger.debug(f"Applying color mode: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'color')}")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
             enhancer = ImageEnhance.Contrast(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "contrast"))
+            self._logger.debug(f"Applying contrast: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'contrast')}")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "brightness")):
             enhancer = ImageEnhance.Brightness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "brightness"))
+            self._logger.debug(f"Applying brightness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'brightness')}")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "sharpness")):
             enhancer = ImageEnhance.Sharpness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
+            self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
         return image
 
