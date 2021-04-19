@@ -31,8 +31,8 @@ class WaveshareDisplay(VirtualEPD):
 
     pkg_name = 'waveshare_epd'
 
-    def __init__(self, deviceName):
-        super(WaveshareDisplay, self).__init__(f"{deviceName}")
+    def __init__(self, deviceName, config):
+        super(WaveshareDisplay, self).__init__(f"{deviceName}", config)
 
         # load the module
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
@@ -63,7 +63,7 @@ class WaveshareDisplay(VirtualEPD):
     def prepare(self):
         self._device.init()
 
-    def display(self, image):
+    def _display(self, image):
         self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
