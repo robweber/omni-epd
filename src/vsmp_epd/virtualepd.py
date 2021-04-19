@@ -19,7 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import importlib
-
+from PIL import Image, ImageEnhance
+from . conf import *
 
 class VirtualEPD:
     """
@@ -30,20 +31,56 @@ class VirtualEPD:
     width = width of display, can set in __init__
     height = height of display, can set in __init__
     get_supported_devices() = must return a list of supported devices for this class in the format {pkgname.devicename}
-    display() = performs the action of writing the image to the display
+    _display() = performs the action of writing the image to the display
     """
 
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
     _device = None  # concrete device class, initialize in __init__
+    _config = None  # configuration options passed in via dict at runtime or .ini file
     __device_name = ""  # name of this device
 
-    def __init__(self, deviceName):
+    def __init__(self, deviceName, config):
+        self._config = config
         self.__device_name = deviceName
 
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
+
+    def __applyConfig(self, image):
+        """
+        Apply any values passed in from the global configuration that should
+        apply to all images before writing to the epd
+        """
+
+        if(self._config.has_option(IMAGE_DISPLAY, "rotate")):
+            image = image.rotate(self._config.getfloat(IMAGE_DISPLAY, "rotate"))
+
+        if(self._config.has_option(IMAGE_DISPLAY, "flip_x") and self._config.getboolean(IMAGE_DISPLAY, "flip_x")):
+            image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
+
+        if(self._config.has_option(IMAGE_DISPLAY, "flip_y") and self._config.getboolean(IMAGE_DISPLAY, "flip_y")):
+            image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
+
+        # must be one of the valid PILLOW modes, and display must support
+        # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
+        if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
+            image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
+
+        if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
+            enhancer = ImageEnhance.Contrast(image)
+            image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "contrast"))
+
+        if(self._config.has_option(IMAGE_ENHANCEMENTS, "brightness")):
+            enhancer = ImageEnhance.Brightness(image)
+            image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "brightness"))
+
+        if(self._config.has_option(IMAGE_ENHANCEMENTS, "sharpness")):
+            enhancer = ImageEnhance.Sharpness(image)
+            image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
+
+        return image
 
     # helper method to load a concrete display object based on the package and class name
     def load_display_driver(self, packageName, className):
@@ -62,13 +99,16 @@ class VirtualEPD:
     def get_supported_devices():
         raise NotImplementedError
 
+    # REQUIRED - actual display code, PIL image given
+    def _display(self, image):
+        raise NotImplementedError
+
     # OPTIONAL - run at the top of each update to do required pre-work
     def prepare(self):
         return True
 
-    # REQUIRED - actual display code, PIL image given
     def display(self, image):
-        raise NotImplementedError
+        self._display(self.__applyConfig(image))
 
     # OPTIONAL - put the display to sleep after each update, if device supports
     def sleep(self):

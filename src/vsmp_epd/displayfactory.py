@@ -18,12 +18,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import configparser
 import importlib
+import os
 from . errors import EPDNotFoundError
+from . conf import CONFIG_FILE
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 
+
+def __loadConfig():
+    config = configparser.ConfigParser()
+
+    if(os.path.exists(os.path.join(os.getcwd(), CONFIG_FILE))):
+        config.read(os.path.join(os.getcwd(), CONFIG_FILE))
+
+    return config
 
 def list_supported_displays(as_dict=False):
     result = []
@@ -46,8 +57,12 @@ def list_supported_displays(as_dict=False):
     return result
 
 
-def load_display_driver(displayName):
+def load_display_driver(displayName, configDict={}):
     result = None
+
+    # load any config files and merge passed in configs
+    config = __loadConfig()
+    config.read_dict(configDict)
 
     # get a dict of all valid display device classes
     displayClasses = list_supported_displays(True)
@@ -61,7 +76,7 @@ def load_display_driver(displayName):
         mod = importlib.import_module(foundClass[0]['package'])
         classObj = getattr(mod, foundClass[0]['class'])
 
-        result = classObj(deviceType[1])
+        result = classObj(deviceType[1], config)
     else:
         # we have a problem
         raise EPDNotFoundError(displayName)

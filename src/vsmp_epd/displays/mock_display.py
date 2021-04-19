@@ -30,8 +30,8 @@ class MockDisplay(VirtualEPD):
 
     pkg_name = 'vsmp_epd'
 
-    def __init__(self, deviceName):
-        super(MockDisplay, self).__init__(deviceName)
+    def __init__(self, deviceName, config):
+        super(MockDisplay, self).__init__(deviceName, config)
 
         # this is normally where you'd load actual device class but nothing to load here
 
@@ -47,7 +47,7 @@ class MockDisplay(VirtualEPD):
     def prepare(self):
         logging.info(f"preparing {self.__str__()}")
 
-    def display(self, image):
+    def _display(self, image):
         logging.info(f"writing image to {self.__str__()}")
 
     def sleep(self):

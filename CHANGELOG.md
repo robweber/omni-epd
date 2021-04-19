@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.1.4
+
 ## Version 0.1.3
 
 ### Added
 
 - added `clear()` functionality to waveshare display class
 - added `EPDTestUtility` class for basic display troubleshooting
+- added `vsmp-epd-test` console script for quick user testing
 
 ### Fixed
 
@@ -18,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - moved `EPDNotFoundError` class so it's easier to import
+- updated README with better individual display and testing instructions
 
 ## Version 0.1.2
 
