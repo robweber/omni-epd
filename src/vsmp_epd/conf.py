@@ -22,5 +22,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 CONFIG_FILE = "vsmp-epd.ini"
 
 # config option sections
-IMAGE_DISPLAY="Image Display"
-IMAGE_ENHANCEMENTS="Image Enhancements"
+IMAGE_DISPLAY = "Display"
+IMAGE_ENHANCEMENTS = "Image Enhancements"

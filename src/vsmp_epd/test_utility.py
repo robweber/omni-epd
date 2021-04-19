@@ -90,6 +90,7 @@ class EPDTestUtility:
 
         print("Display closed - testing complete")
 
+
 def main():
 
     # get the name of the epd driver to use

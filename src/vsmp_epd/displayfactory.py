@@ -36,6 +36,7 @@ def __loadConfig():
 
     return config
 
+
 def list_supported_displays(as_dict=False):
     result = []
 

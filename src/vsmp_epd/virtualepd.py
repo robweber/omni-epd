@@ -20,7 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import importlib
 from PIL import Image, ImageEnhance
-from . conf import *
+from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
+
 
 class VirtualEPD:
     """
