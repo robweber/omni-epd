@@ -42,6 +42,24 @@ class EPDTestUtility:
             print(f"{displayName} is not a valid display. Valid options are:")
             print("\n".join(map(str, validDisplays)))
 
+    def __draw_rectangle(self, imgObj, width, height, x, y, percent, step):
+        # draw recursively until we go below 0
+        if(percent > 0):
+            # calculate the dimensions of the rectangle
+            rWidth = width * percent
+            rHeight = height * percent
+
+            # calculate the starting position to center it
+            rX = x + (width - rWidth)/2
+            rY = y + (height - rHeight)/2
+
+            print(f"Drawing rectangle of width {rWidth} and height {rHeight}")
+            imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), width=2)
+
+            return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent-step, step)
+        else:
+            return imgObj
+
     def isReady(self):
         return self.epd is not None
 
@@ -51,12 +69,8 @@ class EPDTestUtility:
         im = Image.new('1', (self.epd.width, self.epd.height), color=1)
         draw = ImageDraw.Draw(im)
 
-        # rectangle will be width * 3 and height * 3
-        rWidth = self.epd.width/4
-        rHeight = self.epd.height/4
-
-        print(f"Drawing rectangle of width {rWidth * 3} and height {rHeight * 3}")
-        draw.rectangle((rWidth, rHeight, rWidth * 3, rHeight * 3), width=3)
+        # draw a series of rectangles
+        draw = self.__draw_rectangle(draw, self.epd.width, self.epd.height, 0, 0, .75, .25)
 
         self.epd.prepare()
 
