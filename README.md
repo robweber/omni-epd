@@ -87,6 +87,26 @@ user@server:~ $ vsmp-epd-test -e vsmp_epd.mock
 
 ```
 
+### Advanced EPD Control
+
+There are scenarios where additional post-processing needs to be done for a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be adjusting the contrast or brightness of a particular image. These are modifications that are specific to a video or display. These can be applied by use of a ini file instead of having to modify code or allow for options via implementing scripts.
+
+A file, name ```vsmp-epd.ini```, must exist in the root directory where the calling script is run. This is the directory given by the ```os.getcwd()``` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate any additional X degrees.
+
+```
+# file shown with default values
+[Display]
+rotate=0  # rotate final image written to display by X degrees [0-360]
+flip_x = False  # flip image along x axis
+flip_y = False  # flip image along y axis
+
+[Image Enhancements]
+color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
+contrast = 1  # adjust image contrast, 1 = no adjustment
+brightness = 1  # adjust image brightness, 1 = no adjustment
+sharpness = 1  # adjust image sharpness, 1 = no adjustment
+```
+
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The VSMP Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models.
 
