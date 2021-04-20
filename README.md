@@ -102,14 +102,14 @@ type=none  # only valid in the global configuration file, will load this display
 
 [Display]
 rotate=0  # rotate final image written to display by X degrees [0-360]
-flip_horizontal = False  # flip image horizontally
-flip_vertical = False  # flip image vertically
+flip_horizontal=False  # flip image horizontally
+flip_vertical=False  # flip image vertically
 
 [Image Enhancements]
 color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
-contrast = 1  # adjust image contrast, 1 = no adjustment
-brightness = 1  # adjust image brightness, 1 = no adjustment
-sharpness = 1  # adjust image sharpness, 1 = no adjustment
+contrast=1  # adjust image contrast, 1 = no adjustment
+brightness=1  # adjust image brightness, 1 = no adjustment
+sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
 ## Displays Implemented
