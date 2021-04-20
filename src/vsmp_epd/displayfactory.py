@@ -39,8 +39,12 @@ def __loadConfig(deviceName):
         config.read(os.path.join(os.getcwd(), CONFIG_FILE))
         logger.debug(f"Loading {CONFIG_FILE}")
 
+    # possible device name exists in global configuration file
+    if(not deviceName and config.has_option('EPD', 'type')):
+        deviceName = config.get('EPD', 'type')
+
     # check for device specific ini file
-    if(os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
+    if(deviceName and os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
         config.read(os.path.join(os.getcwd(), f"{deviceName}.ini"))
         logger.debug(f"Loading {deviceName}.ini")
 
@@ -68,8 +72,16 @@ def list_supported_displays(as_dict=False):
     return result
 
 
-def load_display_driver(displayName, configDict={}):
+def load_display_driver(displayName='', configDict={}):
     result = None
+
+    # load any config files and merge passed in configs
+    config = __loadConfig(displayName)
+    config.read_dict(configDict)
+
+    # possible device name is part of global conf
+    if(not displayName and config.has_option('EPD', 'type')):
+        displayName = config.get('EPD', 'type')
 
     # get a dict of all valid display device classes
     displayClasses = list_supported_displays(True)
@@ -82,10 +94,6 @@ def load_display_driver(displayName, configDict={}):
         # create the class and initialize
         mod = importlib.import_module(foundClass[0]['package'])
         classObj = getattr(mod, foundClass[0]['class'])
-
-        # load any config files and merge passed in configs
-        config = __loadConfig(displayName)
-        config.read_dict(configDict)
 
         result = classObj(deviceType[1], config)
     else:

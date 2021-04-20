@@ -11,7 +11,7 @@ For VSMP project maintainers this expands the number of displays you can use for
 
 ## Install
 
-Refer to instructions for your specific display for any [additional libraries or requirements](https://github.com/robweber/vsmp-epd#display-driver-installation) that may need to be satisfied. A common requirement is [enabling SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) on a Raspberry Pi. Install any required libraries or setup files and then run:
+Installing this module installs any required _Python_ library files. Refer to instructions for your specific display for any [additional requirements](https://github.com/robweber/vsmp-epd#display-driver-installation) that may need to be satisfied. A common requirement is [enabling SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) on a Raspberry Pi. Install any required libraries or setup files and then run:
 
 ```
 
@@ -23,48 +23,7 @@ This will install the abstraction library. The [test utility](https://github.com
 
 ## Usage
 
-Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar.
-
-
-Below is an example utilizing the built in in `MockDisplay` object. This is will emulate the calls of a real EPD without the need for actual hardware.
-
-```
-from vsmp_epd import displayfactory
-import logging
-
-# logging module only necessary to see info messages from the Mock Display
-logging.basicConfig(logging.INFO)
-
-def get_image():
-  # do processing and return your PIL Image here
-  return ""
-
-# the vsmp name of the display you want to load.
-displayName = "vsmp_epd.mock"
-
-# get a list of all supported displays from the display factory
-allDisplays = displayfactory.list_supported_displays()
-
-# check if this exists - not necessary but good practice
-if( displayName in allDisplays ):
-  epd = displayfactory.load_display_driver(displayName)
-
-  # get the width and height
-  logging.info(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
-
-  # perform actions on the epd
-  epd.prepare()
-
-  epd.display(get_image())  # see below for more on this function
-
-  epd.sleep()
-
-  epd.close()
-
-else:
-  print("Couldn't find that display")
-
-```
+Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/vsmp-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below.
 
 ### VirtualEPD Object
 
@@ -72,7 +31,7 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 
 * `width` and `height` - these are convience attributes to get the width and height of the display in your code. See the above example for their use.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
-* `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
+* `_display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains better life of the display.
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
@@ -82,29 +41,35 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 There is a utility, `vsmp-epd-test` to verify the display. This is useful to provide users with a way their hardware is working properly. Many displays have specific library requirements that need to be installed with OS level package utilities and may throw errors until they are resolved. The test utility helps confirm all requirements are met before doing more advanced work with the display. This can be run from the command line, specifying the device from the table below.
 
 ```
-
+# this will draw a series of rectangles
 user@server:~ $ vsmp-epd-test -e vsmp_epd.mock
+
+# this will draw the specified image
+user@server:~ $ vsmp-epd-test -e vsmp_epd.mock -i /path/to/image.jpg
 
 ```
 
 ### Advanced EPD Control
 
-There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always mirroring an image due to how a project is being mounted. These are modifications that are specific to a video or display and can be applied by use of a ini file instead of having to modify code or allow for options via implementing scripts.
+There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always adjusting the image with brightness or contrast settings. These are modifications that are specific to display requirements or user preferences and can be applied by use of a .ini file instead of having to modify code or allow for options via implementing scripts.
 
-Two types of __ini__ files can be used in these situations. A global file, named ```vsmp-epd.ini```, or a device specific file; which is the device name from the table below with a ```ini``` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the ```os.getcwd()``` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations.
+Two types of __ini__ files can be used in these situations. A global file, named `vsmp-epd.ini`, or a device specific file; which is the device name from the table below with a `.ini` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the `os.getcwd()` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations.
 
 ```
 # file shown with default values
+[EPD]
+type=none  # only valid in the global configuration file, will load this display if none given to displayfactor.load_display_driver()
+
 [Display]
 rotate=0  # rotate final image written to display by X degrees [0-360]
-flip_horizontal = False  # flip image horizontally
-flip_vertical = False  # flip image vertically
+flip_horizontal=False  # flip image horizontally
+flip_vertical=False  # flip image vertically
 
 [Image Enhancements]
 color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
-contrast = 1  # adjust image contrast, 1 = no adjustment
-brightness = 1  # adjust image brightness, 1 = no adjustment
-sharpness = 1  # adjust image sharpness, 1 = no adjustment
+contrast=1  # adjust image contrast, 1 = no adjustment
+brightness=1  # adjust image brightness, 1 = no adjustment
+sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
 ## Displays Implemented
@@ -152,19 +117,11 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 ### Display Driver Installation
 
-Each display type has different install requirements depending on the platform. They may require additional Python or OS level packages to be installed. Basic instructions are below for each library type. Refer to instructions for your specific display to make sure you've satisfied these requirements. The `vsmp-epd-test` utility can be used to verify things are working properly.
+Each display type has different install requirements depending on the platform.  While loading this module will install any required _Python_ libraries for supported displays; specific OS level configuration may need to be done. Basic instructions are below for each library type. Refer to instructions for your specific display to make sure you've satisfied these requirements. The `vsmp-epd-test` utility can be used to verify things are working properly.
 
 __Waveshare__
 
-The Waveshare device library is not available via the Package Installer for Python (pip) and must be installed manually. Instructions for this are:
-
-```
-
-git clone https://github.com/waveshare/e-Paper
-cd e-Paper/RaspberryPi_JetsonNano/python/
-sudo python3 setup.py install
-
-```
+The [Waveshare device library](https://github.com/waveshare/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.  
 
 ## Implementing Projects
 Below is a list of known projects currently utilizing `vsmp-epd`. If you're interested in building a very small media player, check them out.

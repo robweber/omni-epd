@@ -56,3 +56,26 @@ class TestVsmpEpd(unittest.TestCase):
         os.rename(os.path.join(os.getcwd(), CONFIG_FILE), os.path.join(os.getcwd(), "tests", CONFIG_FILE))
         os.rename(os.path.join(os.getcwd(), deviceConfig), os.path.join(os.getcwd(), "tests", deviceConfig))
         time.sleep(1)
+
+    def test_load_device_from_conf(self):
+        deviceConfig = self.goodEpd + ".ini"
+
+        # set up a global config file
+        os.rename(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
+        os.rename(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
+        time.sleep(1)
+
+        # should load driver from ini file without error
+        epd = displayfactory.load_display_driver()
+
+        # test that driver specific file also loaded
+        assert epd._config.has_option(IMAGE_DISPLAY, 'flip_horizontal')
+        self.assertFalse(epd._config.getboolean(IMAGE_DISPLAY, 'flip_horizontal'))
+
+        # should attempt to load passed in driver, and fail, instead of one in conf file
+        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, self.badEpd)
+
+        # reset global config file, wait for file IO
+        os.rename(os.path.join(os.getcwd(), CONFIG_FILE), os.path.join(os.getcwd(), "tests", CONFIG_FILE))
+        os.rename(os.path.join(os.getcwd(), deviceConfig), os.path.join(os.getcwd(), "tests", deviceConfig))
+        time.sleep(1)
