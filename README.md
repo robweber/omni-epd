@@ -95,6 +95,9 @@ Two types of __ini__ files can be used in these situations. A global file, named
 
 ```
 # file shown with default values
+[EPD]
+type=none  # only valid in the global configuration file, will load this display if none given to displayfactor.load_display_driver()
+
 [Display]
 rotate=0  # rotate final image written to display by X degrees [0-360]
 flip_horizontal = False  # flip image horizontally

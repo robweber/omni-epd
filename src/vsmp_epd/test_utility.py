@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import argparse
 from . import displayfactory
+from . errors import EPDNotFoundError
 from PIL import Image, ImageDraw
 
 
@@ -32,13 +33,13 @@ class EPDTestUtility:
 
     def __init__(self, displayName):
 
-        validDisplays = displayfactory.list_supported_displays()
-
-        if(displayName in validDisplays):
+        # attempt to load the EPD with the given name
+        try:
             self.epd = displayfactory.load_display_driver(displayName)
-
             print(f"Loaded {self.epd} with width {self.epd.width} and height {self.epd.height}")
-        else:
+
+        except EPDNotFoundError:
+            validDisplays = displayfactory.list_supported_displays()
             print(f"{displayName} is not a valid display. Valid options are:")
             print("\n".join(map(str, validDisplays)))
 
