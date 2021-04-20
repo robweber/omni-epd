@@ -63,12 +63,12 @@ class InkyDisplay(VirtualEPD):
         result = []
 
         deviceList = ["phat_black", "phat_red", "phat_yellow",
-                     "phat1608_black", "phat1608_red", "phat1608_yellow"
-                     "what_black", "what_red", "what_yellow"]
+                      "phat1608_black", "phat1608_red", "phat1608_yellow"
+                      "what_black", "what_red", "what_yellow"]
 
         try:
             # do a test import from the inky library
-            from inky import WHITE
+            from inky import WHITE  # noqa: F401
 
             # if passed return list of devices
             result = [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
@@ -119,7 +119,7 @@ class InkyImpressionDisplay(VirtualEPD):
 
         try:
             # do a test import from the inky library
-            from inky.inky_uc8159 import CLEAN
+            from inky.inky_uc8159 import CLEAN  # noqa: F401
 
             # if passed return list of devices
             result = [f"{InkyDisplay.pkg_name}.impression"]
