@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - added ability to create `vsmp-epd.ini` file to manually set display options for epd that always get applied
 - added device level ini file using `devicename.ini` for syntax
 - automatic pytest checks for PRs on Github Actions
+- added working code examples
+- `vsmp-epd-test` now accepts the `-i` flag to load an image in addition to the default display pattern
 
 ### Changed
 
