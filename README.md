@@ -23,50 +23,7 @@ This will install the abstraction library. The [test utility](https://github.com
 
 ## Usage
 
-Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar.
-
-
-Below is an example utilizing the built in in `MockDisplay` object. This is will emulate the calls of a real EPD without the need for actual hardware.
-
-```
-from vsmp_epd import displayfactory, EPDNotFoundError
-import logging
-
-# logging module only necessary to see info messages from the Mock Display
-logging.basicConfig(level=logging.INFO)
-
-def get_image():
-  # do processing and return your PIL Image here
-  return ""
-
-# the vsmp name of the display you want to load.
-displayName = "vsmp_epd.mock"
-
-try:
-  epd = displayfactory.load_display_driver(displayName)
-except EPDNotFoundError:
-  print("Couldn't find that display, valid options are:")
-
-  # get a list of all supported displays from the display factory
-  allDisplays = displayfactory.list_supported_displays()
-
-  print("\n".join(map(str, allDisplays)))
-
-  sys.exit()
-
-# get the width and height
-logging.info(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
-
-# perform actions on the epd
-epd.prepare()
-
-epd.display(get_image())  # see below for more on this function
-
-epd.sleep()
-
-epd.close()
-
-```
+Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/vsmp-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. 
 
 ### VirtualEPD Object
 
