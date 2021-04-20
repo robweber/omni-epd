@@ -63,7 +63,7 @@ class InkyDisplay(VirtualEPD):
         result = []
 
         deviceList = ["phat_black", "phat_red", "phat_yellow",
-                      "phat1608_black", "phat1608_red", "phat1608_yellow"
+                      "phat1608_black", "phat1608_red", "phat1608_yellow",
                       "what_black", "what_red", "what_yellow"]
 
         try:
