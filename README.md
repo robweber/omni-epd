@@ -9,6 +9,18 @@ There are several implementations of very slow media players (VSMP), many in Pyt
 
 For VSMP project maintainers this expands the number of displays you can use for your project without having to code around each one. To utilize this in your VSMP project read the usage instructions. For a list of (known) projects that use this abstraction see the list below.
 
+## Table Of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+  - [VirtualEPD Object](#virtualepd-object)
+  - [Display Testing](#display-testing)
+  - [Advanced EPD Control](#advanced-epd-control)
+- [Displays Implemented](#displays-implemented)
+  - [Display Driver Installation](#display-driver-installation)
+- [Implementing Projects](#implementing-projects)
+- [License](#license)
+
 ## Install
 
 Installing this module installs any required _Python_ library files. Refer to instructions for your specific display for any [additional requirements](https://github.com/robweber/vsmp-epd#display-driver-installation) that may need to be satisfied. A common requirement is [enabling SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) on a Raspberry Pi. Install any required libraries or setup files and then run:
