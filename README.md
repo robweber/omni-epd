@@ -81,6 +81,9 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 | [Inky](https://github.com/pimoroni/inky) | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) | inky.phat_red |
 | | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) | inky.phat_yellow |
 | | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) | inky.phat_black |
+| | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 250x122 | inky.phat1608_red |
+| | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 250x122 | inky.phat1608_yellow |
+| | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) - 250x122 | inky.phat1608_black |
 | | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | inky.what_red |
 | | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow |
 | | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black |

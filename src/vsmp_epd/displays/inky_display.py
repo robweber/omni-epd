@@ -20,10 +20,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. conf import IMAGE_ENHANCEMENTS
 from .. virtualepd import VirtualEPD
-from inky import InkyPHAT, InkyWHAT, WHITE
+from inky import InkyPHAT, InkyWHAT, InkyPHAT_SSD1608, WHITE
 
 
 class InkyDisplay(VirtualEPD):
+    """
+    This is an abstraction for Pimoroni Inky pHat and wHat devices
+    https://github.com/pimoroni/inky
+    """
+
     pkg_name = 'inky'
 
     def __init__(self, deviceName, config):
@@ -42,16 +47,21 @@ class InkyDisplay(VirtualEPD):
 
         if(dType == 'phat'):
             self._device = InkyPHAT(dColor)
+        elif(dType == 'phat1608'):
+            self._device = InkyPHAT_SSD1608(dColor)
         elif(dType == 'what'):
             self._device = InkyWHAT(dColor)
 
-        # set the width and height - doesn't matter since we won't write anything
+        # set the width and height
         self.width = self._device.width
         self.height = self._device.height
 
     @staticmethod
     def get_supported_devices():
-        return [f"{InkyDisplay.pkg_name}.{n}" for n in ["phat_black", "phat_red", "phat_yellow", "what_black", "what_red", "what_yellow"]]
+        deviceList = ["phat_black", "phat_red", "phat_yellow",
+                     "phat1608_black", "phat1608_red", "phat1608_yellow"
+                     "what_black", "what_red", "what_yellow"]
+        return [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
 
     def _display(self, image):
         self._device.set_image(image)
