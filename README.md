@@ -11,7 +11,7 @@ For VSMP project maintainers this expands the number of displays you can use for
 
 ## Install
 
-Refer to instructions for your specific display for any [additional libraries or requirements](https://github.com/robweber/vsmp-epd#display-driver-installation) that may need to be satisfied. A common requirement is [enabling SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) on a Raspberry Pi. Install any required libraries or setup files and then run:
+Installing this module installs any required _Python_ library files. Refer to instructions for your specific display for any [additional requirements](https://github.com/robweber/vsmp-epd#display-driver-installation) that may need to be satisfied. A common requirement is [enabling SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) on a Raspberry Pi. Install any required libraries or setup files and then run:
 
 ```
 
@@ -72,7 +72,7 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 
 * `width` and `height` - these are convience attributes to get the width and height of the display in your code. See the above example for their use.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
-* `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
+* `_display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains better life of the display.
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
@@ -89,9 +89,9 @@ user@server:~ $ vsmp-epd-test -e vsmp_epd.mock
 
 ### Advanced EPD Control
 
-There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always mirroring an image due to how a project is being mounted. These are modifications that are specific to a video or display and can be applied by use of a ini file instead of having to modify code or allow for options via implementing scripts.
+There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always adjusting the image with brightness or contrast settings. These are modifications that are specific to display requirements or user preferences and can be applied by use of a .ini file instead of having to modify code or allow for options via implementing scripts.
 
-Two types of __ini__ files can be used in these situations. A global file, named ```vsmp-epd.ini```, or a device specific file; which is the device name from the table below with a ```ini``` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the ```os.getcwd()``` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations.
+Two types of __ini__ files can be used in these situations. A global file, named `vsmp-epd.ini`, or a device specific file; which is the device name from the table below with a `.ini` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the `os.getcwd()` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations.
 
 ```
 # file shown with default values
@@ -146,19 +146,11 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 ### Display Driver Installation
 
-Each display type has different install requirements depending on the platform. They may require additional Python or OS level packages to be installed. Basic instructions are below for each library type. Refer to instructions for your specific display to make sure you've satisfied these requirements. The `vsmp-epd-test` utility can be used to verify things are working properly.
+Each display type has different install requirements depending on the platform.  While loading this module will install any required _Python_ libraries for supported displays; specific OS level configuration may need to be done. Basic instructions are below for each library type. Refer to instructions for your specific display to make sure you've satisfied these requirements. The `vsmp-epd-test` utility can be used to verify things are working properly.
 
 __Waveshare__
 
-The Waveshare device library is not available via the Package Installer for Python (pip) and must be installed manually. Instructions for this are:
-
-```
-
-git clone https://github.com/waveshare/e-Paper
-cd e-Paper/RaspberryPi_JetsonNano/python/
-sudo python3 setup.py install
-
-```
+The [Waveshare device library](https://github.com/waveshare/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.  
 
 ## Implementing Projects
 Below is a list of known projects currently utilizing `vsmp-epd`. If you're interested in building a very small media player, check them out.
