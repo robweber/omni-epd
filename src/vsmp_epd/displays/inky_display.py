@@ -91,3 +91,54 @@ class InkyDisplay(VirtualEPD):
                     self._device.set_pixel(x, y, WHITE)
 
         self._device.show()
+
+
+class InkyImpressionDisplay(VirtualEPD):
+    """
+    This is an abstraction for Pimoroni Inky Impression devices
+    https://shop.pimoroni.com/products/inky-impression
+    https://github.com/pimoroni/inky
+    """
+
+    pkg_name = 'inky'
+
+    def __init__(self, deviceName, config):
+        super(InkyDisplay, self).__init__(deviceName, config)
+
+        # load the device driver
+        deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
+        self._device = deviceObj.Inky()
+
+        # set the width and height
+        self.width = self._device.width
+        self.height = self._device.height
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        try:
+            # do a test import from the inky library
+            from inky.inky_uc8159 import CLEAN
+
+            # if passed return list of devices
+            result = [f"{InkyDisplay.pkg_name}.impression"]
+        except ModuleNotFoundError:
+            # python libs for this might not be installed - that's ok, return nothing
+            pass
+
+        return result
+
+    def _display(self, image):
+        self._device.set_image(image)
+        self._device.show()
+
+    def clear(self):
+        from inky.inky_uc8159 import CLEAN
+
+        for _ in range(2):
+            for y in range(self.height - 1):
+                for x in range(self.width - 1):
+                    self._device.set_pixel(x, y, CLEAN)
+
+        self._device.show()
