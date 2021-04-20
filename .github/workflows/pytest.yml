@@ -18,3 +18,7 @@ jobs:
           python -m pip install --upgrade pip build
           python -m build
           pip install -r src/vsmp_epd.egg-info/requires.txt
+      - name: Test with pytest
+        run: |
+          pip install pytest
+          pytest
