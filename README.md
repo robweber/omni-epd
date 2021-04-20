@@ -123,6 +123,14 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 Each display type has different install requirements depending on the platform.  While loading this module will install any required _Python_ libraries for supported displays; specific OS level configuration may need to be done. Basic instructions are below for each library type. Refer to instructions for your specific display to make sure you've satisfied these requirements. The `vsmp-epd-test` utility can be used to verify things are working properly.
 
+__Inky__
+
+Inky makes things pretty easy with a one-line installer. This makes the necessary OS level changes and pulls in the [Inky library](https://github.com/pimoroni/inky/). 
+
+```
+curl https://get.pimoroni.com/inky | bash
+```
+
 __Waveshare__
 
 The [Waveshare device library](https://github.com/waveshare/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.  
