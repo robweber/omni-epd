@@ -1,5 +1,4 @@
 # VSMP-EPD Abstraction
-[![pypi-version](https://img.shields.io/pypi/v/vsmp-epd)](https://pypi.org/project/vsmp-epd/)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 
@@ -27,11 +26,19 @@ Installing this module installs any required _Python_ library files. Refer to in
 
 ```
 
-sudo pip3 install vsmp-epd
+sudo pip3 install git+https://github.com/robweber/vsmp-epd.git#egg=vsmp-epd
 
 ```
 
-This will install the abstraction library. The [test utility](https://github.com/robweber/vsmp-epd#display-testing) can be used to test your display and ensure everything is working properly.
+This will install the abstraction library. The [test utility](#display-testing) can be used to test your display and ensure everything is working properly. You can also clone this repo and install from source with:
+
+```
+
+git clone https://github.com/robweber/vsmp-epd.git
+cd vsmp-epd
+sudo python3 setup.py install
+
+```
 
 ## Usage
 

@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - support for Inky type displays (pHAT, wHAT, and Impression)
+- added instructions for installing direct from repo
+
+### Removed
+
+- removed PyPi setup instructions, more important to allow installing of waveshare libs
 
 ## Version 0.1.4
 
