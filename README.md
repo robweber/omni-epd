@@ -23,7 +23,7 @@ This will install the abstraction library. The [test utility](https://github.com
 
 ## Usage
 
-Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/vsmp-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. 
+Usage in this case refers to VSMP project implementers that wish to abstract their EPD code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/vsmp-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below.
 
 ### VirtualEPD Object
 
@@ -41,8 +41,11 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 There is a utility, `vsmp-epd-test` to verify the display. This is useful to provide users with a way their hardware is working properly. Many displays have specific library requirements that need to be installed with OS level package utilities and may throw errors until they are resolved. The test utility helps confirm all requirements are met before doing more advanced work with the display. This can be run from the command line, specifying the device from the table below.
 
 ```
-
+# this will draw a series of rectangles
 user@server:~ $ vsmp-epd-test -e vsmp_epd.mock
+
+# this will draw the specified image
+user@server:~ $ vsmp-epd-test -e vsmp_epd.mock -i /path/to/image.jpg
 
 ```
 

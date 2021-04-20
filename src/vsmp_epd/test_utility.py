@@ -61,6 +61,15 @@ class EPDTestUtility:
         else:
             return imgObj
 
+    def __draw_on_display(self, image):
+        self.epd.prepare()
+
+        self.epd.display(image)
+
+        self.epd.close()
+
+        print("Display closed - testing complete")
+
     def isReady(self):
         return self.epd is not None
 
@@ -73,13 +82,18 @@ class EPDTestUtility:
         # draw a series of rectangles
         draw = self.__draw_rectangle(draw, self.epd.width, self.epd.height, 0, 0, .75, .25)
 
-        self.epd.prepare()
+        self.__draw_on_display(im)
 
-        self.epd.display(im)
+    def draw_image(self, file):
 
-        self.epd.close()
+        # load the image
+        im = Image.open(file)
 
-        print("Display closed - testing complete")
+        # resize for display
+        im = im.resize((self.epd.width, self.epd.height))
+
+        # write to the display
+        self.__draw_on_display(im)
 
     def clear(self):
         print("Clearing display")
@@ -98,11 +112,16 @@ def main():
     parser = argparse.ArgumentParser(description='EPD Test Utility')
     parser.add_argument('-e', '--epd', required=True,
                         help="The type of EPD driver to test")
+    parser.add_argument('-i', '--image', required=False, type=str,
+                        help="Path to an image file to draw on the display")
 
     args = parser.parse_args()
 
     test = EPDTestUtility(args.epd)
 
     if(test.isReady()):
-        # this will draw a rectangle in the center of the display
-        test.draw()
+        if(args.image):
+            test.draw_image(args.image)
+        else:
+            # this will draw a rectangle in the center of the display
+            test.draw()
