@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+from .. conf import IMAGE_ENHANCEMENTS
 from .. virtualepd import VirtualEPD
 from inky import InkyPHAT, InkyWHAT, WHITE
 
@@ -25,8 +26,16 @@ from inky import InkyPHAT, InkyWHAT, WHITE
 class InkyDisplay(VirtualEPD):
     pkg_name = 'inky'
 
-    def __init__(self, deviceName):
-        super(InkyDisplay, self).__init__(deviceName)
+    def __init__(self, deviceName, config):
+        super(InkyDisplay, self).__init__(deviceName, config)
+
+        # if color does not exist, add it
+        if(not self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
+            if(not self._config.has_section(IMAGE_ENHANCEMENTS)):
+                self._config.add_section(IMAGE_ENHANCEMENTS)
+
+            # by default use black/white images
+            self._config.set(IMAGE_ENHANCEMENTS, "color", "1")
 
         # need to figure out what type of device we have
         dType, dColor = deviceName.split('_')
@@ -44,7 +53,7 @@ class InkyDisplay(VirtualEPD):
     def get_supported_devices():
         return [f"{InkyDisplay.pkg_name}.{n}" for n in ["phat_black", "phat_red", "phat_yellow", "what_black", "what_red", "what_yellow"]]
 
-    def display(self, image):
+    def _display(self, image):
         self._device.set_image(image)
         self._device.show()
 
