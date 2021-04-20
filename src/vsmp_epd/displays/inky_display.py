@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. conf import IMAGE_ENHANCEMENTS
 from .. virtualepd import VirtualEPD
-from inky import InkyPHAT, InkyWHAT, InkyPHAT_SSD1608, WHITE
 
 
 class InkyDisplay(VirtualEPD):
@@ -46,11 +45,14 @@ class InkyDisplay(VirtualEPD):
         dType, dColor = deviceName.split('_')
 
         if(dType == 'phat'):
-            self._device = InkyPHAT(dColor)
+            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
+            self._device = deviceObj.InkyPHAT(dColor)
         elif(dType == 'phat1608'):
-            self._device = InkyPHAT_SSD1608(dColor)
+            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
+            self._device = deviceObj.InkyPHAT_SSD1608(dColor)
         elif(dType == 'what'):
-            self._device = InkyWHAT(dColor)
+            deviceObj = self.load_display_driver(self.pkg_name, 'what')
+            self._device = deviceObj.InkyWHAT(dColor)
 
         # set the width and height
         self.width = self._device.width
@@ -58,16 +60,31 @@ class InkyDisplay(VirtualEPD):
 
     @staticmethod
     def get_supported_devices():
+        result = []
+
         deviceList = ["phat_black", "phat_red", "phat_yellow",
                      "phat1608_black", "phat1608_red", "phat1608_yellow"
                      "what_black", "what_red", "what_yellow"]
-        return [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
+
+        try:
+            # do a test import from the inky library
+            from inky import WHITE
+
+            # if passed return list of devices
+            result = [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
+        except ModuleNotFoundError:
+            # python libs for this might not be installed - that's ok, return nothing
+            pass
+
+        return result
 
     def _display(self, image):
         self._device.set_image(image)
         self._device.show()
 
     def clear(self):
+        from inky import WHITE
+
         for _ in range(2):
             for y in range(self.height - 1):
                 for x in range(self.width - 1):
