@@ -29,11 +29,11 @@ Usage in this case refers to VSMP project implementers that wish to abstract the
 Below is an example utilizing the built in in `MockDisplay` object. This is will emulate the calls of a real EPD without the need for actual hardware.
 
 ```
-from vsmp_epd import displayfactory
+from vsmp_epd import displayfactory, EPDNotFoundError
 import logging
 
 # logging module only necessary to see info messages from the Mock Display
-logging.basicConfig(logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 def get_image():
   # do processing and return your PIL Image here
@@ -42,27 +42,29 @@ def get_image():
 # the vsmp name of the display you want to load.
 displayName = "vsmp_epd.mock"
 
-# get a list of all supported displays from the display factory
-allDisplays = displayfactory.list_supported_displays()
-
-# check if this exists - not necessary but good practice
-if( displayName in allDisplays ):
+try:
   epd = displayfactory.load_display_driver(displayName)
+except EPDNotFoundError:
+  print("Couldn't find that display, valid options are:")
 
-  # get the width and height
-  logging.info(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
+  # get a list of all supported displays from the display factory
+  allDisplays = displayfactory.list_supported_displays()
 
-  # perform actions on the epd
-  epd.prepare()
+  print("\n".join(map(str, allDisplays)))
 
-  epd.display(get_image())  # see below for more on this function
+  sys.exit()
 
-  epd.sleep()
+# get the width and height
+logging.info(f"Loaded {displayName} with width {epd.width} and height {epd.height}")
 
-  epd.close()
+# perform actions on the epd
+epd.prepare()
 
-else:
-  print("Couldn't find that display")
+epd.display(get_image())  # see below for more on this function
+
+epd.sleep()
+
+epd.close()
 
 ```
 
