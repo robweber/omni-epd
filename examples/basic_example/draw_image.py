@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
+import sys
 from vsmp_epd import displayfactory, EPDNotFoundError
 from PIL import Image
 
@@ -35,14 +36,14 @@ except EPDNotFoundError:
     print(f"Couldn't find {displayName}")
     sys.exit()
 
- # if now load an image file using the Pillow lib
+# if now load an image file using the Pillow lib
 print('Loading image')
 image = Image.open('../grass.jpg')
 
 # resize for your display
 image = image.resize((epd.width, epd.height))
 
- # prepare the epd, write the image, and close
+# prepare the epd, write the image, and close
 print('Writing to display')
 epd.prepare()
 
