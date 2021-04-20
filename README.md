@@ -78,9 +78,9 @@ Below is a list of displays currently implemented in the library. The VSMP Devic
 
 | Device Library | Device Name | VSMP Device Name |
 |:---------------|:------------|:-----------------|
-| [Inky](https://github.com/pimoroni/inky) | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) | inky.phat_red |
-| | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) | inky.phat_yellow |
-| | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) | inky.phat_black |
+| [Inky](https://github.com/pimoroni/inky) | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 212x104 | inky.phat_red |
+| | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 212x104 | inky.phat_yellow |
+| | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) - 212x104 | inky.phat_black |
 | | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 250x122 | inky.phat1608_red |
 | | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 250x122 | inky.phat1608_yellow |
 | | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) - 250x122 | inky.phat1608_black |
@@ -125,7 +125,7 @@ Each display type has different install requirements depending on the platform. 
 
 __Inky__
 
-Inky makes things pretty easy with a one-line installer. This makes the necessary OS level changes and pulls in the [Inky library](https://github.com/pimoroni/inky/). 
+Inky makes things pretty easy with a one-line installer. This makes the necessary OS level changes and pulls in the [Inky library](https://github.com/pimoroni/inky/).
 
 ```
 curl https://get.pimoroni.com/inky | bash
