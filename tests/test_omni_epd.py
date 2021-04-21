@@ -1,15 +1,15 @@
 import unittest
 import os
 import time
-from vsmp_epd import EPDNotFoundError
-from vsmp_epd import displayfactory
-from vsmp_epd.virtualepd import VirtualEPD
-from vsmp_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
+from omni_epd import EPDNotFoundError
+from omni_epd import displayfactory
+from omni_epd.virtualepd import VirtualEPD
+from omni_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
 
 
-class TestVsmpEpd(unittest.TestCase):
-    goodEpd = "vsmp_epd.mock"  # this should always be a valid EPD
-    badEpd = "vsmp_epd.bad"  # this is not a valid EPD
+class TestomniEpd(unittest.TestCase):
+    goodEpd = "omni_epd.mock"  # this should always be a valid EPD
+    badEpd = "omni_epd.bad"  # this is not a valid EPD
 
     def test_supported_diplays(self):
         drivers = displayfactory.list_supported_displays()
