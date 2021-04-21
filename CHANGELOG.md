@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - Added some notes on contributing
+- unit test build badge to README
 
 ### Changed
 
