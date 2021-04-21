@@ -1,4 +1,4 @@
-# Omni-EPD Abstraction
+# Omni-EPD
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 An EPD (electronic paper display) class abstraction to simplify communications across multiple display types.
@@ -158,6 +158,10 @@ The [Waveshare device library](https://github.com/waveshare/e-Paper) requires th
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
 
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
+
+## Contributing
+
+PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example. 
 
 ## License
 [GPLv3](/LICENSE)

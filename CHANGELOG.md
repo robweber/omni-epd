@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Version 0.1.6
 
+### Added
+
+- Added some notes on contributing
+
 ### Changed
 
 - Rebrand! `vsmp-epd` renamed to `omni-epd`, subsequent commands and documentation also updated
