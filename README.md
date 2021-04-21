@@ -1,4 +1,5 @@
 # Omni-EPD
+[![build-status](https://img.shields.io/github/workflow/status/robweber/omni-epd/Unit%20Test%20Check?logo=Github)](https://github.com/robweber/omni-epd/actions/workflows/pytest.yml?query=branch%3Amain)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 An EPD (electronic paper display) class abstraction to simplify communications across multiple display types.
