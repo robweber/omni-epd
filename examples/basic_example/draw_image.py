@@ -1,9 +1,9 @@
 """
 Copyright 2021 Rob Weber
 
-This file is part of vsmp-epd
+This file is part of omni-epd
 
-vsmp-epd is free software: you can redistribute it and/or modify
+omni-epd is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 import sys
-from vsmp_epd import displayfactory, EPDNotFoundError
+from omni_epd import displayfactory, EPDNotFoundError
 from PIL import Image
 
 """
@@ -27,7 +27,7 @@ load an image, and then write it to the display
 
 """
 # load your particular display using the displayfactory
-displayName = "vsmp_epd.mock"
+displayName = "omni_epd.mock"
 
 print('Loading display')
 try:
