@@ -98,7 +98,7 @@ class VirtualEPD:
                 palette_image = Image.new("P", (1, 1))
 
                 # set the palette, set all other colors to 0
-                palette_image.putpalette(palette + [0,0,0] * (256-len(palette)))
+                palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
 
                 # load image so it can be processed
                 image.load()
