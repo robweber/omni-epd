@@ -104,3 +104,55 @@ class WaveshareDisplay(VirtualEPD):
         from waveshare_epd import epdconfig
         epdconfig.module_init()
         epdconfig.module_exit()
+
+class Waveshare102inDisplay(VirtualEPD):
+    """
+    This class is for the Waveshare 1.02 in display only as it has some method calls that are different
+    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd1in02.py
+    """
+
+    pkg_name = 'waveshare_epd'
+
+    def __init__(self, deviceName, config):
+        super(MockDisplay, self).__init__(deviceName, config)
+
+        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
+
+        # create the epd object
+        self._device = deviceObj.EPD()
+
+        # set the width and height
+        self.width = self._device.width
+        self.height = self._device.height
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        try:
+            from waveshare_epd import epdconfig
+
+            result = [f"{Waveshare102inDisplay.pkg_name}.epd1in02"]
+        except ModuleNotFoundError:
+            # python libs for this might not be installed - that's ok, return nothing
+            pass
+
+        return result
+
+    def prepare(self):
+        self._device.Init()
+
+    def _display(self, image):
+        self._device.Display(self._device.getbuffer(image))
+
+    def sleep(self):
+        self._device.Sleep()
+
+    def clear(self):
+        self._device.Clear()
+
+    def close(self):
+        # can't import this earlier as pkg may not be installed
+        from waveshare_epd import epdconfig
+        epdconfig.module_init()
+        epdconfig.module_exit()
