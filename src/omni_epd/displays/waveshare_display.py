@@ -18,8 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-import importlib
-from pkgutil import iter_modules
+from PIL import Image
 from .. virtualepd import VirtualEPD
 
 
@@ -65,12 +64,12 @@ class WaveshareDisplay(VirtualEPD):
 
         # list of common devices that share init() and display() method calls
         commonDeviceList = ["epd1in54_V2", "epd2in13d", "epd2in7",
-                      "epd2in9_V2", "epd2in9d", "epd4in01f",
-                      "epd4in2", "epd5in65f", "epd5in83",
-                      "epd5in83_V2", "epd7in5", "epd7in5_HD", "epd7in5_V2"]
+                            "epd2in9_V2", "epd2in9d", "epd4in01f",
+                            "epd4in2", "epd5in65f", "epd5in83",
+                            "epd5in83_V2", "epd7in5", "epd7in5_HD", "epd7in5_V2"]
         try:
             # load the waveshare library
-            from waveshare_epd import epdconfig
+            from waveshare_epd import epdconfig  # noqa: F401
 
             result = result + commonDeviceList
 
@@ -116,7 +115,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName, config):
-        super(MockDisplay, self).__init__(deviceName, config)
+        super(WaveshareTriColorDisplay, self).__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -142,7 +141,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
                       "epd7in5b_V2", "epd7in5bc"]
 
         try:
-            from waveshare_epd import epdconfig
+            from waveshare_epd import epdconfig  # noqa: F401
 
             result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in deviceList]
         except ModuleNotFoundError:
@@ -180,7 +179,7 @@ class Waveshare102inDisplay(VirtualEPD):
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName, config):
-        super(MockDisplay, self).__init__(deviceName, config)
+        super(Waveshare102inDisplay, self).__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -196,7 +195,7 @@ class Waveshare102inDisplay(VirtualEPD):
         result = []
 
         try:
-            from waveshare_epd import epdconfig
+            from waveshare_epd import epdconfig  # noqa: F401
 
             result = [f"{Waveshare102inDisplay.pkg_name}.epd1in02"]
         except ModuleNotFoundError:
@@ -223,6 +222,7 @@ class Waveshare102inDisplay(VirtualEPD):
         epdconfig.module_init()
         epdconfig.module_exit()
 
+
 class Waveshare3in7Display(VirtualEPD):
     """
     This class is for the Waveshare 3.7in display only as it
@@ -233,7 +233,7 @@ class Waveshare3in7Display(VirtualEPD):
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName, config):
-        super(MockDisplay, self).__init__(deviceName, config)
+        super(Waveshare3in7Display, self).__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -249,7 +249,7 @@ class Waveshare3in7Display(VirtualEPD):
         result = []
 
         try:
-            from waveshare_epd import epdconfig
+            from waveshare_epd import epdconfig  # noqa: F401
 
             result = [f"{Waveshare102inDisplay.pkg_name}.epd3in7"]
         except ModuleNotFoundError:
