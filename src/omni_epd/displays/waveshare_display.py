@@ -105,6 +105,72 @@ class WaveshareDisplay(VirtualEPD):
         epdconfig.module_init()
         epdconfig.module_exit()
 
+
+class WaveshareTriColorDisplay(VirtualEPD):
+    """
+    This class is for the Waveshare displays that support 3 colors
+    typically white/black/red or white/black/yellow
+    https://github.com/waveshare/e-Paper
+    """
+
+    pkg_name = 'waveshare_epd'
+
+    def __init__(self, deviceName, config):
+        super(MockDisplay, self).__init__(deviceName, config)
+
+        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
+
+        # create the epd object
+        self._device = deviceObj.EPD()
+
+        # set the width and height
+        self.width = self._device.width
+        self.height = self._device.height
+
+    def _createEmptyImage(self):
+        return Image.new('L', [self.width, self.height], 255)
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        deviceList = ["epd1in54b", "epd1in54b_V2", "epd1in54c",
+                      "epd2in13b_V3", "epd2in13bc", "epd2in66b",
+                      "epd2in7b", "epd2in7b_V2", "epd2in9b_V3",
+                      "epd2in9bc", "epd4in2b_V2", "epd4in2bc",
+                      "epd5in83b_V2", "epd5in83bc", "epd7in5b_HD",
+                      "epd7in5b_V2", "epd7in5bc"]
+
+        try:
+            from waveshare_epd import epdconfig
+
+            result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in deviceList]
+        except ModuleNotFoundError:
+            # python libs for this might not be installed - that's ok, return nothing
+            pass
+
+        return result
+
+    def prepare(self):
+        self._device.init()
+
+    def _display(self, image):
+        # send the black/white image and blank second image (safer since some require data)
+        self._device.display(self._device.getbuffer(image), self._device.getbuffer(self._createEmptyImage()))
+
+    def sleep(self):
+        self._device.sleep()
+
+    def clear(self):
+        self._device.Clear()
+
+    def close(self):
+        # can't import this earlier as pkg may not be installed
+        from waveshare_epd import epdconfig
+        epdconfig.module_init()
+        epdconfig.module_exit()
+
+
 class Waveshare102inDisplay(VirtualEPD):
     """
     This class is for the Waveshare 1.02 in display only as it has some method calls that are different
