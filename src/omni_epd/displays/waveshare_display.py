@@ -70,9 +70,6 @@ class WaveshareDisplay(VirtualEPD):
 
         # python libs for this might not be installed - that's ok, return nothing
         if(WaveshareDisplay.check_module_installed('waveshare_epd')):
-            # load the waveshare library
-            from waveshare_epd import epdconfig  # noqa: F401
-
             result = result + commonDeviceList
 
             # return a list of all submodules (device types)
