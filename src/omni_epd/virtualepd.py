@@ -18,7 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import sys
 import importlib
+import importlib.util
 import logging
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
@@ -112,6 +114,17 @@ class VirtualEPD:
             exit(2)
 
         return driver
+
+    # helper method to check if a module is (or can be) installed
+    @staticmethod
+    def check_module_installed(moduleName):
+        result = False
+
+        # check if the module is already loaded, or can be loaded
+        if(moduleName in sys.modules or (importlib.util.find_spec(moduleName)) is not None):
+            result = True
+
+        return result
 
     # REQUIRED - a list of devices supported by this class, format is {pkgname.devicename}
     @staticmethod

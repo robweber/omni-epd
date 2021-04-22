@@ -67,7 +67,9 @@ class WaveshareDisplay(VirtualEPD):
                             "epd2in9_V2", "epd2in9d", "epd4in01f",
                             "epd4in2", "epd5in65f", "epd5in83",
                             "epd5in83_V2", "epd7in5", "epd7in5_HD", "epd7in5_V2"]
-        try:
+
+        # python libs for this might not be installed - that's ok, return nothing
+        if(WaveshareDisplay.check_module_installed('waveshare_epd')):
             # load the waveshare library
             from waveshare_epd import epdconfig  # noqa: F401
 
@@ -75,9 +77,6 @@ class WaveshareDisplay(VirtualEPD):
 
             # return a list of all submodules (device types)
             result = [f"{WaveshareDisplay.pkg_name}.{n}" for n in result]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 
@@ -140,13 +139,9 @@ class WaveshareTriColorDisplay(VirtualEPD):
                       "epd5in83b_V2", "epd5in83bc", "epd7in5b_HD",
                       "epd7in5b_V2", "epd7in5bc"]
 
-        try:
-            from waveshare_epd import epdconfig  # noqa: F401
-
+        # python libs for this might not be installed - that's ok, return nothing
+        if(WaveshareTriColorDisplay.check_module_installed('waveshare_epd')):
             result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in deviceList]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 
@@ -194,13 +189,8 @@ class Waveshare102inDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        try:
-            from waveshare_epd import epdconfig  # noqa: F401
-
+        if(Waveshare102inDisplay.check_module_installed('waveshare_epd')):
             result = [f"{Waveshare102inDisplay.pkg_name}.epd1in02"]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 
@@ -248,13 +238,8 @@ class Waveshare3in7Display(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        try:
-            from waveshare_epd import epdconfig  # noqa: F401
-
+        if(Waveshare3in7Display.check_module_installed('waveshare_epd')):
             result = [f"{Waveshare102inDisplay.pkg_name}.epd3in7"]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 
