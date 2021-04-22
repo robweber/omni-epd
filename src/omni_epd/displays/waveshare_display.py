@@ -25,11 +25,18 @@ from .. virtualepd import VirtualEPD
 
 class WaveshareDisplay(VirtualEPD):
     """
-    This is an abstraction for Waveshare EPD devices loaded under the waveshare_epd pkg
+    This is an abstraction for Waveshare EPD devices that are single color only
     https://github.com/waveshare/e-Paper
     """
 
     pkg_name = 'waveshare_epd'
+
+    # devices that use alternate init methods
+    lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
+    modeInitList = ["epd2in66", "epd2in13_V2"]
+
+    alt_init = False  # specify that init with a param should be used
+    alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
     def __init__(self, deviceName, config):
         super(WaveshareDisplay, self).__init__(f"{deviceName}", config)
@@ -40,20 +47,35 @@ class WaveshareDisplay(VirtualEPD):
         # create the epd object
         self._device = deviceObj.EPD()
 
+        # check if alternate init method is used
+        if(deviceName in self.lutInitList or deviceName in self.modeInitList):
+            self.alt_init = True
+
+            # some devices set the full instruction as the param
+            if(deviceName in self.lutInitList):
+                self.alt_init_param = self._device.lut_full_update
+
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
 
     @staticmethod
     def get_supported_devices():
-        result = []
+        result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList
 
+        # list of common devices that share init() and display() method calls
+        commonDeviceList = ["epd1in54_V2", "epd2in13d", "epd2in7",
+                      "epd2in9_V2", "epd2in9d", "epd4in01f",
+                      "epd4in2", "epd5in65f", "epd5in83",
+                      "epd5in83_V2", "epd7in5", "epd7in5_HD", "epd7in5_V2"]
         try:
             # load the waveshare library
-            waveshareModule = importlib.import_module(WaveshareDisplay.pkg_name)
+            from waveshare_epd import epdconfig
+
+            result = result + commonDeviceList
 
             # return a list of all submodules (device types)
-            result = [f"{WaveshareDisplay.pkg_name}.{s.name}" for s in iter_modules(waveshareModule.__path__) if s.name != 'epdconfig']
+            result = [f"{WaveshareDisplay.pkg_name}.{n}" for n in result]
         except ModuleNotFoundError:
             # python libs for this might not be installed - that's ok, return nothing
             pass
@@ -61,7 +83,12 @@ class WaveshareDisplay(VirtualEPD):
         return result
 
     def prepare(self):
-        self._device.init()
+
+        # if device needs an init param
+        if(self.alt_init):
+            self._device.init(self.alt_init_param)
+        else:
+            self._device.init()
 
     def _display(self, image):
         self._device.display(self._device.getbuffer(image))
