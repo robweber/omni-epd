@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import importlib
 import logging
+import json
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 
@@ -52,6 +53,15 @@ class VirtualEPD:
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
 
+    def __generate_palette(self, pstr):
+        result = []
+        pjson = json.loads(pstr)
+
+        for c in pjson:
+            result += [int(c[0]), int(c[1]), int(c[2])]
+
+        return result
+
     def __applyConfig(self, image):
         """
         Apply any values passed in from the global configuration that should
@@ -73,12 +83,28 @@ class VirtualEPD:
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            # use could optionally specifiy a number of colors to use
+            # if total_colors given filter down to this many colors only
             if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'total_colors')):
                 total_colors = self._config.getint(IMAGE_ENHANCEMENTS, "total_colors")
                 image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"), palette=Image.ADAPTIVE,
                                       colors=total_colors)
                 self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with {total_colors} colors")
+            # if palette given filter out all colors but these
+            elif(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
+                # load the palette as a list from the string
+                palette = self.__generate_palette(self._config.get(IMAGE_ENHANCEMENTS, "palette"))
+
+                # create a new image to define the palette
+                palette_image = Image.new("P", (1, 1))
+
+                # set the palette, set all other colors to 0
+                palette_image.putpalette(palette + [0,0,0] * (256-len(palette)))
+
+                # load image so it can be processed
+                image.load()
+                image = image._new(image.im.convert('P', True, palette_image.im)).convert('RGB')
+
+                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with custom palette")
             else:
                 # just apply the color enhancment mode
                 image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))

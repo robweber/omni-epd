@@ -38,8 +38,8 @@ class MockDisplay(VirtualEPD):
         # this is normally where you'd load actual device class but nothing to load here
 
         # set the width and height - doesn't matter since we won't write anything
-        self.width = 100
-        self.height = 100
+        self.width = 300
+        self.height = 300
 
     @staticmethod
     def get_supported_devices():
