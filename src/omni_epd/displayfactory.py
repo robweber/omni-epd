@@ -23,7 +23,7 @@ import importlib
 import os
 import logging
 from . errors import EPDNotFoundError
-from . conf import CONFIG_FILE
+from . conf import CONFIG_FILE, EPD_CONFIG
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
@@ -41,8 +41,8 @@ def __loadConfig(deviceName):
         logger.debug(f"Loading {CONFIG_FILE}")
 
     # possible device name exists in global configuration file
-    if(not deviceName and config.has_option('EPD', 'type')):
-        deviceName = config.get('EPD', 'type')
+    if(not deviceName and config.has_option(EPD_CONFIG, 'type')):
+        deviceName = config.get(EPD_CONFIG, 'type')
 
     # check for device specific ini file
     if(deviceName and os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
@@ -81,8 +81,8 @@ def load_display_driver(displayName='', configDict={}):
     config.read_dict(configDict)
 
     # possible device name is part of global conf
-    if(not displayName and config.has_option('EPD', 'type')):
-        displayName = config.get('EPD', 'type')
+    if(not displayName and config.has_option(EPD_CONFIG, 'type')):
+        displayName = config.get(EPD_CONFIG, 'type')
 
     # get a dict of all valid display device classes
     displayClasses = list_supported_displays(True)
