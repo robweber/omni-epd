@@ -41,7 +41,7 @@ class VirtualEPD:
     height = 0  # height of display
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
-    __device_name = ""  # name of this device
+    _device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):
         self._config = config
