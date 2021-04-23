@@ -122,9 +122,6 @@ class WaveshareTriColorDisplay(VirtualEPD):
         self.width = self._device.width
         self.height = self._device.height
 
-    def _createEmptyImage(self):
-        return Image.new('L', [self.width, self.height], 255)
-
     @staticmethod
     def get_supported_devices():
         result = []
