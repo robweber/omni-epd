@@ -37,7 +37,7 @@ This will install the abstraction library. The [test utility](#display-testing) 
 
 git clone https://github.com/robweber/omni-epd.git
 cd omni-epd
-sudo pip3 -e .
+sudo pip3 install .
 
 ```
 
