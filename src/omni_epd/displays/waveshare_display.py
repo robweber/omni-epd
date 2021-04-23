@@ -147,7 +147,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
 
     def _display(self, image):
         # send the black/white image and blank second image (safer since some require data)
-        self._device.display(self._device.getbuffer(image), self._device.getbuffer(self._createEmptyImage()))
+        self._device.display(self._device.getbuffer(image), [0x00] * (int(self.width/8) * self.height)))
 
     def sleep(self):
         self._device.sleep()
