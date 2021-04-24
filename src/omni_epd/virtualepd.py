@@ -43,11 +43,11 @@ class VirtualEPD:
     width = 0   # width of display
     height = 0  # height of display
     mode = "bw"  # mode of the display, bw or color (if supported)
+    colors = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
     _modes_available = ("bw")  # modes this display supports, set in __init__
-    _colors = ((0, 0, 0), (255, 255, 255))  # assume only bw supported by default, set in __init__
     _device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):
@@ -78,14 +78,33 @@ class VirtualEPD:
     def _getboolean_device_option(self, option, fallback):
         return self._config.getboolean(self.getName(), option, fallback=fallback)
 
-    def __generate_palette(self, pstr):
+    # generate a palette given the colors available for this display
+    def __generate_palette(self):
         result = []
-        pjson = json.loads(pstr)
 
-        for c in pjson:
+        for c in self.colors:
             result += [int(c[0]), int(c[1]), int(c[2])]
 
         return result
+
+    def _convertImage(self, image):
+
+        if(self.mode == 'bw'):
+            image = image.convert("1")
+        else:
+            # load the palette as a list from the string
+            palette = self.__generate_palette()
+
+            # create a new image to define the palette
+            palette_image = Image.new("P", (1, 1))
+
+            # set the palette, set all other colors to 0
+            palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
+
+            # apply the palette
+            image = image.quantize(palette=palette_image)
+
+        return image
 
     def __applyConfig(self, image):
         """
@@ -104,29 +123,6 @@ class VirtualEPD:
         if(self._config.has_option(IMAGE_DISPLAY, "flip_vertical") and self._config.getboolean(IMAGE_DISPLAY, "flip_vertical")):
             image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
             self._logger.debug("Flipping image vertically")
-
-        # must be one of the valid PILLOW modes, and display must support
-        # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
-        if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            # if palette given filter out all colors but these
-            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
-                # load the palette as a list from the string
-                palette = self.__generate_palette(self._config.get(IMAGE_ENHANCEMENTS, "palette"))
-
-                # create a new image to define the palette
-                palette_image = Image.new("P", (1, 1))
-
-                # set the palette, set all other colors to 0
-                palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
-
-                # apply the palette
-                image = image.quantize(palette=palette_image)
-
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with custom palette")
-            else:
-                # just apply the color enhancment mode
-                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')}")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
             enhancer = ImageEnhance.Contrast(image)

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+from PIL import Image
 from .. conf import IMAGE_ENHANCEMENTS
 from .. virtualepd import VirtualEPD
 
@@ -33,14 +34,6 @@ class InkyDisplay(VirtualEPD):
     def __init__(self, deviceName, config):
         super(InkyDisplay, self).__init__(deviceName, config)
 
-        # if color does not exist, add it
-        if(not self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            if(not self._config.has_section(IMAGE_ENHANCEMENTS)):
-                self._config.add_section(IMAGE_ENHANCEMENTS)
-
-            # by default use black/white images
-            self._config.set(IMAGE_ENHANCEMENTS, "color", "1")
-
         # need to figure out what type of device we have
         dType, dColor = deviceName.split('_')
 
@@ -53,6 +46,14 @@ class InkyDisplay(VirtualEPD):
         elif(dType == 'what'):
             deviceObj = self.load_display_driver(self.pkg_name, 'what')
             self._device = deviceObj.InkyWHAT(dColor)
+
+        # could have additional display modes
+        if(dColor == 'red'):
+            self._modes_available = ('bw', 'red')
+            self.colors.append([255, 0, 0])
+        elif(dColor == 'yellow'):
+            self._modes_available = ('bw', 'yellow')
+            self.colors.append([255, 255, 0])
 
         # set the width and height
         self.width = self._device.width
@@ -74,6 +75,10 @@ class InkyDisplay(VirtualEPD):
         return result
 
     def _display(self, image):
+        # apply any needed conversions to this image based on the mode
+        image = self._convertImage(image)
+
+        # set the image and display
         self._device.set_image(image)
         self._device.show()
 
