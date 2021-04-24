@@ -66,7 +66,6 @@ class MockDisplay(VirtualEPD):
         else:
             self.logger.info(f"{self.__str__()} display() called, skipping output")
 
-
     def sleep(self):
         self.logger.info(f"{self.__str__()} is sleeping")
 
