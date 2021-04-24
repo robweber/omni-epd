@@ -96,9 +96,8 @@ class VirtualEPD:
                 # set the palette, set all other colors to 0
                 palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
 
-                # load image so it can be processed
-                image.load()
-                image = image._new(image.im.convert('P', True, palette_image.im)).convert('RGB')
+                # apply the palette
+                image = image.quantize(palette=palette_image)
 
                 self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with custom palette")
             else:

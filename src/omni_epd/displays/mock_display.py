@@ -56,6 +56,11 @@ class MockDisplay(VirtualEPD):
 
     def _display(self, image):
         self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
+
+        if(image.mode == 'P'):
+            # can't write P mode images
+            image = image.convert('RGB')
+
         image.save(self.output_file, "JPEG")
 
     def sleep(self):
