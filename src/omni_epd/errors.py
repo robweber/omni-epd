@@ -36,3 +36,12 @@ class InvalidDisplayModeError(Exception):
 
     def __init__(self, deviceName, mode):
         super().__init__(f"'{mode}' is not a valid display mode for {deviceName}")
+
+
+class TooManyColorsError(Exception):
+    """
+    TooManyColors is thrown when a the user defined palette for a display has too many colors
+    """
+
+    def __init__(self, deviceName, maxColors, givenColors):
+        super().__init__(f"{givenColors} colors is too many for {deviceName}, {maxColors} colors supported")

@@ -46,6 +46,7 @@ class InkyDisplay(VirtualEPD):
             self._device = deviceObj.InkyWHAT(dColor)
 
         # could have additional display modes
+        # phat and what devices expect colors in the order white, black, other
         if(dColor == 'red'):
             self._modes_available = ('bw', 'red')
             self.colors.append([255, 0, 0])

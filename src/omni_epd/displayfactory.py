@@ -22,8 +22,9 @@ import configparser
 import importlib
 import os
 import logging
-from . errors import EPDNotFoundError, InvalidDisplayModeError
-from . conf import CONFIG_FILE, EPD_CONFIG
+import json
+from . errors import EPDNotFoundError, InvalidDisplayModeError, TooManyColorsError
+from . conf import CONFIG_FILE, EPD_CONFIG, IMAGE_ENHANCEMENTS
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay, WaveshareTriColorDisplay, Waveshare102inDisplay, Waveshare3in7Display  # noqa: F401
@@ -101,6 +102,16 @@ def load_display_driver(displayName='', configDict={}):
         # check that the display mode is valid - must be done after class loaded
         if(result.mode not in result._modes_available):
             raise InvalidDisplayModeError(displayName, result.mode)
+
+        # the config can override default palette filter - only matters if not bw
+        if(result.mode != 'bw' and config.has_option(IMAGE_ENHANCEMENTS, 'palette_filter')):
+            newColors = json.loads(config.get(IMAGE_ENHANCEMENTS, 'palette_filter'))
+
+            if(len(newColors) == len(result.colors)):
+                result.colors = newColors
+            else:
+                raise TooManyColorsError(displayName, len(result.colors), len(newColors))
+
     else:
         # we have a problem
         raise EPDNotFoundError(displayName)

@@ -56,7 +56,7 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
 
-If the display you're implementing supports any advanced features, like multiple colors, these can be handled by setting some additional variables. Specifically you can set the variables below in the `__init()__` method. See currently implemented displays for a better idea of how to handle multiple colors. 
+If the display you're implementing supports any advanced features, like multiple colors, these can be handled by setting some additional variables. Specifically you can set the variables below in the `__init()__` method. See currently implemented displays for a better idea of how to handle multiple colors.
 
 * `_modes_available` - a tuple containing the names of valid modes, BW available by default
 * `_colors` - a tuple of RGB values for valid colors an `Image` can send to the display.
@@ -91,8 +91,7 @@ flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
 
 [Image Enhancements]
-color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
-palette=[[R,G,B], [R,G,B]]  # filter out all except these colors, defined as an array or RGB values. Only works with P color mode
+palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must equal total colors the display supports
 contrast=1  # adjust image contrast, 1 = no adjustment
 brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
