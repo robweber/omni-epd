@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from PIL import Image
 from .. virtualepd import VirtualEPD
 
 
@@ -144,7 +143,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
 
     def _display(self, image):
         # send the black/white image and blank second image (safer since some require data)
-        self._device.display(self._device.getbuffer(image), [0x00] * (int(self.width/8) * self.height)))
+        self._device.display(self._device.getbuffer(image), [0x00] * (int(self.width/8) * self.height))
 
     def sleep(self):
         self._device.sleep()
