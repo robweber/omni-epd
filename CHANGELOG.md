@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - EPD config section didn't have corresponding var in `conf.py`
+- fixed issues with some Waveshare displays not working due to differences in individual drivers #8 for more details
 
 ## Version 0.1.6
 
