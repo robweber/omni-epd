@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.1.7
+
+### Added
+
+- The mock display driver, `omni_epd.mock`, now writes the image file to a jpg in the local directory for better testing
+
+### Fixed
+
+- EPD config section didn't have corresponding var in `conf.py`
+- fixed issues with some Waveshare displays not working due to differences in individual drivers #8 for more details
+
 ## Version 0.1.6
 
 ### Added

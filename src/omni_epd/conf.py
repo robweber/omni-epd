@@ -22,5 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 CONFIG_FILE = "omni-epd.ini"
 
 # config option sections
+EPD_CONFIG = "EPD"
 IMAGE_DISPLAY = "Display"
 IMAGE_ENHANCEMENTS = "Image Enhancements"
