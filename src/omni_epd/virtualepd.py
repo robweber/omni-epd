@@ -85,14 +85,8 @@ class VirtualEPD:
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            # if total_colors given filter down to this many colors only
-            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'total_colors')):
-                total_colors = self._config.getint(IMAGE_ENHANCEMENTS, "total_colors")
-                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"), palette=Image.ADAPTIVE,
-                                      colors=total_colors)
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with {total_colors} colors")
             # if palette given filter out all colors but these
-            elif(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
+            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
                 # load the palette as a list from the string
                 palette = self.__generate_palette(self._config.get(IMAGE_ENHANCEMENTS, "palette"))
 

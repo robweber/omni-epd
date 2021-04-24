@@ -43,7 +43,7 @@ sudo pip3 install .
 
 ## Usage
 
-Usage in this case refers to EPD project implementers that wish to abstract their code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/omni-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. For testing, the device `omni_epd.mock` can be used to write output to a JPEG file instead of to a display. 
+Usage in this case refers to EPD project implementers that wish to abstract their code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/omni-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. For testing, the device `omni_epd.mock` can be used to write output to a JPEG file instead of to a display.
 
 ### VirtualEPD Object
 
@@ -87,8 +87,7 @@ flip_vertical=False  # flip image vertically
 
 [Image Enhancements]
 color=1  # adjust the color processing, use with caution as most EPDs are black/white only. See https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert
-total_colors=2  # the total number of colors to use, only works when used with the P color mode. Useful for displays that have more than 2 colors (Inky pHhat or wHat)
-palette=[[R,G,B], [R,G,B]]  # filter out all except these colors, defined as an array or RGB values. Only works with P color mode, can't use with total_colors
+palette=[[R,G,B], [R,G,B]]  # filter out all except these colors, defined as an array or RGB values. Only works with P color mode
 contrast=1  # adjust image contrast, 1 = no adjustment
 brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
