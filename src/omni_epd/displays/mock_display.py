@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
+import os.path
 from .. virtualepd import VirtualEPD
 
 
@@ -29,6 +30,7 @@ class MockDisplay(VirtualEPD):
     """
 
     pkg_name = 'omni_epd'
+    output_file = 'mock_output.jpg'
 
     def __init__(self, deviceName, config):
         super(MockDisplay, self).__init__(deviceName, config)
@@ -37,9 +39,12 @@ class MockDisplay(VirtualEPD):
 
         # this is normally where you'd load actual device class but nothing to load here
 
+        # set location to write test image
+        self.output_file = os.path.join(os.getcwd(), self.output_file)
+
         # set the width and height - doesn't matter since we won't write anything
-        self.width = 100
-        self.height = 100
+        self.width = 400
+        self.height = 200
 
     @staticmethod
     def get_supported_devices():
@@ -50,7 +55,8 @@ class MockDisplay(VirtualEPD):
         self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
-        self.logger.info(f"writing image to {self.__str__()}")
+        self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
+        image.save(self.output_file, "JPEG")
 
     def sleep(self):
         self.logger.info(f"{self.__str__()} is sleeping")
