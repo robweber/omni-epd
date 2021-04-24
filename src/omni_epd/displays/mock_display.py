@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 import os.path
+import json
 from .. virtualepd import VirtualEPD
 
 
@@ -42,12 +43,15 @@ class MockDisplay(VirtualEPD):
         # set location to write test image - can be set in config file
         self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
+        # colors available when in palette mode
+        self.colors = json.loads(self._get_device_option('palette', '[[0, 0, 0], [255, 255, 255]]'))
+
         # set the width and height
         self.width = 400
         self.height = 200
 
         # this object can also work in color mode
-        self._modes_available = ('bw', 'color')
+        self._modes_available = ('bw', 'color', 'palette')
 
     @staticmethod
     def get_supported_devices():
@@ -58,6 +62,10 @@ class MockDisplay(VirtualEPD):
         self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
+
+        if(self.mode != 'color'):
+            image = self._convertImage(image)
+
         if(self._getboolean_device_option('write_file', True)):
             self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
 
