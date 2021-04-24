@@ -66,15 +66,10 @@ class InkyDisplay(VirtualEPD):
                       "phat1608_black", "phat1608_red", "phat1608_yellow",
                       "what_black", "what_red", "what_yellow"]
 
-        try:
-            # do a test import from the inky library
-            from inky import WHITE  # noqa: F401
-
+        # python libs for this might not be installed - that's ok, return nothing
+        if(InkyDisplay.check_module_installed('inky')):
             # if passed return list of devices
             result = [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 
@@ -117,15 +112,10 @@ class InkyImpressionDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        try:
-            # do a test import from the inky library
-            from inky.inky_uc8159 import CLEAN  # noqa: F401
-
+        # python libs for this might not be installed - that's ok, return nothing
+        if(InkyImpressionDisplay.check_module_installed('inky')):
             # if passed return list of devices
             result = [f"{InkyDisplay.pkg_name}.impression"]
-        except ModuleNotFoundError:
-            # python libs for this might not be installed - that's ok, return nothing
-            pass
 
         return result
 

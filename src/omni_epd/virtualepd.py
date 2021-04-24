@@ -18,8 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import sys
 import importlib
+import importlib.util
 import logging
+import json
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 
@@ -45,7 +48,7 @@ class VirtualEPD:
     _config = None  # configuration options passed in via dict at runtime or .ini file
     _modes_available = ('bw')  # modes this display supports, set in __init__
     _colors = ((0, 0, 0), (255, 255, 255))  # assume only bw supported by default, set in __init__
-    __device_name = ""  # name of this device
+    _device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):
         self._config = config
@@ -55,6 +58,15 @@ class VirtualEPD:
 
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
+
+    def __generate_palette(self, pstr):
+        result = []
+        pjson = json.loads(pstr)
+
+        for c in pjson:
+            result += [int(c[0]), int(c[1]), int(c[2])]
+
+        return result
 
     def __applyConfig(self, image):
         """
@@ -77,12 +89,21 @@ class VirtualEPD:
         # must be one of the valid PILLOW modes, and display must support
         # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            # use could optionally specifiy a number of colors to use
-            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'total_colors')):
-                total_colors = self._config.getint(IMAGE_ENHANCEMENTS, "total_colors")
-                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"), palette=Image.ADAPTIVE,
-                                      colors=total_colors)
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with {total_colors} colors")
+            # if palette given filter out all colors but these
+            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
+                # load the palette as a list from the string
+                palette = self.__generate_palette(self._config.get(IMAGE_ENHANCEMENTS, "palette"))
+
+                # create a new image to define the palette
+                palette_image = Image.new("P", (1, 1))
+
+                # set the palette, set all other colors to 0
+                palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
+
+                # apply the palette
+                image = image.quantize(palette=palette_image)
+
+                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with custom palette")
             else:
                 # just apply the color enhancment mode
                 image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
@@ -120,6 +141,17 @@ class VirtualEPD:
     # returns package.device name
     def getName(self):
         return self.__str__()
+
+    # helper method to check if a module is (or can be) installed
+    @staticmethod
+    def check_module_installed(moduleName):
+        result = False
+
+        # check if the module is already loaded, or can be loaded
+        if(moduleName in sys.modules or (importlib.util.find_spec(moduleName)) is not None):
+            result = True
+
+        return result
 
     # REQUIRED - a list of devices supported by this class, format is {pkgname.devicename}
     @staticmethod
