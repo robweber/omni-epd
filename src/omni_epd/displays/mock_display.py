@@ -39,8 +39,8 @@ class MockDisplay(VirtualEPD):
 
         # this is normally where you'd load actual device class but nothing to load here
 
-        # set location to write test image
-        self.output_file = os.path.join(os.getcwd(), self.output_file)
+        # set location to write test image - can be set in config file
+        self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
         # set the width and height - doesn't matter since we won't write anything
         self.width = 400
@@ -55,13 +55,17 @@ class MockDisplay(VirtualEPD):
         self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
-        self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
+        if(self._getboolean_device_option('write_file', True)):
+            self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
 
-        if(image.mode == 'P'):
-            # can't write P mode images
-            image = image.convert('RGB')
+            if(image.mode == 'P'):
+                # can't write P mode images
+                image = image.convert('RGB')
 
-        image.save(self.output_file, "JPEG")
+            image.save(self.output_file, "JPEG")
+        else:
+            self.logger.info(f"{self.__str__()} display() called, skipping output")
+
 
     def sleep(self):
         self.logger.info(f"{self.__str__()} is sleeping")
