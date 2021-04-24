@@ -39,8 +39,12 @@ class VirtualEPD:
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
+    mode = "bw"  # mode of the display, bw or color (if supported)
+
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
+    _modes_available = ('bw')  # modes this display supports, set in __init__
+    _colors = ((0, 0, 0), (255, 255, 255))  # assume only bw supported by default, set in __init__
     __device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):
@@ -112,6 +116,10 @@ class VirtualEPD:
             exit(2)
 
         return driver
+
+    # returns package.device name
+    def getName(self):
+        return self.__str__()
 
     # REQUIRED - a list of devices supported by this class, format is {pkgname.devicename}
     @staticmethod

@@ -47,7 +47,7 @@ Usage in this case refers to EPD project implementers that wish to abstract thei
 
 ### VirtualEPD Object
 
-Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
+Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available to be implemented once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
 
 * `width` and `height` - these are convience attributes to get the width and height of the display in your code. See the above example for their use.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
@@ -55,6 +55,11 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains better life of the display.
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
+
+If the display you're implementing supports any advanced features, like multiple colors, these can be handled by setting some additional variables. Specifically you can set the variables below in the `__init()__` method. See currently implemented displays for a better idea of how to handle multiple colors. 
+
+* `_modes_available` - a tuple containing the names of valid modes, BW available by default
+* `_colors` - a tuple of RGB values for valid colors an `Image` can send to the display.
 
 ### Display Testing
 
