@@ -59,6 +59,22 @@ class VirtualEPD:
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
 
+    """
+    helper methods to get custom config options, providing a fallback if needed
+    avoids having to do constant has_option(), get() calls within device class
+    """
+    def _get_device_option(self, option, fallback):
+        return self._config.get(self.getName(), option, fallback=fallback)
+
+    def _getint_device_option(self, option, fallback):
+        return self._config.getint(self.getName(), option, fallback=fallback)
+
+    def _getfloat_device_option(self, option, fallback):
+        return self._config.getfloat(self.getName(), option, fallback=fallback)
+
+    def _getboolean_device_option(self, option, fallback):
+        return self._config.getboolean(self.getName(), option, fallback=fallback)
+
     def __generate_palette(self, pstr):
         result = []
         pjson = json.loads(pstr)
