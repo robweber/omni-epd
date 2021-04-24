@@ -18,8 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from PIL import Image
-from .. conf import IMAGE_ENHANCEMENTS
 from .. virtualepd import VirtualEPD
 
 

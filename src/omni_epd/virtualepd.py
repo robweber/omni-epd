@@ -22,7 +22,6 @@ import sys
 import importlib
 import importlib.util
 import logging
-import json
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 
