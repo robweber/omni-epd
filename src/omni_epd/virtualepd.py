@@ -46,13 +46,16 @@ class VirtualEPD:
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
-    _modes_available = ('bw')  # modes this display supports, set in __init__
+    _modes_available = ("bw")  # modes this display supports, set in __init__
     _colors = ((0, 0, 0), (255, 255, 255))  # assume only bw supported by default, set in __init__
     _device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):
         self._config = config
         self.__device_name = deviceName
+
+        # set the display mode
+        self.mode = self._config.get(self.getName(), "mode", fallback=self.mode)
 
         self._logger = logging.getLogger(self.__str__())
 

@@ -26,3 +26,13 @@ class EPDNotFoundError(Exception):
 
     def __init__(self, deviceName):
         super().__init__(f"A display device for device name {deviceName} cannot be loaded")
+
+
+class InvalidDisplayModeError(Exception):
+    """
+    InvalidDisplayModeError is thrown when a display mode for a given sign does not match
+    the configured allowed display modes
+    """
+
+    def __init__(self, deviceName, mode):
+        super().__init__(f"'{mode}' is not a valid display mode for {deviceName}")

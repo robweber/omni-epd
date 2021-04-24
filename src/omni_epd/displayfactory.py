@@ -22,7 +22,7 @@ import configparser
 import importlib
 import os
 import logging
-from . errors import EPDNotFoundError
+from . errors import EPDNotFoundError, InvalidDisplayModeError
 from . conf import CONFIG_FILE, EPD_CONFIG
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
@@ -97,6 +97,10 @@ def load_display_driver(displayName='', configDict={}):
         classObj = getattr(mod, foundClass[0]['class'])
 
         result = classObj(deviceType[1], config)
+
+        # check that the display mode is valid - must be done after class loaded
+        if(result.mode not in result._modes_available):
+            raise InvalidDisplayModeError(displayName, result.mode)
     else:
         # we have a problem
         raise EPDNotFoundError(displayName)

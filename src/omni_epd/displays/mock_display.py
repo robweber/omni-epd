@@ -26,7 +26,7 @@ from .. virtualepd import VirtualEPD
 class MockDisplay(VirtualEPD):
     """
     This is a reference implementation of a display extending VirtualEPD
-    it does not physically write to anything but can be used as a mock testing device
+    it can write images to a testing file for use as a mock testing device
     """
 
     pkg_name = 'omni_epd'
@@ -42,9 +42,12 @@ class MockDisplay(VirtualEPD):
         # set location to write test image - can be set in config file
         self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
-        # set the width and height - doesn't matter since we won't write anything
+        # set the width and height
         self.width = 400
         self.height = 200
+
+        # this object can also work in color mode
+        self._modes_available = ('bw', 'color')
 
     @staticmethod
     def get_supported_devices():
