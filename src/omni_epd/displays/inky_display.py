@@ -75,7 +75,7 @@ class InkyDisplay(VirtualEPD):
 
     def _display(self, image):
         # apply any needed conversions to this image based on the mode
-        image = self._convertImage(image)
+        image = self._filterImage(image)
 
         # set the image and display
         self._device.set_image(image)

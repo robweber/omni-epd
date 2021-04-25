@@ -61,22 +61,6 @@ class VirtualEPD:
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
 
-    """
-    helper methods to get custom config options, providing a fallback if needed
-    avoids having to do constant has_option(), get() calls within device class
-    """
-    def _get_device_option(self, option, fallback):
-        return self._config.get(self.getName(), option, fallback=fallback)
-
-    def _getint_device_option(self, option, fallback):
-        return self._config.getint(self.getName(), option, fallback=fallback)
-
-    def _getfloat_device_option(self, option, fallback):
-        return self._config.getfloat(self.getName(), option, fallback=fallback)
-
-    def _getboolean_device_option(self, option, fallback):
-        return self._config.getboolean(self.getName(), option, fallback=fallback)
-
     # generate a palette given the colors available for this display
     def __generate_palette(self):
         result = []
@@ -85,25 +69,6 @@ class VirtualEPD:
             result += [int(c[0]), int(c[1]), int(c[2])]
 
         return result
-
-    def _convertImage(self, image):
-
-        if(self.mode == 'bw'):
-            image = image.convert("1")
-        else:
-            # load the palette as a list from the string
-            palette = self.__generate_palette()
-
-            # create a new image to define the palette
-            palette_image = Image.new("P", (1, 1))
-
-            # set the palette, set all other colors to 0
-            palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
-
-            # apply the palette
-            image = image.quantize(palette=palette_image)
-
-        return image
 
     def __applyConfig(self, image):
         """
@@ -137,6 +102,41 @@ class VirtualEPD:
             enhancer = ImageEnhance.Sharpness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
+
+        return image
+
+    """
+    helper methods to get custom config options, providing a fallback if needed
+    avoids having to do constant has_option(), get() calls within device class
+    """
+    def _get_device_option(self, option, fallback):
+        return self._config.get(self.getName(), option, fallback=fallback)
+
+    def _getint_device_option(self, option, fallback):
+        return self._config.getint(self.getName(), option, fallback=fallback)
+
+    def _getfloat_device_option(self, option, fallback):
+        return self._config.getfloat(self.getName(), option, fallback=fallback)
+
+    def _getboolean_device_option(self, option, fallback):
+        return self._config.getboolean(self.getName(), option, fallback=fallback)
+
+    def _filterImage(self, image):
+
+        if(self.mode == 'bw'):
+            image = image.convert("1")
+        else:
+            # load the palette as a list from the string
+            palette = self.__generate_palette()
+
+            # create a new image to define the palette
+            palette_image = Image.new("P", (1, 1))
+
+            # set the palette, set all other colors to 0
+            palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
+
+            # apply the palette
+            image = image.quantize(palette=palette_image)
 
         return image
 

@@ -60,7 +60,7 @@ class MockDisplay(VirtualEPD):
     def _display(self, image):
 
         if(self.mode != 'color'):
-            image = self._convertImage(image)
+            image = self._filterImage(image)
 
         if(self._getboolean_device_option('write_file', True)):
             self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
