@@ -91,7 +91,7 @@ flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
 
 [Image Enhancements]
-palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must equal total colors the display supports
+palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must be less than or equal to max colors the display supports
 contrast=1  # adjust image contrast, 1 = no adjustment
 brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
