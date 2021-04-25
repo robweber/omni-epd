@@ -121,6 +121,9 @@ class VirtualEPD:
     def _getboolean_device_option(self, option, fallback):
         return self._config.getboolean(self.getName(), option, fallback=fallback)
 
+    """
+    Converts image to b/w or attempts a palette filter based on allowed colors in the display
+    """
     def _filterImage(self, image):
 
         if(self.mode == 'bw'):
