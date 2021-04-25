@@ -28,20 +28,11 @@ class EPDNotFoundError(Exception):
         super().__init__(f"A display device for device name {deviceName} cannot be loaded")
 
 
-class InvalidDisplayModeError(Exception):
+class EPDConfigurationError(Exception):
     """
-    InvalidDisplayModeError is thrown when a display mode for a given sign does not match
-    the configured allowed display modes
-    """
-
-    def __init__(self, deviceName, mode):
-        super().__init__(f"'{mode}' is not a valid display mode for {deviceName}")
-
-
-class TooManyColorsError(Exception):
-    """
-    TooManyColors is thrown when a the user defined palette for a display has too many colors
+    EPDConfigurationError is thrown when an invalid configuration option is given for a display
+    this could be an invalid display mode, color option, or other issue
     """
 
-    def __init__(self, deviceName, maxColors, givenColors):
-        super().__init__(f"{givenColors} colors is too many for {deviceName}, {maxColors} colors supported")
+    def __init__(self, deviceName, optionName, optionValue):
+        super().__init__(f"'{optionValue}' for '{optionName}' is not a valid configuration value for {deviceName}")
