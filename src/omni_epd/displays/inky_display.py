@@ -100,6 +100,7 @@ class InkyImpressionDisplay(VirtualEPD):
     """
 
     pkg_name = 'inky'
+    mode = 'color'  # this uses color by default
 
     def __init__(self, deviceName, config):
         super(InkyDisplay, self).__init__(deviceName, config)
@@ -111,6 +112,10 @@ class InkyImpressionDisplay(VirtualEPD):
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
+
+        # get colors from the inky lib (won't be used normally as inky does conversion)
+        self.colors = self._device.DESATURATED_PALETTE
+        self._modes_available = ('bw', 'color')
 
     @staticmethod
     def get_supported_devices():
@@ -124,6 +129,7 @@ class InkyImpressionDisplay(VirtualEPD):
         return result
 
     def _display(self, image):
+        # no palette adjustments need to be done as the Inky lib does them from the image
         self._device.set_image(image)
         self._device.show()
 
