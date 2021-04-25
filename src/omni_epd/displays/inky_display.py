@@ -49,10 +49,12 @@ class InkyDisplay(VirtualEPD):
         # phat and what devices expect colors in the order white, black, other
         if(dColor == 'red'):
             self._modes_available = ('bw', 'red')
-            self.colors.append([255, 0, 0])
+            self.palette_filter.append([255, 0, 0])
+            self.max_colors = 3
         elif(dColor == 'yellow'):
             self._modes_available = ('bw', 'yellow')
-            self.colors.append([255, 255, 0])
+            self.palette_filter.append([255, 255, 0])
+            self.max_colors = 3
 
         # set the width and height
         self.width = self._device.width
@@ -114,7 +116,8 @@ class InkyImpressionDisplay(VirtualEPD):
         self.height = self._device.height
 
         # get colors from the inky lib (won't be used normally as inky does conversion)
-        self.colors = self._device.DESATURATED_PALETTE
+        self.palette_filter = self._device.DESATURATED_PALETTE
+        self.max_colors = 8  # 7 + transparent
         self._modes_available = ('bw', 'color')
 
     @staticmethod

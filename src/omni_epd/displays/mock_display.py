@@ -31,6 +31,7 @@ class MockDisplay(VirtualEPD):
 
     pkg_name = 'omni_epd'
     output_file = 'mock_output.jpg'
+    max_colors = 256
 
     def __init__(self, deviceName, config):
         super(MockDisplay, self).__init__(deviceName, config)

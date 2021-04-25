@@ -107,8 +107,8 @@ def load_display_driver(displayName='', configDict={}):
         if(result.mode != 'bw' and config.has_option(IMAGE_ENHANCEMENTS, 'palette_filter')):
             newColors = json.loads(config.get(IMAGE_ENHANCEMENTS, 'palette_filter'))
 
-            if(len(newColors) == len(result.colors)):
-                result.colors = newColors
+            if(len(newColors) <= result.max_colors):
+                result.palette_filter = newColors
             else:
                 raise EPDConfigurationError(displayName, "palette_filter", f"{len(newColors)} colors")
 
