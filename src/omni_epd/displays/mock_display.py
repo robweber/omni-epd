@@ -30,7 +30,7 @@ class MockDisplay(VirtualEPD):
     """
 
     pkg_name = 'omni_epd'
-    output_file = 'mock_output.jpg'
+    output_file = 'mock_output.png'
     max_colors = 256
     modes_available = ('bw', 'color', 'palette')
 
@@ -64,11 +64,7 @@ class MockDisplay(VirtualEPD):
         if(self._getboolean_device_option('write_file', True)):
             self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
 
-            if(image.mode == 'P'):
-                # can't write P mode images
-                image = image.convert('RGB')
-
-            image.save(self.output_file, "JPEG")
+            image.save(self.output_file, "PNG")
         else:
             self.logger.info(f"{self.__str__()} display() called, skipping output")
 
