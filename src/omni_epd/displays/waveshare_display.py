@@ -33,6 +33,9 @@ class WaveshareDisplay(VirtualEPD):
     lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
     modeInitList = ["epd2in66", "epd2in13_V2"]
 
+    # devices that also support a grayscale option
+    grayScaleList = ["epd2in7", "epd4in2"]
+
     alt_init = False  # specify that init with a param should be used
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
@@ -52,6 +55,11 @@ class WaveshareDisplay(VirtualEPD):
             # some devices set the full instruction as the param
             if(deviceName in self.lutInitList):
                 self.alt_init_param = self._device.lut_full_update
+
+        # add additional modes if grayscale is available
+        if(deviceName in self.grayScaleList):
+            self._modes_available = ('bw', 'gray4')
+            self.max_colors = 4
 
         # set the width and height
         self.width = self._device.width
@@ -82,10 +90,19 @@ class WaveshareDisplay(VirtualEPD):
         if(self.alt_init):
             self._device.init(self.alt_init_param)
         else:
-            self._device.init()
+            # gray4 modes can only be set when available
+            if(self.mode == 'gray4'):
+                self._device.Init_4Gray()
+            else:
+                self._device.init()
 
     def _display(self, image):
-        self._device.display(self._device.getbuffer(image))
+        # no need to adjust palette, done in waveshare driver
+
+        if(self.mode == 'gray4'):
+            self._device.display_4Gray(self._device.getbuffer_4Gray(image))
+        else:
+            self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
         self._device.sleep()
