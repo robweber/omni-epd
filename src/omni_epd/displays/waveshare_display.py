@@ -33,9 +33,6 @@ class WaveshareDisplay(VirtualEPD):
     lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
     modeInitList = ["epd2in66", "epd2in13_V2"]
 
-    # devices that also support a grayscale option
-    grayScaleList = ["epd2in7", "epd4in2"]
-
     alt_init = False  # specify that init with a param should be used
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
@@ -56,11 +53,6 @@ class WaveshareDisplay(VirtualEPD):
             if(deviceName in self.lutInitList):
                 self.alt_init_param = self._device.lut_full_update
 
-        # add additional modes if grayscale is available
-        if(deviceName in self.grayScaleList):
-            self.modes_available = ('bw', 'gray4')
-            self.max_colors = 4
-
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
@@ -70,10 +62,10 @@ class WaveshareDisplay(VirtualEPD):
         result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList
 
         # list of common devices that share init() and display() method calls
-        commonDeviceList = ["epd1in54_V2", "epd2in13d", "epd2in7",
+        commonDeviceList = ["epd1in54_V2", "epd2in13d",
                             "epd2in9_V2", "epd2in9d", "epd4in01f",
-                            "epd4in2", "epd5in65f", "epd5in83",
-                            "epd5in83_V2", "epd7in5", "epd7in5_HD", "epd7in5_V2"]
+                            "epd5in65f", "epd5in83", "epd5in83_V2",
+                            "epd7in5", "epd7in5_HD", "epd7in5_V2"]
 
         # python libs for this might not be installed - that's ok, return nothing
         if(WaveshareDisplay.check_module_installed('waveshare_epd')):
@@ -85,24 +77,15 @@ class WaveshareDisplay(VirtualEPD):
         return result
 
     def prepare(self):
-
         # if device needs an init param
         if(self.alt_init):
             self._device.init(self.alt_init_param)
         else:
-            # gray4 modes can only be set when available
-            if(self.mode == 'gray4'):
-                self._device.Init_4Gray()
-            else:
-                self._device.init()
+            self._device.init()
 
     def _display(self, image):
         # no need to adjust palette, done in waveshare driver
-
-        if(self.mode == 'gray4'):
-            self._device.display_4Gray(self._device.getbuffer_4Gray(image))
-        else:
-            self._device.display(self._device.getbuffer(image))
+        self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
         self._device.sleep()
@@ -223,18 +206,23 @@ class Waveshare102inDisplay(VirtualEPD):
         epdconfig.module_exit()
 
 
-class Waveshare3in7Display(VirtualEPD):
+class WaveshareGrayscaleDisplay(VirtualEPD):
     """
-    This class is for the Waveshare 3.7in display only as it
-    has support for different gray scales and the methods are different
+    This class is for the Waveshare displays that support 4 shade grayscale
+
+    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd2in7.py
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd3in7.py
+    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
     """
 
     pkg_name = 'waveshare_epd'
     modes_available = ("bw", "gray4")
+    max_colors = 4
+
+    deviceList = ["epd2in7", "epd3in7", "epd4in2"]  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
-        super(Waveshare3in7Display, self).__init__(deviceName, config)
+        super(WaveshareGrayscaleDisplay, self).__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -249,16 +237,23 @@ class Waveshare3in7Display(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        if(Waveshare3in7Display.check_module_installed('waveshare_epd')):
-            result = [f"{Waveshare102inDisplay.pkg_name}.epd3in7"]
+        if(WaveshareGrayscaleDisplay.check_module_installed('waveshare_epd')):
+            result = [f"{WaveshareGrayscaleDisplay.pkg_name}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
 
         return result
 
     def prepare(self):
-        if(self.mode == 'gray4'):
-            self._device.init(0)
+        # 3.7 in has different init methods
+        if(self._device_name == "epd3in7"):
+            if(self.mode == 'gray4'):
+                self._device.init(0)
+            else:
+                self._device.init(1)
         else:
-            self._device.init(1)
+            if(self.mode == "gray4"):
+                self._device.Init_4Gray()
+            else:
+                self._device.init()
 
     def _display(self, image):
         # no need to adjust image, done in waveshare lib
@@ -266,7 +261,11 @@ class Waveshare3in7Display(VirtualEPD):
         if(self.mode == "gray4"):
             self._device.display_4Gray(self._device.getbuffer_4Gray(image))
         else:
-            self._device.display_1Gray(self._device.getbuffer(image))
+            # 3.7 in has different bw method
+            if(self._device_name == "epd3in7"):
+                self._device.display_1Gray(self._device.getbuffer(image))
+            else:
+                self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
         self._device.sleep()
