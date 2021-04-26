@@ -59,7 +59,7 @@ class WaveshareDisplay(VirtualEPD):
 
     @staticmethod
     def get_supported_devices():
-        result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList
+        result = []
 
         # list of common devices that share init() and display() method calls
         commonDeviceList = ["epd1in54_V2", "epd2in13d",
@@ -69,7 +69,7 @@ class WaveshareDisplay(VirtualEPD):
 
         # python libs for this might not be installed - that's ok, return nothing
         if(WaveshareDisplay.check_module_installed('waveshare_epd')):
-            result = result + commonDeviceList
+            result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList + commonDeviceList
 
             # return a list of all submodules (device types)
             result = [f"{WaveshareDisplay.pkg_name}.{n}" for n in result]
@@ -108,14 +108,48 @@ class WaveshareTriColorDisplay(VirtualEPD):
     """
 
     pkg_name = 'waveshare_epd'
+    max_colors = 3
+
+    # list of all devices - some drivers cover more than one device
+    deviceMap = {"epd1in54b": {"driver": "epd1in54b", "modes": ("bw", "red")},
+                 "epd1in54b_V2": {"driver": "epd1in54b_V2", "modes": ("bw", "red")},
+                 "epd1in54c": {"driver": "epd1in54c", "modes": ("bw", "yellow")},
+                 "epd2in13b": {"driver": "epd2in13bc", "modes": ("bw", "red")},
+                 "epd2in13b_V3": {"driver": "epd2in13b_V3", "modes": ("bw", "red")},
+                 "epd2in13c": {"driver": "epd2in13bc", "modes": ("bw", "yellow")},
+                 "epd2in66b": {"driver": "epd2in66b", "modes": ("bw", "red")},
+                 "epd2in7b": {"driver": "epd2in7b", "modes": ("bw", "red")},
+                 "epd2in7b_V2": {"driver": "epd2in7b_V2", "modes": ("bw", "red")},
+                 "epd2in9b": {"driver": "epd2in9bc", "modes": ("bw", "red")},
+                 "epd2in9b_V3": {"driver": "epd2in9b_V3", "modes": ("bw", "red")},
+                 "epd2in9c": {"driver": "epd2in9bc", "modes": ("bw", "yellow")},
+                 "epd4in2bc": {"driver": "epd4in2bc", "modes": ("bw", "red")},
+                 "epd4in2c": {"driver": "epd4in2bc", "modes": ("bw", "yellow")},
+                 "epd4in2b_V2": {"driver": "epd4in2b_V2", "modes": ("bw", "red")},
+                 "epd5in83b": {"driver": "epd5in83bc", "modes": ("bw", "red")},
+                 "epd5in83c": {"driver": "epd5in83bc", "modes": ("bw", "yellow")},
+                 "epd5in83b_V2": {"driver": "epd5in83b_V2", "modes": ("bw", "red")},
+                 "epd7in5b": {"driver": "epd7in5bc", "modes": ("bw", "red")},
+                 "epd7in5c": {"driver": "epd7in5bc", "modes": ("bw", "yellow")},
+                 "epd7in5b_V2": {"driver": "epd7in5b_V2", "modes": ("bw", "red")},
+                 "epd7in5b_HD": {"driver": "epd7in5b_HD", "modes": ("bw", "red")}}
 
     def __init__(self, deviceName, config):
         super(WaveshareTriColorDisplay, self).__init__(deviceName, config)
 
-        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
+        # load driver based on name from deviceMap dict
+        deviceObj = self.load_display_driver(self.pkg_name, self.deviceMap[deviceName]["driver"])
 
         # create the epd object
         self._device = deviceObj.EPD()
+
+        # set the allowed modes
+        self.modes_available = self.deviceMap[deviceName]['modes']
+
+        if(self.mode == 'red'):
+            self.palette_filter.append([255, 0, 0])
+        elif(self.mode == 'yellow'):
+            self.palette_filter.append([255, 255, 0])
 
         # set the width and height
         self.width = self._device.width
@@ -125,16 +159,9 @@ class WaveshareTriColorDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        deviceList = ["epd1in54b", "epd1in54b_V2", "epd1in54c",
-                      "epd2in13b_V3", "epd2in13bc", "epd2in66b",
-                      "epd2in7b", "epd2in7b_V2", "epd2in9b_V3",
-                      "epd2in9bc", "epd4in2b_V2", "epd4in2bc",
-                      "epd5in83b_V2", "epd5in83bc", "epd7in5b_HD",
-                      "epd7in5b_V2", "epd7in5bc"]
-
         # python libs for this might not be installed - that's ok, return nothing
         if(WaveshareTriColorDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in deviceList]
+            result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
 
         return result
 
