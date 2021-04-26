@@ -179,10 +179,10 @@ class WaveshareTriColorDisplay(VirtualEPD):
 
             # separate out black from the other color
             img_black = image.copy()
-            img_black.putpalette((0, 0, 0, 255, 255, 255, 255, 255, 255) + (0,0,0)*253)
+            img_black.putpalette((0, 0, 0, 255, 255, 255, 255, 255, 255) + (0, 0, 0)*253)
 
             img_color = image.copy()
-            img_color.putpalette((255, 255, 255, 0, 0, 0, 255, 255, 255) + (0,0,0)*253)
+            img_color.putpalette((255, 255, 255, 0, 0, 0, 255, 255, 255) + (0, 0, 0)*253)
 
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
