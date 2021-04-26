@@ -169,8 +169,22 @@ class WaveshareTriColorDisplay(VirtualEPD):
         self._device.init()
 
     def _display(self, image):
-        # send the black/white image and blank second image (safer since some require data)
-        self._device.display(self._device.getbuffer(image), [0x00] * (int(self.width/8) * self.height))
+
+        if(self.mode == 'bw'):
+            # send the black/white image and blank second image (safer since some drivers require data)
+            self._device.display(self._device.getbuffer(image), [0x00] * (int(self.width/8) * self.height))
+        else:
+            # apply the color filter to get a 3 color image
+            image = self._filterImage(image)
+
+            # separate out black from the other color
+            img_black = image.copy()
+            img_black.putpalette((0, 0, 0, 255, 255, 255, 255, 255, 255) + (0,0,0)*253)
+
+            img_color = image.copy()
+            img_color.putpalette((255, 255, 255, 0, 0, 0, 255, 255, 255) + (0,0,0)*253)
+
+            self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
     def sleep(self):
         self._device.sleep()
