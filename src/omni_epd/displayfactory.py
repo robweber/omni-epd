@@ -103,15 +103,6 @@ def load_display_driver(displayName='', configDict={}):
         if(result.mode not in result.modes_available):
             raise EPDConfigurationError(displayName, "mode", result.mode)
 
-        # the config can override default palette filter - only matters if not bw
-        if(result.mode != 'bw' and config.has_option(IMAGE_ENHANCEMENTS, 'palette_filter')):
-            newColors = json.loads(config.get(IMAGE_ENHANCEMENTS, 'palette_filter'))
-
-            if(len(newColors) <= result.max_colors):
-                result.palette_filter = newColors
-            else:
-                raise EPDConfigurationError(displayName, "palette_filter", f"{len(newColors)} colors")
-
     else:
         # we have a problem
         raise EPDNotFoundError(displayName)

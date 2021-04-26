@@ -19,11 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import json
 import importlib
 import importlib.util
 import logging
 from PIL import Image, ImageEnhance
 from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
+from . errors import EPDConfigurationError
 
 
 class VirtualEPD:
@@ -65,10 +67,10 @@ class VirtualEPD:
         return f"{self.pkg_name}.{self.__device_name}"
 
     # generate a palette given the colors available for this display
-    def __generate_palette(self):
+    def __generate_palette(self, colors):
         result = []
 
-        for c in self.palette_filter:
+        for c in colors:
             result += [int(c[0]), int(c[1]), int(c[2])]
 
         return result
@@ -132,8 +134,14 @@ class VirtualEPD:
         if(self.mode == 'bw'):
             image = image.convert("1")
         else:
-            # load the palette as a list from the string
-            palette = self.__generate_palette()
+            # load palette - this is a catch in case it was changed by the user
+            colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+
+            # check if we have too many colors in the palette
+            if(len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
+
+            palette = self.__generate_palette(colors)
 
             # create a new image to define the palette
             palette_image = Image.new("P", (1, 1))
