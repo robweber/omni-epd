@@ -58,7 +58,6 @@ class TestomniEpd(unittest.TestCase):
 
         # test mode and palette configurations
         assert epd.mode == 'palette'
-        assert len(epd.palette_filter) == 5
 
         # reset global config file, wait for file IO
         os.rename(os.path.join(os.getcwd(), CONFIG_FILE), os.path.join(os.getcwd(), "tests", CONFIG_FILE))
