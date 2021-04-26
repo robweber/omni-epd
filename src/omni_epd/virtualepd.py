@@ -24,7 +24,7 @@ import importlib
 import importlib.util
 import logging
 from PIL import Image, ImageEnhance
-from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
+from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
 
 
@@ -59,7 +59,7 @@ class VirtualEPD:
         self.__device_name = deviceName
 
         # set the display mode
-        self.mode = self._config.get(self.getName(), "mode", fallback=self.mode)
+        self.mode = self._get_device_option('mode', self.mode)
 
         self._logger = logging.getLogger(self.__str__())
 
@@ -115,16 +115,32 @@ class VirtualEPD:
     avoids having to do constant has_option(), get() calls within device class
     """
     def _get_device_option(self, option, fallback):
-        return self._config.get(self.getName(), option, fallback=fallback)
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.get(self.getName(), option)
+        else:
+            return self._config.get(EPD_CONFIG, option, fallback=fallback)
 
     def _getint_device_option(self, option, fallback):
-        return self._config.getint(self.getName(), option, fallback=fallback)
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getint(self.getName(), option)
+        else:
+            return self._config.getint(EPD_CONFIG, option, fallback=fallback)
 
     def _getfloat_device_option(self, option, fallback):
-        return self._config.getfloat(self.getName(), option, fallback=fallback)
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getfloat(self.getName(), option)
+        else:
+            return self._config.getfloat(EPD_CONFIG, option, fallback=fallback)
 
     def _getboolean_device_option(self, option, fallback):
-        return self._config.getboolean(self.getName(), option, fallback=fallback)
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getboolean(self.getName(), option)
+        else:
+            return self._config.getboolean(EPD_CONFIG, option, fallback=fallback)
 
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display

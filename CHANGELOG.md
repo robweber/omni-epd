@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## Unreleased
 
 - added device specific modes to INI file
-- changed palette to palette_filter
+- removed Image Enhancements from INI having to do with colors, moved to device specific configurations
+- updated device types to use multiple color modes when available
 
 ## Version 0.1.7
 
