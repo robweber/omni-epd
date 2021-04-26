@@ -22,9 +22,8 @@ import configparser
 import importlib
 import os
 import logging
-import json
 from . errors import EPDNotFoundError, EPDConfigurationError
-from . conf import CONFIG_FILE, EPD_CONFIG, IMAGE_ENHANCEMENTS
+from . conf import CONFIG_FILE, EPD_CONFIG
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay, WaveshareTriColorDisplay, Waveshare102inDisplay, Waveshare3in7Display  # noqa: F401
