@@ -214,6 +214,7 @@ class Waveshare3in7Display(VirtualEPD):
     """
 
     pkg_name = 'waveshare_epd'
+    _modes_available = ("bw", "gray4")
 
     def __init__(self, deviceName, config):
         super(Waveshare3in7Display, self).__init__(deviceName, config)
@@ -237,11 +238,18 @@ class Waveshare3in7Display(VirtualEPD):
         return result
 
     def prepare(self):
-        # only b/w supported right now
-        self._device.init(1)
+        if(self.mode == 'gray4'):
+            self._device.init(0)
+        else:
+            self._device.init(1)
 
     def _display(self, image):
-        self._device.display_1Gray(self._device.getbuffer(image))
+        # no need to adjust image, done in waveshare lib
+
+        if(self.mode == "gray4"):
+            self._device.display_4Gray(self._device.getbuffer_4Gray(image))
+        else:
+            self._device.display_1Gray(self._device.getbuffer(image))
 
     def sleep(self):
         self._device.sleep()
