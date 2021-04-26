@@ -41,13 +41,15 @@ class VirtualEPD:
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
-    mode = "bw"  # mode of the display, bw or color (if supported)
+    mode = "bw"  # mode of the display, bw by default, others defined by display class
+    modes_available = ("bw")  # modes this display supports, set in __init__
+
+    # only used by displays that need palette filtering before sending to display driver
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
-    _modes_available = ("bw")  # modes this display supports, set in __init__
     _device_name = ""  # name of this device
 
     def __init__(self, deviceName, config):

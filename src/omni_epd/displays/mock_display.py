@@ -32,6 +32,7 @@ class MockDisplay(VirtualEPD):
     pkg_name = 'omni_epd'
     output_file = 'mock_output.jpg'
     max_colors = 256
+    modes_available = ('bw', 'color', 'palette')
 
     def __init__(self, deviceName, config):
         super(MockDisplay, self).__init__(deviceName, config)
@@ -40,15 +41,12 @@ class MockDisplay(VirtualEPD):
 
         # this is normally where you'd load actual device class but nothing to load here
 
-        # set location to write test image - can be set in config file
+        # set location to write test image - can be set in ini file
         self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
         # set the width and height
         self.width = 400
         self.height = 200
-
-        # this object can also work in color mode
-        self._modes_available = ('bw', 'color', 'palette')
 
     @staticmethod
     def get_supported_devices():

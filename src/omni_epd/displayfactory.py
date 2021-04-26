@@ -100,7 +100,7 @@ def load_display_driver(displayName='', configDict={}):
         result = classObj(deviceType[1], config)
 
         # check that the display mode is valid - must be done after class loaded
-        if(result.mode not in result._modes_available):
+        if(result.mode not in result.modes_available):
             raise EPDConfigurationError(displayName, "mode", result.mode)
 
         # the config can override default palette filter - only matters if not bw

@@ -58,8 +58,9 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 
 If the display you're implementing supports any advanced features, like multiple colors, these can be handled by setting some additional variables. Specifically you can set the variables below in the `__init()__` method. See currently implemented displays for a better idea of how to handle multiple colors.
 
-* `_modes_available` - a tuple containing the names of valid modes, BW available by default
-* `_colors` - a tuple of RGB values for valid colors an `Image` can send to the display.
+* `modes_available` - a tuple containing the names of valid modes, BW available by default
+* `max_colors` - The maximum number of colors supported (up to 256 RGB)
+* `palette_filter` - a tuple of RGB values for valid colors an `Image` can send to the display
 
 ### Display Testing
 

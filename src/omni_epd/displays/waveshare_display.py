@@ -58,7 +58,7 @@ class WaveshareDisplay(VirtualEPD):
 
         # add additional modes if grayscale is available
         if(deviceName in self.grayScaleList):
-            self._modes_available = ('bw', 'gray4')
+            self.modes_available = ('bw', 'gray4')
             self.max_colors = 4
 
         # set the width and height
@@ -231,7 +231,7 @@ class Waveshare3in7Display(VirtualEPD):
     """
 
     pkg_name = 'waveshare_epd'
-    _modes_available = ("bw", "gray4")
+    modes_available = ("bw", "gray4")
 
     def __init__(self, deviceName, config):
         super(Waveshare3in7Display, self).__init__(deviceName, config)
