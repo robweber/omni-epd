@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - removed Image Enhancements from INI having to do with colors, moved to device specific configurations
 - updated device types to use multiple color modes when available
 - updated device table to show available device modes for each supported typo
+- Inky Impression is tested - thanks @missionfloyd
 
 ## Version 0.1.7
 
