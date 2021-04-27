@@ -37,7 +37,7 @@ class WaveshareDisplay(VirtualEPD):
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
     def __init__(self, deviceName, config):
-        super(WaveshareDisplay, self).__init__(f"{deviceName}", config)
+        super().__init__(f"{deviceName}", config)
 
         # load the module
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
@@ -135,7 +135,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
                  "epd7in5b_HD": {"driver": "epd7in5b_HD", "modes": ("bw", "red")}}
 
     def __init__(self, deviceName, config):
-        super(WaveshareTriColorDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         # load driver based on name from deviceMap dict
         deviceObj = self.load_display_driver(self.pkg_name, self.deviceMap[deviceName]["driver"])
@@ -215,7 +215,7 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
     deviceList = ["epd2in7", "epd3in7", "epd4in2"]  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
-        super(WaveshareGrayscaleDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -282,7 +282,7 @@ class Waveshare102inDisplay(VirtualEPD):
     pkg_name = 'waveshare_epd'
 
     def __init__(self, deviceName, config):
-        super(Waveshare102inDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -335,7 +335,7 @@ class WaveshareMultiColorDisplay(VirtualEPD):
     deviceList = ["epd5in64f", "epd4in01f"]
 
     def __init__(self, deviceName, config):
-        super(WaveshareMultiColorDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 

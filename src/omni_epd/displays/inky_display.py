@@ -32,7 +32,7 @@ class InkyDisplay(VirtualEPD):
     modes_available = ("black")
 
     def __init__(self, deviceName, config):
-        super(InkyDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         # need to figure out what type of device we have
         dType, dColor = deviceName.split('_')
@@ -110,7 +110,7 @@ class InkyImpressionDisplay(VirtualEPD):
     modes_available = ('bw', 'color')
 
     def __init__(self, deviceName, config):
-        super(InkyImpressionDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         # load the device driver
         deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')

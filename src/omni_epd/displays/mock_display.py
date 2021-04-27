@@ -35,7 +35,7 @@ class MockDisplay(VirtualEPD):
     modes_available = ('bw', 'color', 'palette')
 
     def __init__(self, deviceName, config):
-        super(MockDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         self.logger = logging.getLogger(__name__)
 
