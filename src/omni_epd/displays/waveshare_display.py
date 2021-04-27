@@ -94,8 +94,7 @@ class WaveshareDisplay(VirtualEPD):
         self._device.Clear()
 
     def close(self):
-        # can't import this earlier as pkg may not be installed
-        from waveshare_epd import epdconfig
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
         epdconfig.module_init()
         epdconfig.module_exit()
 
@@ -193,8 +192,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
         self._device.Clear()
 
     def close(self):
-        # can't import this earlier as pkg may not be installed
-        from waveshare_epd import epdconfig
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
         epdconfig.module_init()
         epdconfig.module_exit()
 
@@ -267,8 +265,7 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
         self._device.Clear()
 
     def close(self):
-        # can't import this earlier as pkg may not be installed
-        from waveshare_epd import epdconfig
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
         epdconfig.module_init()
         epdconfig.module_exit()
 
@@ -315,8 +312,7 @@ class Waveshare102inDisplay(VirtualEPD):
         self._device.Clear()
 
     def close(self):
-        # can't import this earlier as pkg may not be installed
-        from waveshare_epd import epdconfig
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
         epdconfig.module_init()
         epdconfig.module_exit()
 
@@ -369,7 +365,6 @@ class WaveshareMultiColorDisplay(VirtualEPD):
         self._device.Clear()
 
     def close(self):
-        # can't import this earlier as pkg may not be installed
-        from waveshare_epd import epdconfig
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
         epdconfig.module_init()
         epdconfig.module_exit()
