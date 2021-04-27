@@ -86,6 +86,7 @@ Two types of __ini__ files can be used in these situations. A global file, named
 # file shown with default values
 [EPD]
 type=none  # only valid in the global configuration file, will load this display if none given to displayfactor.load_display_driver()
+mode=bw  # the mode of the display, typically b+w by default. See list of supported modes for each display below
 
 [Display]
 rotate=0  # rotate final image written to display by X degrees [0-360]
@@ -114,7 +115,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 | | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | inky.what_red | black, red |
 | | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow | black, yellow |
 | | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black | black |
-| Omni-EPD | Mock Display (emulates EPD with no hardware) | omni_epd.mock | bw, color, palette |
+| Omni-EPD | Mock Display (emulates EPD with no hardware) | __omni_epd.mock__ | bw, color, palette |
 | [Waveshare](https://github.com/waveshare/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin02 | bw |
 |  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 | bw |
 |  | [1.54inch e-Paper Module B](https://www.waveshare.com/1.54inch-e-Paper-Module-B.htm) | waveshare_epd.epdlin54b <br> waveshare_epd.epdlin54b_V2 | bw, red |
