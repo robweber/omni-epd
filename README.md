@@ -99,7 +99,7 @@ sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
 ## Displays Implemented
-Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device. 
+Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
 
 | Device Library | Device Name | Omni Device Name | Color Modes |
 |:---------------|:------------|:-----------------|-------------|
@@ -131,6 +131,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [2.9inch e-Paper Module C](https://www.waveshare.com/2.9inch-e-Paper-Module-C.htm) | waveshare_epd.epd2in9c | bw, yellow |
 |  | [2.9inch e-Paper HAT D](https://www.waveshare.com/2.9inch-e-Paper-HAT-D.htm) | waveshare_epd.epd2in9d | bw |
 |  | [3.7inch e-Paper HAT](https://www.waveshare.com/3.7inch-e-Paper-HAT.htm) | waveshare_epd.epd3in7 | bw, gray4 |
+|  | [4.01inch 7 color e-Paper HAT](https://www.waveshare.com/4.01inch-e-paper-hat-f.htm) | waveshare_epd.epd4in01f | bw, color |
 |  | [4.2inch e-Paper Module](https://www.waveshare.com/4.2inch-e-Paper-Module.htm) |waveshare_epd.epd4in2 | bw |
 |  | [4.2inch e-Paper Module B](https://www.waveshare.com/4.2inch-e-Paper-Module-B.htm) |waveshare_epd.epd4in2b <br> waveshare_epd.epd4in2b_V2 | bw, red |
 |  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) |waveshare_epd.epd4in2c | bw, yellow |

@@ -63,7 +63,7 @@ class WaveshareDisplay(VirtualEPD):
 
         # list of common devices that share init() and display() method calls
         commonDeviceList = ["epd1in54_V2", "epd2in13d",
-                            "epd2in9_V2", "epd2in9d", "epd4in01f",
+                            "epd2in9_V2", "epd2in9d",
                             "epd5in83", "epd5in83_V2",
                             "epd7in5", "epd7in5_HD", "epd7in5_V2"]
 
@@ -321,18 +321,21 @@ class Waveshare102inDisplay(VirtualEPD):
         epdconfig.module_exit()
 
 
-class Waveshare565finDisplay(VirtualEPD):
+class WaveshareMultiColorDisplay(VirtualEPD):
     """
-    This class is for the Waveshare 5.64 in 7 color display
+    This class is for the Waveshare 7 color displays
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd5in65f.py
+    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/.py
     """
 
     pkg_name = 'waveshare_epd'
     max_colors = 7
     modes_available = ('bw', 'color')
 
+    deviceList = ["epd5in64f", "epd4in01f"]
+
     def __init__(self, deviceName, config):
-        super(Waveshare102inDisplay, self).__init__(deviceName, config)
+        super(WaveshareMultiColorDisplay, self).__init__(deviceName, config)
 
         deviceObj = self.load_display_driver(self.pkg_name, deviceName)
 
@@ -347,8 +350,8 @@ class Waveshare565finDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        if(Waveshare565finDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{Waveshare565finDisplay.pkg_name}.epd5in64f"]
+        if(WaveshareMultiColorDisplay.check_module_installed('waveshare_epd')):
+            result = [f"{WaveshareMultiColorDisplay.pkg_name}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
 
         return result
 

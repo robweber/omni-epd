@@ -26,7 +26,7 @@ from . errors import EPDNotFoundError, EPDConfigurationError
 from . conf import CONFIG_FILE, EPD_CONFIG
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
-from . displays.waveshare_display import WaveshareDisplay, WaveshareTriColorDisplay, Waveshare102inDisplay, WaveshareGrayscaleDisplay, Waveshare565finDisplay  # noqa: F401,E501
+from . displays.waveshare_display import WaveshareDisplay, WaveshareTriColorDisplay, Waveshare102inDisplay, WaveshareGrayscaleDisplay, WaveshareMultiColorDisplay  # noqa: F401,E501
 from . displays.inky_display import InkyDisplay, InkyImpressionDisplay  # noqa: F401
 
 
