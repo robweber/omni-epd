@@ -106,11 +106,11 @@ class InkyImpressionDisplay(VirtualEPD):
 
     pkg_name = 'inky'
     mode = 'color'  # this uses color by default
-    max_colors = 8  # 7 + transparent
+    max_colors = 8  # 7 + CLEAN (no color)
     modes_available = ('bw', 'color')
 
     def __init__(self, deviceName, config):
-        super(InkyDisplay, self).__init__(deviceName, config)
+        super(InkyImpressionDisplay, self).__init__(deviceName, config)
 
         # load the device driver
         deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
@@ -121,7 +121,7 @@ class InkyImpressionDisplay(VirtualEPD):
         self.height = self._device.height
 
         # get colors from the inky lib (won't be used normally as inky does conversion)
-        self.palette_filter = self._device.DESATURATED_PALETTE
+        self.palette_filter = deviceObj.DESATURATED_PALETTE
 
     @staticmethod
     def get_supported_devices():
@@ -130,13 +130,13 @@ class InkyImpressionDisplay(VirtualEPD):
         # python libs for this might not be installed - that's ok, return nothing
         if(InkyImpressionDisplay.check_module_installed('inky')):
             # if passed return list of devices
-            result = [f"{InkyDisplay.pkg_name}.impression"]
+            result = [f"{InkyImpressionDisplay.pkg_name}.impression"]
 
         return result
 
     def _display(self, image):
         # no palette adjustments need to be done as the Inky lib does them from the image
-        self._device.set_image(image, saturation=self._getfloat_device_option('saturation', .5))  # .5 is default from Inky lib
+        self._device.set_image(image.convert("RGB"), saturation=self._getfloat_device_option('saturation', .5))  # .5 is default from Inky lib
         self._device.show()
 
     def clear(self):
