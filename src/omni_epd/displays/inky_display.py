@@ -87,12 +87,11 @@ class InkyDisplay(VirtualEPD):
         self._device.show()
 
     def clear(self):
-        from inky import WHITE
-
+        inkyDev = self.load_display_driver(self.pkg_name, 'inky')
         for _ in range(2):
             for y in range(self.height - 1):
                 for x in range(self.width - 1):
-                    self._device.set_pixel(x, y, WHITE)
+                    self._device.set_pixel(x, y, inkyDev.WHITE)
 
         self._device.show()
 
@@ -140,11 +139,10 @@ class InkyImpressionDisplay(VirtualEPD):
         self._device.show()
 
     def clear(self):
-        from inky.inky_uc8159 import CLEAN
-
+        inkyDev = self.load_display_driver(self.pkg_name, 'inky_uc8159')
         for _ in range(2):
             for y in range(self.height - 1):
                 for x in range(self.width - 1):
-                    self._device.set_pixel(x, y, CLEAN)
+                    self._device.set_pixel(x, y, inkyDev.CLEAN)
 
         self._device.show()
