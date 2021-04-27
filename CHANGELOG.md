@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - updated device types to use multiple color modes when available
 - updated device table to show available device modes for each supported typo
 - Inky Impression is tested - thanks @missionfloyd
+- dynamically load class files instead of using import where possible
 
 ## Version 0.1.7
 

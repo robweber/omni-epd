@@ -134,7 +134,11 @@ class InkyImpressionDisplay(VirtualEPD):
         return result
 
     def _display(self, image):
-        # no palette adjustments need to be done as the Inky lib does them from the image
+
+        # no palette adjustments when color as the Inky lib does them from the image
+        if(self.mode == 'bw'):
+            image = self._filterImage(image)
+
         self._device.set_image(image.convert("RGB"), saturation=self._getfloat_device_option('saturation', .5))  # .5 is default from Inky lib
         self._device.show()
 

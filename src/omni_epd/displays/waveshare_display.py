@@ -355,7 +355,10 @@ class WaveshareMultiColorDisplay(VirtualEPD):
         self._device.init()
 
     def _display(self, image):
-        # driver takes care of color filtering
+        # driver takes care of filtering when in color mode
+        if(self.mode == 'bw'):
+            image = self._applyFilter(image)
+
         self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
