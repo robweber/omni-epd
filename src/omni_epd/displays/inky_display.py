@@ -83,6 +83,7 @@ class InkyDisplay(VirtualEPD):
         image = self._filterImage(image)
 
         # set the image and display
+        self._device.set_border(getattr(self._device, self._get_device_option('border', 'white').upper()))
         self._device.set_image(image)
         self._device.show()
 
@@ -138,6 +139,7 @@ class InkyImpressionDisplay(VirtualEPD):
         if(self.mode == 'bw'):
             image = self._filterImage(image)
 
+        self._device.set_border(getattr(self._device, self._get_device_option('border', 'white').upper()))
         self._device.set_image(image.convert("RGB"), saturation=self._getfloat_device_option('saturation', .5))  # .5 is default from Inky lib
         self._device.show()
 
