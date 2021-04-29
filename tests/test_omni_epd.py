@@ -73,7 +73,6 @@ class TestomniEpd(unittest.TestCase):
         # test that mode is default
         assert epd.mode == 'bw'
 
-
     def test_device_config(self):
         """
         Test that when both omni-epd.ini file is present and device specific INI present
