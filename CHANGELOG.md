@@ -4,14 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## Version 0.2.0
+
+### Added
 
 - added device specific modes to INI file
-- removed Image Enhancements from INI having to do with colors, moved to device specific configurations
 - updated device types to use multiple color modes when available
-- updated device table to show available device modes for each supported typo
+- added many device specific options, loaded within INI files. [Documented on wiki](https://github.com/robweber/omni-epd/wiki/Device-Specific-Options)
 - Inky Impression is tested - thanks @missionfloyd
+
+### Changed
+
+- updated device table to show available device modes for each supported type
 - dynamically load class files instead of using import where possible
+
+### Removed
+
+- removed Image Enhancements from INI having to do with colors, moved to device specific configurations
 
 ## Version 0.1.7
 
