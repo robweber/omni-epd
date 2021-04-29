@@ -1,6 +1,7 @@
 import unittest
 import os
 import time
+import json
 from omni_epd import EPDNotFoundError, EPDConfigurationError
 from omni_epd import displayfactory
 from omni_epd.virtualepd import VirtualEPD
@@ -76,6 +77,7 @@ class TestomniEpd(unittest.TestCase):
 
         # test mode and palette configurations
         assert epd.mode == 'palette'
+        assert len(json.loads(epd._get_device_option('palette_filter', "[]"))) == 5  # confirms custom palette will be loaded
 
         # reset global config file, wait for file IO
         os.rename(os.path.join(os.getcwd(), CONFIG_FILE), os.path.join(os.getcwd(), "tests", CONFIG_FILE))
