@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import argparse
 from . import displayfactory
 from . errors import EPDNotFoundError
-from PIL import Image, ImageDraw
+from PIL import Image, ImageColor, ImageDraw
 
 
 class EPDTestUtility:
@@ -55,7 +55,7 @@ class EPDTestUtility:
             rY = y + (height - rHeight)/2
 
             print(f"Drawing rectangle of width {rWidth} and height {rHeight}")
-            imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), outline=(0, 0, 0), width=2)
+            imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), outline=ImageColor.getrgb("black"), width=2)
 
             return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent-step, step)
         else:
@@ -76,7 +76,7 @@ class EPDTestUtility:
     def draw(self):
 
         # create a blank image
-        im = Image.new('RGB', (self.epd.width, self.epd.height), color=(255,255,255))
+        im = Image.new('RGB', (self.epd.width, self.epd.height), color=ImageColor.getrgb("white"))
         draw = ImageDraw.Draw(im)
 
         # draw a series of rectangles
