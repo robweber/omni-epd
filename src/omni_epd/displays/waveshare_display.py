@@ -19,15 +19,66 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from .. virtualepd import VirtualEPD
+from .. conf import check_module_installed
+
+WAVESHARE_PKG = "waveshare_epd"
 
 
 class WaveshareDisplay(VirtualEPD):
     """
+    This is a generic class for all Waveshare devices to encapsulate common functions
+    """
+
+    pkg_name = WAVESHARE_PKG
+
+    def __init__(self, deviceName, config):
+        """
+        All classes should perform these steps when initialized
+        individual classes can perform additional functions once class is loaded
+        """
+        super().__init__(deviceName, config)
+
+        # load the module
+        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
+
+        # create the epd object
+        self._device = deviceObj.EPD()
+
+        # set the width and height
+        self.width = self._device.width
+        self.height = self._device.height
+
+    @staticmethod
+    def get_supported_devices():
+        # this class is meant to be abstract but will be called by displayfactory, return nothing
+        return []
+
+    def sleep(self):
+        """
+        Most devices utilize the same sleep function
+        """
+        self._device.sleep()
+
+    def clear(self):
+        """
+        Most devices utilize the same clear function
+        """
+        self._device.Clear()
+
+    def close(self):
+        """
+        Most devices utilize the same close function
+        """
+        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
+        epdconfig.module_init()
+        epdconfig.module_exit()
+
+
+class WaveshareBWDisplay(WaveshareDisplay):
+    """
     This is an abstraction for Waveshare EPD devices that are single color only
     https://github.com/waveshare/e-Paper
     """
-
-    pkg_name = 'waveshare_epd'
 
     # devices that use alternate init methods
     lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
@@ -37,13 +88,9 @@ class WaveshareDisplay(VirtualEPD):
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
     def __init__(self, deviceName, config):
-        super().__init__(f"{deviceName}", config)
+        super().__init__(deviceName, config)
 
-        # load the module
-        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
-
-        # create the epd object
-        self._device = deviceObj.EPD()
+        # device object loaded in parent class
 
         # check if alternate init method is used
         if(deviceName in self.lutInitList or deviceName in self.modeInitList):
@@ -52,10 +99,6 @@ class WaveshareDisplay(VirtualEPD):
             # some devices set the full instruction as the param
             if(deviceName in self.lutInitList):
                 self.alt_init_param = self._device.lut_full_update
-
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
 
     @staticmethod
     def get_supported_devices():
@@ -68,11 +111,11 @@ class WaveshareDisplay(VirtualEPD):
                             "epd7in5", "epd7in5_HD", "epd7in5_V2"]
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(WaveshareDisplay.check_module_installed('waveshare_epd')):
-            result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList + commonDeviceList
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = WaveshareBWDisplay.lutInitList + WaveshareBWDisplay.modeInitList + commonDeviceList
 
             # return a list of all submodules (device types)
-            result = [f"{WaveshareDisplay.pkg_name}.{n}" for n in result]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in result]
 
         return result
 
@@ -87,26 +130,14 @@ class WaveshareDisplay(VirtualEPD):
         # no need to adjust palette, done in waveshare driver
         self._device.display(self._device.getbuffer(image))
 
-    def sleep(self):
-        self._device.sleep()
 
-    def clear(self):
-        self._device.Clear()
-
-    def close(self):
-        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
-        epdconfig.module_init()
-        epdconfig.module_exit()
-
-
-class WaveshareTriColorDisplay(VirtualEPD):
+class WaveshareTriColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 3 colors
     typically white/black/red or white/black/yellow
     https://github.com/waveshare/e-Paper
     """
 
-    pkg_name = 'waveshare_epd'
     max_colors = 3
 
     # list of all devices - some drivers cover more than one device
@@ -136,11 +167,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        # load driver based on name from deviceMap dict
-        deviceObj = self.load_display_driver(self.pkg_name, self.deviceMap[deviceName]["driver"])
-
-        # create the epd object
-        self._device = deviceObj.EPD()
+        # device object loaded in parent class
 
         # set the allowed modes
         self.modes_available = self.deviceMap[deviceName]['modes']
@@ -150,17 +177,13 @@ class WaveshareTriColorDisplay(VirtualEPD):
         elif(self.mode == 'yellow'):
             self.palette_filter.append([255, 255, 0])
 
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
-
     @staticmethod
     def get_supported_devices():
         result = []
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(WaveshareTriColorDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
 
         return result
 
@@ -185,19 +208,8 @@ class WaveshareTriColorDisplay(VirtualEPD):
 
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
-    def sleep(self):
-        self._device.sleep()
 
-    def clear(self):
-        self._device.Clear()
-
-    def close(self):
-        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
-        epdconfig.module_init()
-        epdconfig.module_exit()
-
-
-class WaveshareGrayscaleDisplay(VirtualEPD):
+class WaveshareGrayscaleDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 shade grayscale
 
@@ -206,7 +218,6 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
     """
 
-    pkg_name = 'waveshare_epd'
     modes_available = ("bw", "gray4")
     max_colors = 4
 
@@ -215,21 +226,14 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
-
-        # create the epd object
-        self._device = deviceObj.EPD()
-
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
+        # device object created in parent class
 
     @staticmethod
     def get_supported_devices():
         result = []
 
-        if(WaveshareGrayscaleDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareGrayscaleDisplay.pkg_name}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
 
         return result
 
@@ -258,44 +262,24 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
             else:
                 self._device.display(self._device.getbuffer(image))
 
-    def sleep(self):
-        self._device.sleep()
 
-    def clear(self):
-        self._device.Clear()
-
-    def close(self):
-        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
-        epdconfig.module_init()
-        epdconfig.module_exit()
-
-
-class Waveshare102inDisplay(VirtualEPD):
+class Waveshare102inDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare 1.02 in display only as it has some method calls that are different
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd1in02.py
     """
 
-    pkg_name = 'waveshare_epd'
-
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
-
-        # create the epd object
-        self._device = deviceObj.EPD()
-
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
+        # device object loaded in parent class
 
     @staticmethod
     def get_supported_devices():
         result = []
 
-        if(Waveshare102inDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{Waveshare102inDisplay.pkg_name}.epd1in02"]
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.epd1in02"]
 
         return result
 
@@ -306,25 +290,21 @@ class Waveshare102inDisplay(VirtualEPD):
         self._device.Display(self._device.getbuffer(image))
 
     def sleep(self):
+        # this differs from parent
         self._device.Sleep()
 
     def clear(self):
+        # this differs from parent
         self._device.Clear()
 
-    def close(self):
-        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
-        epdconfig.module_init()
-        epdconfig.module_exit()
 
-
-class WaveshareMultiColorDisplay(VirtualEPD):
+class WaveshareMultiColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare 7 color displays
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd5in65f.py
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/.py
     """
 
-    pkg_name = 'waveshare_epd'
     max_colors = 7
     modes_available = ('bw', 'color')
 
@@ -333,21 +313,14 @@ class WaveshareMultiColorDisplay(VirtualEPD):
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        deviceObj = self.load_display_driver(self.pkg_name, deviceName)
-
-        # create the epd object
-        self._device = deviceObj.EPD()
-
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
+        # device object loaded in parent class
 
     @staticmethod
     def get_supported_devices():
         result = []
 
-        if(WaveshareMultiColorDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareMultiColorDisplay.pkg_name}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
 
         return result
 
@@ -360,14 +333,3 @@ class WaveshareMultiColorDisplay(VirtualEPD):
             image = self._applyFilter(image)
 
         self._device.display(self._device.getbuffer(image))
-
-    def sleep(self):
-        self._device.sleep()
-
-    def clear(self):
-        self._device.Clear()
-
-    def close(self):
-        epdconfig = self.load_display_driver(self.pkg_name, 'epdconfig')
-        epdconfig.module_init()
-        epdconfig.module_exit()

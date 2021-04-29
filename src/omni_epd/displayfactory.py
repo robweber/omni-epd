@@ -26,7 +26,7 @@ from . errors import EPDNotFoundError, EPDConfigurationError
 from . conf import CONFIG_FILE, EPD_CONFIG
 from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
-from . displays.waveshare_display import WaveshareDisplay, WaveshareTriColorDisplay, Waveshare102inDisplay, WaveshareGrayscaleDisplay, WaveshareMultiColorDisplay  # noqa: F401,E501
+from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 from . displays.inky_display import InkyDisplay, InkyImpressionDisplay  # noqa: F401
 
 
@@ -52,11 +52,25 @@ def __loadConfig(deviceName):
     return config
 
 
+def __get_subclasses(cName):
+    """
+    Can be used to recursively find classes that implement
+    a given class resursively (ie, subclass of a subclass)
+    """
+    result = []
+
+    for sub in cName.__subclasses__():
+        result.append(sub)
+        result.extend(__get_subclasses(sub))
+
+    return result
+
+
 def list_supported_displays(as_dict=False):
     result = []
 
-    # get a list of display classes extending VirtualDisplayDevice
-    displayClasses = [(cls.__module__, cls.__name__) for cls in VirtualEPD.__subclasses__()]
+    # get a list of display classes extending VirtualEPD
+    displayClasses = [(cls.__module__, cls.__name__) for cls in __get_subclasses(VirtualEPD)]
 
     for modName, className in displayClasses:
         # load the module the class belongs to
