@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Version 0.2.1
 
+### Changed
+
+- restructured object inheritance to reduce duplicate code, this is especially true for waveshare devices
+
 ### Fixed
 
 - fixed issue where test utility would fail on inky displays. made the `draw()` function more universal between devices
