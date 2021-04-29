@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - updated device table to show available device modes for each supported type
 - dynamically load class files instead of using import where possible
+- changed example image to use one from NASA with more colors for better color display test
 
 ### Removed
 

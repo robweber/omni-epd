@@ -48,6 +48,7 @@ image = image.resize((epd.width, epd.height))
 
 # prepare the epd, write the image, and close
 print('Writing to display')
+print("Rotating image 180 degrees, adjusting sharpness and contrast")
 epd.prepare()
 
 epd.display(image)
