@@ -52,7 +52,7 @@ def __loadConfig(deviceName):
     return config
 
 
-def _get_subclasses(cName):
+def __get_subclasses(cName):
     """
     Can be used to recursively find classes that implement
     a given class resursively (ie, subclass of a subclass)
@@ -61,7 +61,7 @@ def _get_subclasses(cName):
 
     for sub in cName.__subclasses__():
         result.append(sub)
-        result.extend(_get_subclasses(sub))
+        result.extend(__get_subclasses(sub))
 
     return result
 
@@ -70,7 +70,7 @@ def list_supported_displays(as_dict=False):
     result = []
 
     # get a list of display classes extending VirtualEPD
-    displayClasses = [(cls.__module__, cls.__name__) for cls in _get_subclasses(VirtualEPD)]
+    displayClasses = [(cls.__module__, cls.__name__) for cls in __get_subclasses(VirtualEPD)]
 
     for modName, className in displayClasses:
         # load the module the class belongs to
