@@ -26,23 +26,25 @@ from .. virtualepd import VirtualEPD
 class MockDisplay(VirtualEPD):
     """
     This is a reference implementation of a display extending VirtualEPD
-    it does not physically write to anything but can be used as a mock testing device
+    it can write images to a testing file for use as a mock testing device
     """
 
     pkg_name = 'omni_epd'
-    output_file = 'mock_output.jpg'
+    output_file = 'mock_output.png'
+    max_colors = 256
+    modes_available = ('bw', 'color', 'palette')
 
     def __init__(self, deviceName, config):
-        super(MockDisplay, self).__init__(deviceName, config)
+        super().__init__(deviceName, config)
 
         self.logger = logging.getLogger(__name__)
 
         # this is normally where you'd load actual device class but nothing to load here
 
-        # set location to write test image
-        self.output_file = os.path.join(os.getcwd(), self.output_file)
+        # set location to write test image - can be set in ini file
+        self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
-        # set the width and height - doesn't matter since we won't write anything
+        # set the width and height
         self.width = 400
         self.height = 200
 
@@ -55,13 +57,16 @@ class MockDisplay(VirtualEPD):
         self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
-        self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
 
-        if(image.mode == 'P'):
-            # can't write P mode images
-            image = image.convert('RGB')
+        if(self.mode != 'color'):
+            image = self._filterImage(image)
 
-        image.save(self.output_file, "JPEG")
+        if(self._getboolean_device_option('write_file', True)):
+            self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
+
+            image.save(self.output_file, "PNG")
+        else:
+            self.logger.info(f"{self.__str__()} display() called, skipping output")
 
     def sleep(self):
         self.logger.info(f"{self.__str__()} is sleeping")

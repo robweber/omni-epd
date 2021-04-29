@@ -19,12 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import json
 import importlib
 import importlib.util
 import logging
-import json
 from PIL import Image, ImageEnhance
-from . conf import IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
+from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
+from . errors import EPDConfigurationError
 
 
 class VirtualEPD:
@@ -42,6 +43,13 @@ class VirtualEPD:
     pkg_name = "virtualdevice"  # the package name of the concrete class
     width = 0   # width of display
     height = 0  # height of display
+    mode = "bw"  # mode of the display, bw by default, others defined by display class
+    modes_available = ("bw")  # modes this display supports, set in __init__
+
+    # only used by displays that need palette filtering before sending to display driver
+    max_colors = 2  # assume only b+w supported by default, set in __init__
+    palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
+
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
     _device_name = ""  # name of this device
@@ -50,16 +58,19 @@ class VirtualEPD:
         self._config = config
         self.__device_name = deviceName
 
+        # set the display mode
+        self.mode = self._get_device_option('mode', self.mode)
+
         self._logger = logging.getLogger(self.__str__())
 
     def __str__(self):
         return f"{self.pkg_name}.{self.__device_name}"
 
-    def __generate_palette(self, pstr):
+    # generate a palette given the colors available for this display
+    def __generate_palette(self, colors):
         result = []
-        pjson = json.loads(pstr)
 
-        for c in pjson:
+        for c in colors:
             result += [int(c[0]), int(c[1]), int(c[2])]
 
         return result
@@ -82,29 +93,6 @@ class VirtualEPD:
             image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
             self._logger.debug("Flipping image vertically")
 
-        # must be one of the valid PILLOW modes, and display must support
-        # https://pillow.readthedocs.io/en/stable/handbook/concepts.html#concept-modes
-        if(self._config.has_option(IMAGE_ENHANCEMENTS, "color")):
-            # if palette given filter out all colors but these
-            if(self._config.get(IMAGE_ENHANCEMENTS, "color") == 'P' and self._config.has_option(IMAGE_ENHANCEMENTS, 'palette')):
-                # load the palette as a list from the string
-                palette = self.__generate_palette(self._config.get(IMAGE_ENHANCEMENTS, "palette"))
-
-                # create a new image to define the palette
-                palette_image = Image.new("P", (1, 1))
-
-                # set the palette, set all other colors to 0
-                palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
-
-                # apply the palette
-                image = image.quantize(palette=palette_image)
-
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')} with custom palette")
-            else:
-                # just apply the color enhancment mode
-                image = image.convert(self._config.get(IMAGE_ENHANCEMENTS, "color"))
-                self._logger.debug(f"Applying color mode: {self._config.get(IMAGE_ENHANCEMENTS, 'color')}")
-
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
             enhancer = ImageEnhance.Contrast(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "contrast"))
@@ -122,6 +110,66 @@ class VirtualEPD:
 
         return image
 
+    """
+    helper methods to get custom config options, providing a fallback if needed
+    avoids having to do constant has_option(), get() calls within device class
+    """
+    def _get_device_option(self, option, fallback):
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.get(self.getName(), option)
+        else:
+            return self._config.get(EPD_CONFIG, option, fallback=fallback)
+
+    def _getint_device_option(self, option, fallback):
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getint(self.getName(), option)
+        else:
+            return self._config.getint(EPD_CONFIG, option, fallback=fallback)
+
+    def _getfloat_device_option(self, option, fallback):
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getfloat(self.getName(), option)
+        else:
+            return self._config.getfloat(EPD_CONFIG, option, fallback=fallback)
+
+    def _getboolean_device_option(self, option, fallback):
+        # if exists in local config use that, otherwise check EPD section
+        if(self._config.has_option(self.getName(), option)):
+            return self._config.getboolean(self.getName(), option)
+        else:
+            return self._config.getboolean(EPD_CONFIG, option, fallback=fallback)
+
+    """
+    Converts image to b/w or attempts a palette filter based on allowed colors in the display
+    """
+    def _filterImage(self, image):
+
+        if(self.mode == 'bw'):
+            image = image.convert("1")
+        else:
+            # load palette - this is a catch in case it was changed by the user
+            colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+
+            # check if we have too many colors in the palette
+            if(len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
+
+            palette = self.__generate_palette(colors)
+
+            # create a new image to define the palette
+            palette_image = Image.new("P", (1, 1))
+
+            # set the palette, set all other colors to 0
+            palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
+
+            # apply the palette
+            image = image.quantize(palette=palette_image)
+
+        return image
+
     # helper method to load a concrete display object based on the package and class name
     def load_display_driver(self, packageName, className):
         try:
@@ -133,6 +181,10 @@ class VirtualEPD:
             exit(2)
 
         return driver
+
+    # returns package.device name
+    def getName(self):
+        return self.__str__()
 
     # helper method to check if a module is (or can be) installed
     @staticmethod

@@ -18,5 +18,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from . errors import EPDNotFoundError  # noqa: F401
+from . errors import EPDNotFoundError, EPDConfigurationError  # noqa: F401
 from . test_utility import EPDTestUtility  # noqa: F401

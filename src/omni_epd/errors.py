@@ -26,3 +26,13 @@ class EPDNotFoundError(Exception):
 
     def __init__(self, deviceName):
         super().__init__(f"A display device for device name {deviceName} cannot be loaded")
+
+
+class EPDConfigurationError(Exception):
+    """
+    EPDConfigurationError is thrown when an invalid configuration option is given for a display
+    this could be an invalid display mode, color option, or other issue
+    """
+
+    def __init__(self, deviceName, optionName, optionValue):
+        super().__init__(f"'{optionValue}' for '{optionName}' is not a valid configuration value for {deviceName}")
