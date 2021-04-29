@@ -13,19 +13,33 @@ class TestomniEpd(unittest.TestCase):
     badConfig = 'bad_conf.ini'  # name of invalid configuration file
 
     def test_supported_diplays(self):
+        """
+        Test that displays can be loaded
+        """
         drivers = displayfactory.list_supported_displays()
 
         assert len(drivers) > 0
 
     def test_loading_error(self):
+        """
+        Confirm error thrown if an invalid name passed to load function
+        """
         self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, self.badEpd)
 
     def test_loading_success(self):
+        """
+        Confirm a good display can be loaded and extends VirtualEPD
+        """
         epd = displayfactory.load_display_driver(self.goodEpd)
 
         assert isinstance(epd, VirtualEPD)
 
     def test_global_conf(self):
+        """
+        Test loading of omni-epd.ini config file
+        Once loaded confirm options from file exist within display class config
+        Also confirm values not in the config file aren't changed from defaults
+        """
         # set up a global config file
         os.rename(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
         time.sleep(1)
@@ -43,6 +57,10 @@ class TestomniEpd(unittest.TestCase):
         time.sleep(1)
 
     def test_device_config(self):
+        """
+        Test that when both omni-epd.ini file is present and device specific INI present
+        that the device specific config overrides options in global config
+        """
         deviceConfig = self.goodEpd + ".ini"
 
         # set up a global config file and device config
@@ -65,6 +83,10 @@ class TestomniEpd(unittest.TestCase):
         time.sleep(1)
 
     def test_load_device_from_conf(self):
+        """
+        Test that a device will load when given the type= option in the omni-epd.ini file
+        and no args to load_display_driver()
+        """
         deviceConfig = self.goodEpd + ".ini"
 
         # set up a global config file
@@ -88,6 +110,10 @@ class TestomniEpd(unittest.TestCase):
         time.sleep(1)
 
     def test_configuration_error(self):
+        """
+        Confirm that an EPDConfigurationError is thrown by passing a bad mode value
+        to a display
+        """
         deviceConfig = self.goodEpd + ".ini"
 
         # copy bad config file to be loaded
