@@ -18,6 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 
+import importlib.util
+import sys
+
 # config file name
 CONFIG_FILE = "omni-epd.ini"
 
@@ -25,3 +28,14 @@ CONFIG_FILE = "omni-epd.ini"
 EPD_CONFIG = "EPD"
 IMAGE_DISPLAY = "Display"
 IMAGE_ENHANCEMENTS = "Image Enhancements"
+
+
+# helper method to check if a module is (or can be) installed
+def check_module_installed(moduleName):
+    result = False
+
+    # check if the module is already loaded, or can be loaded
+    if(moduleName in sys.modules or (importlib.util.find_spec(moduleName)) is not None):
+        result = True
+
+    return result

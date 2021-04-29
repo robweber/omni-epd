@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from .. virtualepd import VirtualEPD
+from .. conf import check_module_installed
 
 INKY_PKG = "inky"
 
@@ -74,7 +75,7 @@ class InkyDisplay(VirtualEPD):
                       "what_black", "what_red", "what_yellow"]
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(InkyDisplay.check_module_installed('inky')):
+        if(check_module_installed(INKY_PKG)):
             # if passed return list of devices
             result = [f"{INKY_PKG}.{n}" for n in deviceList]
 
@@ -129,7 +130,7 @@ class InkyImpressionDisplay(VirtualEPD):
         result = []
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(InkyImpressionDisplay.check_module_installed('inky')):
+        if(check_module_installed(INKY_PKG)):
             # if passed return list of devices
             result = [f"{INKY_PKG}.impression"]
 

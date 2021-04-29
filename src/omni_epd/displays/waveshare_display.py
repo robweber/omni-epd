@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 from .. virtualepd import VirtualEPD
+from .. conf import check_module_installed
 
 WAVESHARE_PKG = "waveshare_epd"
 
@@ -70,7 +71,7 @@ class WaveshareBWDisplay(VirtualEPD):
                             "epd7in5", "epd7in5_HD", "epd7in5_V2"]
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(WaveshareBWDisplay.check_module_installed('waveshare_epd')):
+        if(check_module_installed(WAVESHARE_PKG)):
             result = WaveshareBWDisplay.lutInitList + WaveshareBWDisplay.modeInitList + commonDeviceList
 
             # return a list of all submodules (device types)
@@ -161,7 +162,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
         result = []
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(WaveshareTriColorDisplay.check_module_installed('waveshare_epd')):
+        if(check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
 
         return result
@@ -230,7 +231,7 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        if(WaveshareGrayscaleDisplay.check_module_installed('waveshare_epd')):
+        if(check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
 
         return result
@@ -296,7 +297,7 @@ class Waveshare102inDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        if(Waveshare102inDisplay.check_module_installed('waveshare_epd')):
+        if(check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.epd1in02"]
 
         return result
@@ -348,7 +349,7 @@ class WaveshareMultiColorDisplay(VirtualEPD):
     def get_supported_devices():
         result = []
 
-        if(WaveshareMultiColorDisplay.check_module_installed('waveshare_epd')):
+        if(check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
 
         return result
