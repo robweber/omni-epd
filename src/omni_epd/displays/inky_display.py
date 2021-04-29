@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. virtualepd import VirtualEPD
 
+INKY_PKG = "inky"
 
 class InkyDisplay(VirtualEPD):
     """
@@ -27,7 +28,7 @@ class InkyDisplay(VirtualEPD):
     https://github.com/pimoroni/inky
     """
 
-    pkg_name = 'inky'
+    pkg_name = INKY_PKG
     mode = "black"  # default mode is black
     modes_available = ("black")
 
@@ -74,7 +75,7 @@ class InkyDisplay(VirtualEPD):
         # python libs for this might not be installed - that's ok, return nothing
         if(InkyDisplay.check_module_installed('inky')):
             # if passed return list of devices
-            result = [f"{InkyDisplay.pkg_name}.{n}" for n in deviceList]
+            result = [f"{INKY_PKG}.{n}" for n in deviceList]
 
         return result
 
@@ -103,7 +104,7 @@ class InkyImpressionDisplay(VirtualEPD):
     https://github.com/pimoroni/inky
     """
 
-    pkg_name = 'inky'
+    pkg_name = INKY_PKG
     mode = 'color'  # this uses color by default
     max_colors = 8  # 7 + CLEAN (no color)
     modes_available = ('bw', 'color')
@@ -129,7 +130,7 @@ class InkyImpressionDisplay(VirtualEPD):
         # python libs for this might not be installed - that's ok, return nothing
         if(InkyImpressionDisplay.check_module_installed('inky')):
             # if passed return list of devices
-            result = [f"{InkyImpressionDisplay.pkg_name}.impression"]
+            result = [f"{INKY_PKG}.impression"]
 
         return result
 

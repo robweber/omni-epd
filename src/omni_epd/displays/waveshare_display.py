@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. virtualepd import VirtualEPD
 
+WAVESHARE_PKG = "waveshare_epd"
 
 class WaveshareDisplay(VirtualEPD):
     """
@@ -27,7 +28,7 @@ class WaveshareDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper
     """
 
-    pkg_name = 'waveshare_epd'
+    pkg_name = WAVESHARE_PKG
 
     # devices that use alternate init methods
     lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
@@ -72,7 +73,7 @@ class WaveshareDisplay(VirtualEPD):
             result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList + commonDeviceList
 
             # return a list of all submodules (device types)
-            result = [f"{WaveshareDisplay.pkg_name}.{n}" for n in result]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in result]
 
         return result
 
@@ -106,7 +107,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper
     """
 
-    pkg_name = 'waveshare_epd'
+    pkg_name = WAVESHARE_PKG
     max_colors = 3
 
     # list of all devices - some drivers cover more than one device
@@ -160,7 +161,7 @@ class WaveshareTriColorDisplay(VirtualEPD):
 
         # python libs for this might not be installed - that's ok, return nothing
         if(WaveshareTriColorDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareTriColorDisplay.pkg_name}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
 
         return result
 
@@ -206,7 +207,7 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
     """
 
-    pkg_name = 'waveshare_epd'
+    pkg_name = WAVESHARE_PKG
     modes_available = ("bw", "gray4")
     max_colors = 4
 
@@ -229,7 +230,7 @@ class WaveshareGrayscaleDisplay(VirtualEPD):
         result = []
 
         if(WaveshareGrayscaleDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareGrayscaleDisplay.pkg_name}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
 
         return result
 
@@ -276,7 +277,7 @@ class Waveshare102inDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd1in02.py
     """
 
-    pkg_name = 'waveshare_epd'
+    pkg_name = WAVESHARE_PKG
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -295,7 +296,7 @@ class Waveshare102inDisplay(VirtualEPD):
         result = []
 
         if(Waveshare102inDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{Waveshare102inDisplay.pkg_name}.epd1in02"]
+            result = [f"{WAVESHARE_PKG}.epd1in02"]
 
         return result
 
@@ -324,7 +325,7 @@ class WaveshareMultiColorDisplay(VirtualEPD):
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/.py
     """
 
-    pkg_name = 'waveshare_epd'
+    pkg_name = WAVESHARE_PKG
     max_colors = 7
     modes_available = ('bw', 'color')
 
@@ -347,7 +348,7 @@ class WaveshareMultiColorDisplay(VirtualEPD):
         result = []
 
         if(WaveshareMultiColorDisplay.check_module_installed('waveshare_epd')):
-            result = [f"{WaveshareMultiColorDisplay.pkg_name}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
 
         return result
 
