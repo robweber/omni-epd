@@ -23,7 +23,7 @@ from .. virtualepd import VirtualEPD
 WAVESHARE_PKG = "waveshare_epd"
 
 
-class WaveshareDisplay(VirtualEPD):
+class WaveshareBWDisplay(VirtualEPD):
     """
     This is an abstraction for Waveshare EPD devices that are single color only
     https://github.com/waveshare/e-Paper
@@ -70,8 +70,8 @@ class WaveshareDisplay(VirtualEPD):
                             "epd7in5", "epd7in5_HD", "epd7in5_V2"]
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(WaveshareDisplay.check_module_installed('waveshare_epd')):
-            result = WaveshareDisplay.lutInitList + WaveshareDisplay.modeInitList + commonDeviceList
+        if(WaveshareBWDisplay.check_module_installed('waveshare_epd')):
+            result = WaveshareBWDisplay.lutInitList + WaveshareBWDisplay.modeInitList + commonDeviceList
 
             # return a list of all submodules (device types)
             result = [f"{WAVESHARE_PKG}.{n}" for n in result]
