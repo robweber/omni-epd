@@ -22,6 +22,7 @@ from .. virtualepd import VirtualEPD
 
 WAVESHARE_PKG = "waveshare_epd"
 
+
 class WaveshareDisplay(VirtualEPD):
     """
     This is an abstraction for Waveshare EPD devices that are single color only

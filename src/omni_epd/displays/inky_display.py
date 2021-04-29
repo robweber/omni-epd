@@ -22,6 +22,7 @@ from .. virtualepd import VirtualEPD
 
 INKY_PKG = "inky"
 
+
 class InkyDisplay(VirtualEPD):
     """
     This is an abstraction for Pimoroni Inky pHat and wHat devices
