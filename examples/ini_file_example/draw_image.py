@@ -41,7 +41,7 @@ except EPDNotFoundError:
 
 # if now load an image file using the Pillow lib
 print('Loading image')
-image = Image.open('../grass.jpg')
+image = Image.open('../PIA03519_small.jpg')
 
 # resize for your display
 image = image.resize((epd.width, epd.height))
