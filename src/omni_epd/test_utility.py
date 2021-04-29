@@ -55,7 +55,7 @@ class EPDTestUtility:
             rY = y + (height - rHeight)/2
 
             print(f"Drawing rectangle of width {rWidth} and height {rHeight}")
-            imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), width=2)
+            imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), outline=(0, 0, 0), width=2)
 
             return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent-step, step)
         else:
@@ -76,7 +76,7 @@ class EPDTestUtility:
     def draw(self):
 
         # create a blank image
-        im = Image.new('1', (self.epd.width, self.epd.height), color=1)
+        im = Image.new('RGB', (self.epd.width, self.epd.height), color=(255,255,255))
         draw = ImageDraw.Draw(im)
 
         # draw a series of rectangles
