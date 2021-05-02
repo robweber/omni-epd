@@ -153,7 +153,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
                  "epd2in9b": {"driver": "epd2in9bc", "modes": ("bw", "red")},
                  "epd2in9b_V3": {"driver": "epd2in9b_V3", "modes": ("bw", "red")},
                  "epd2in9c": {"driver": "epd2in9bc", "modes": ("bw", "yellow")},
-                 "epd4in2bc": {"driver": "epd4in2bc", "modes": ("bw", "red")},
+                 "epd4in2b": {"driver": "epd4in2bc", "modes": ("bw", "red")},
                  "epd4in2c": {"driver": "epd4in2bc", "modes": ("bw", "yellow")},
                  "epd4in2b_V2": {"driver": "epd4in2b_V2", "modes": ("bw", "red")},
                  "epd5in83b": {"driver": "epd5in83bc", "modes": ("bw", "red")},
