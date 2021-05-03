@@ -171,7 +171,7 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 
 ## Contributing
 
-PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example.
+PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you test one of the listed displays, please mark it as verified by __bolding__ it in the [Displays Implemented](#displays-implemented) section. If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example.
 
 ### Contributors
 
