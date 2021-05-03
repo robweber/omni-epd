@@ -54,7 +54,7 @@ class VirtualEPD:
 
     def __init__(self, deviceName, config):
         self._config = config
-        self.__device_name = deviceName
+        self._device_name = deviceName
 
         # set the display mode
         self.mode = self._get_device_option('mode', self.mode)
@@ -62,7 +62,7 @@ class VirtualEPD:
         self._logger = logging.getLogger(self.__str__())
 
     def __str__(self):
-        return f"{self.pkg_name}.{self.__device_name}"
+        return f"{self.pkg_name}.{self._device_name}"
 
     # generate a palette given the colors available for this display
     def __generate_palette(self, colors):
