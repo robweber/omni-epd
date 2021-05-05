@@ -253,6 +253,10 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     def _display(self, image):
         # no need to adjust image, done in waveshare lib
 
+        if(self._device_name == "epd3in7"):
+            # clear the display first
+            self.clear()
+
         if(self.mode == "gray4"):
             self._device.display_4Gray(self._device.getbuffer_4Gray(image))
         else:
