@@ -262,6 +262,14 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
             else:
                 self._device.display(self._device.getbuffer(image))
 
+    def clear(self):
+        # 3.7 in needs mode and color to clear
+        if(self._device_name == "epd3in7"):
+            mode = 0 if self.mode == "gray4" else 1
+            self._device.Clear(0xFF, mode)
+        else:
+            self._device.Clear()
+
 
 class Waveshare102inDisplay(WaveshareDisplay):
     """
