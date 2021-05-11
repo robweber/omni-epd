@@ -81,10 +81,21 @@ class WaveshareBWDisplay(WaveshareDisplay):
     """
 
     # devices that use alternate init methods
-    lutInitList = ["epd2in9", "epd2in13", "epd1in54"]
-    modeInitList = ["epd2in66", "epd2in13_V2"]
+    deviceMap = {"epd1in54": {"alt_init": True, "lut_init": True, "alt_clear": True},
+                 "epd1in54_V2": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd2in9": {"alt_init": True, "lut_init": True, "alt_clear": True},
+                 "epd2in9_V2": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd2in9d": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd2in13": {"alt_init": True, "lut_init": True, "alt_clear": True},
+                 "epd2in13_V2": {"alt_init": True, "lut_init": False, "alt_clear": False},
+                 "epd2in13d": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd2in66": {"alt_init": True, "lut_init": False, "alt_clear": False},
+                 "epd5in83": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd5in83_V2": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd7in5": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd7in5_HD": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd7in5_V2": {"alt_init": False, "lut_init": False, "alt_clear": False}}
 
-    alt_init = False  # specify that init with a param should be used
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
     def __init__(self, deviceName, config):
@@ -92,36 +103,24 @@ class WaveshareBWDisplay(WaveshareDisplay):
 
         # device object loaded in parent class
 
-        # check if alternate init method is used
-        if(deviceName in self.lutInitList or deviceName in self.modeInitList):
-            self.alt_init = True
-
-            # some devices set the full instruction as the param
-            if(deviceName in self.lutInitList):
-                self.alt_init_param = self._device.lut_full_update
+        # some devices set the full instruction as the param
+        if(self.deviceMap[deviceName]['lut_init']):
+            self.alt_init_param = self._device.lut_full_update
 
     @staticmethod
     def get_supported_devices():
         result = []
 
-        # list of common devices that share init() and display() method calls
-        commonDeviceList = ["epd1in54_V2", "epd2in13d",
-                            "epd2in9_V2", "epd2in9d",
-                            "epd5in83", "epd5in83_V2",
-                            "epd7in5", "epd7in5_HD", "epd7in5_V2"]
-
         # python libs for this might not be installed - that's ok, return nothing
         if(check_module_installed(WAVESHARE_PKG)):
-            result = WaveshareBWDisplay.lutInitList + WaveshareBWDisplay.modeInitList + commonDeviceList
-
             # return a list of all submodules (device types)
-            result = [f"{WAVESHARE_PKG}.{n}" for n in result]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareBWDisplay.deviceMap]
 
         return result
 
     def prepare(self):
         # if device needs an init param
-        if(self.alt_init):
+        if(self.deviceMap[self._device_name]['alt_init']):
             self._device.init(self.alt_init_param)
         else:
             self._device.init()
@@ -131,12 +130,11 @@ class WaveshareBWDisplay(WaveshareDisplay):
         self._device.display(self._device.getbuffer(image))
 
     def clear(self):
-        if(self._device_name in self.lutInitList):
-            # these devices need a color parameter
-            self._device.Clear(0xFF)  # hardcode white here
+        if(self.deviceMap[self._device_name]['alt_clear']):
+            # device needs color parameter, hardcode white
+            self._device.Clear(0xFF)
         else:
-            # use standard clear method
-            super().clear()
+            self._device.Clear()
 
 
 class WaveshareTriColorDisplay(WaveshareDisplay):
