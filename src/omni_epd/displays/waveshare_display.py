@@ -130,6 +130,14 @@ class WaveshareBWDisplay(WaveshareDisplay):
         # no need to adjust palette, done in waveshare driver
         self._device.display(self._device.getbuffer(image))
 
+    def clear(self):
+        if(self._device_name in self.lutInitList):
+            # these devices need a color parameter
+            self._device.Clear(0xFF)  # hardcode white here
+        else:
+            # use standard clear method
+            super().clear()
+
 
 class WaveshareTriColorDisplay(WaveshareDisplay):
     """
