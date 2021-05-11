@@ -88,7 +88,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
                  "epd2in9d": {"alt_init": False, "lut_init": False, "alt_clear": False},
                  "epd2in13": {"alt_init": True, "lut_init": True, "alt_clear": True},
                  "epd2in13_V2": {"alt_init": True, "lut_init": False, "alt_clear": False},
-                 "epd2in13d": {"alt_init": False, "lut_init": False, "alt_clear": False},
+                 "epd2in13d": {"alt_init": False, "lut_init": False, "alt_clear": True},
                  "epd2in66": {"alt_init": True, "lut_init": False, "alt_clear": False},
                  "epd5in83": {"alt_init": False, "lut_init": False, "alt_clear": False},
                  "epd5in83_V2": {"alt_init": False, "lut_init": False, "alt_clear": False},
