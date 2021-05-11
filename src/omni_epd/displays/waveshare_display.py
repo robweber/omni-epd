@@ -227,7 +227,9 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     modes_available = ("bw", "gray4")
     max_colors = 4
 
-    deviceList = ["epd2in7", "epd3in7", "epd4in2"]  # devices that support 4 shade grayscale
+    deviceMap = {"epd2in7": {"alt_clear": True},
+                 "epd3in7": {"alt_clear": True},
+                 "epd4in2": {"alt_clear": False}}  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -239,7 +241,7 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
         result = []
 
         if(check_module_installed(WAVESHARE_PKG)):
-            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceList]
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceMap]
 
         return result
 
@@ -267,6 +269,17 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
                 self._device.display_1Gray(self._device.getbuffer(image))
             else:
                 self._device.display(self._device.getbuffer(image))
+
+    def clear(self):
+        if(self.deviceMap[self._device_name]['alt_clear']):
+            # 3.7 in needs mode and color to clear
+            if(self._device_name == "epd3in7"):
+                mode = 0 if self.mode == "gray4" else 1
+                self._device.Clear(0xFF, mode)
+            else:
+                self._device.Clear(0xFF)  # use white for clear
+        else:
+            self._device.Clear()
 
 
 class Waveshare102inDisplay(WaveshareDisplay):
