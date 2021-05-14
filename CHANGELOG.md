@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.2.2
+
+### Added
+
+- added [SlowMovie](https://github.com/TomWhitwell/SlowMovie) to list of implementing projects
+
+### Changed
+
+- modified several of the Waveshare devices to make sure `init()`, `display()`, and `clear()` methods are all being called correctly based on device specifics
+
 ## Version 0.2.1
 
 ### Changed

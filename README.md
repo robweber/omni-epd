@@ -167,6 +167,7 @@ The [Waveshare device library](https://github.com/waveshare/e-Paper) requires th
 ## Implementing Projects
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
 
+* [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process. 
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 
 ## Contributing
@@ -176,6 +177,7 @@ PRs accepted! If there a fix for any of the documentation or something is not qu
 ### Contributors
 
 * [@missionfloyd](https://github.com/missionfloyd)
+* [@qubist](https://github.com/qubist)
 
 ## License
 [GPLv3](/LICENSE)
