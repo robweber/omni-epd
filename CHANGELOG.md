@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - added [SlowMovie](https://github.com/TomWhitwell/SlowMovie) to list of implmenting projects
 
+### Changed
+
+- modified several of the Waveshare devices to make sure `init()`, `display()`, and `clear()` methods are all being called correctly based on device specifics
+
 ## Version 0.2.1
 
 ### Changed
