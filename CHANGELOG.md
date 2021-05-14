@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## Version 0.2.2
 
 ### Added
 
-- added [SlowMovie](https://github.com/TomWhitwell/SlowMovie) to list of implmenting projects
+- added [SlowMovie](https://github.com/TomWhitwell/SlowMovie) to list of implementing projects
 
 ### Changed
 
