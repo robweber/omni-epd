@@ -227,7 +227,7 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     modes_available = ("bw", "gray4")
     max_colors = 4
 
-    deviceMap = {"epd2in7": {"alt_clear": True},
+    deviceMap = {"epd2in7": {"alt_clear": False},
                  "epd3in7": {"alt_clear": True},
                  "epd4in2": {"alt_clear": False}}  # devices that support 4 shade grayscale
 
