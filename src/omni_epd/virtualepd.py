@@ -48,7 +48,7 @@ class VirtualEPD:
     # only used by displays that need palette filtering before sending to display driver
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
-    
+
     dither = "floyd-steinberg"
 
     _device = None  # concrete device class, initialize in __init__
@@ -108,7 +108,7 @@ class VirtualEPD:
             enhancer = ImageEnhance.Sharpness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
-        
+
         if(self._config.has_option(IMAGE_DISPLAY, "dither")):
             self.dither = self._config.get(IMAGE_DISPLAY, "dither", fallback=self.dither).lower()
 
@@ -179,11 +179,13 @@ class VirtualEPD:
                 image = self._ditherImage(image, palette)
 
         return image
-        
-    def _ditherImage(self, image, palette=[0xffffff, 0x000000]):
-        palette = hitherdither.palette.Palette(palette)
+
+    def _ditherImage(self, image, palette=[255, 255, 255, 0, 0, 0]):
+        # hitherdither expects a list of colors, i.e., [0xffffff, 0x000000, ...] 
+        palette = [palette[i:i+3] for i in range(0, len(palette), 3)]
+        palette = hitherdither.palette.Palette([c[0] << 16 | c[1] << 8 | c[2] for c in palette])
         thresholds = [64, 64, 64]
-        
+
         if self.dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
             image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither, order=2)
         elif self.dither == "bayer":
