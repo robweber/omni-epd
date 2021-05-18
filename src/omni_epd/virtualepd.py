@@ -181,7 +181,7 @@ class VirtualEPD:
         return image
 
     def _ditherImage(self, image, palette=[255, 255, 255, 0, 0, 0]):
-        # hitherdither expects a list of colors, i.e., [0xffffff, 0x000000, ...] 
+        # hitherdither expects a list of colors, i.e., [0xffffff, 0x000000, ...]
         palette = [palette[i:i+3] for i in range(0, len(palette), 3)]
         palette = hitherdither.palette.Palette([c[0] << 16 | c[1] << 8 | c[2] for c in palette])
         thresholds = [64, 64, 64]
