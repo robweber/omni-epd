@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import importlib
 import logging
+import hitherdither
 from PIL import Image, ImageEnhance
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -47,6 +48,8 @@ class VirtualEPD:
     # only used by displays that need palette filtering before sending to display driver
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
+    
+    dither = "floyd-steinberg"
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
@@ -105,6 +108,9 @@ class VirtualEPD:
             enhancer = ImageEnhance.Sharpness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
+        
+        if(self._config.has_option(IMAGE_DISPLAY, "dither")):
+            self.dither = self._config.get(IMAGE_DISPLAY, "dither", fallback=self.dither).lower()
 
         return image
 
@@ -146,7 +152,10 @@ class VirtualEPD:
     def _filterImage(self, image):
 
         if(self.mode == 'bw'):
-            image = image.convert("1")
+            if self.dither == "floyd-steinberg":
+                image = image.convert("1")
+            else:
+                image = self._ditherImage(image)
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
@@ -164,7 +173,25 @@ class VirtualEPD:
             palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
 
             # apply the palette
-            image = image.quantize(palette=palette_image)
+            if self.dither == "floyd-steinberg":
+                image = image.quantize(palette=palette_image)
+            else:
+                image = self._ditherImage(image, palette)
+
+        return image
+        
+    def _ditherImage(self, image, palette=[0xffffff, 0x000000]):
+        palette = hitherdither.palette.Palette(palette)
+        thresholds = [64, 64, 64]
+        
+        if self.dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
+            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither, order=2)
+        elif self.dither == "bayer":
+            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, thresholds, order=8)
+        elif self.dither == "cluster-dot":
+            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds, order=8)
+        elif self.dither == "yliluoma":
+            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette, order=8)
 
         return image
 
