@@ -50,7 +50,8 @@ class VirtualEPD:
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
 
     dither = "floyd-steinberg"
-    dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma")
+    dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes",
+                    "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma")
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
