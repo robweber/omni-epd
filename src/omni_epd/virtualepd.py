@@ -51,7 +51,7 @@ class VirtualEPD:
 
     dither = "floyd-steinberg"
     dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes",
-                    "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma")
+                    "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma", "none")
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
@@ -164,9 +164,9 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image):
+    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG):
         if(self.mode == 'bw'):
-            image = image.convert("1")
+            image = image.convert("1", dither=dither)
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
@@ -184,7 +184,7 @@ class VirtualEPD:
             palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
 
             # apply the palette
-            image = image.quantize(palette=palette_image)
+            image = image.quantize(palette=palette_image, dither=dither)
 
         return image
 
@@ -201,6 +201,8 @@ class VirtualEPD:
             image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds)
         elif self.dither == "yliluoma":
             image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
+        elif(self.dither == "none"):
+            image = self._filterImage(image, Image.NONE)
 
         image = image.convert("RGB")
         return image
