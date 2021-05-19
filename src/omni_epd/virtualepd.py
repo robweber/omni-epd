@@ -182,9 +182,12 @@ class VirtualEPD:
 
     def _ditherImage(self, image, palette=[255, 255, 255, 0, 0, 0]):
         # hitherdither expects a list of colors, i.e., [0xffffff, 0x000000, ...]
-        palette = [palette[i:i+3] for i in range(0, len(palette), 3)]
-        palette = hitherdither.palette.Palette([c[0] << 16 | c[1] << 8 | c[2] for c in palette])
-        thresholds = [64, 64, 64]
+        palette_hex = []
+        for i in range(0, len(palette), 3):
+            palette_hex += [(palette[i] << 16) + (palette[i + 1] << 8) + palette[i + 2]]
+        palette = hitherdither.palette.Palette(palette_hex)
+
+        thresholds = [128, 128, 128]
 
         if self.dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
             image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither, order=2)
