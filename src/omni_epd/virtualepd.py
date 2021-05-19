@@ -190,13 +190,13 @@ class VirtualEPD:
         thresholds = [128, 128, 128]
 
         if self.dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
-            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither, order=2)
+            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither)
         elif self.dither == "bayer":
-            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, thresholds, order=8)
+            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, thresholds)
         elif self.dither == "cluster-dot":
-            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds, order=8)
+            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds)
         elif self.dither == "yliluoma":
-            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette, order=8)
+            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
 
         return image
 
