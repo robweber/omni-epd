@@ -49,7 +49,6 @@ class VirtualEPD:
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
 
-    dither = "floyd-steinberg"
     dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes",
                     "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma", "none")
 
@@ -112,20 +111,11 @@ class VirtualEPD:
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
         if(self._config.has_option(IMAGE_DISPLAY, "dither")) and self._config.get(IMAGE_DISPLAY, "dither") in self.dither_modes:
-            self.dither = self._config.get(IMAGE_DISPLAY, "dither")
-            if(self.dither != "floyd-steinberg"):
-                if(self.mode == "bw"):
-                    image = self._ditherImage(image)
-                else:
-                    # load palette - this is a catch in case it was changed by the user
-                    colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+            dither = self._config.get(IMAGE_DISPLAY, "dither")
+            if(dither != "floyd-steinberg"):
+                image = self._ditherImage(image, dither)
+                self._logger.debug(f"Applying dither: {dither}")
 
-                    # check if we have too many colors in the palette
-                    if(len(colors) > self.max_colors):
-                        raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
-
-                    palette = self.__generate_palette(colors)
-                    image = self._ditherImage(image, palette)
 
         return image
 
@@ -188,20 +178,32 @@ class VirtualEPD:
 
         return image
 
-    def _ditherImage(self, image, palette=[255, 255, 255, 0, 0, 0]):
+    def _ditherImage(self, image, dither):
+        if(self.mode == 'bw'):
+            palette=[255, 255, 255, 0, 0, 0]
+        else:
+            # load palette - this is a catch in case it was changed by the user
+            colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+
+            # check if we have too many colors in the palette
+            if(len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
+
+            palette = self.__generate_palette(colors)
+
         # split the palette into RGB sublists
         palette = hitherdither.palette.Palette([palette[x:x+3] for x in range(0, len(palette), 3)])
         thresholds = [128, 128, 128]
 
-        if self.dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
-            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=self.dither)
-        elif self.dither == "bayer":
+        if dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
+            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=dither)
+        elif dither == "bayer":
             image = hitherdither.ordered.bayer.bayer_dithering(image, palette, thresholds)
-        elif self.dither == "cluster-dot":
+        elif dither == "cluster-dot":
             image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds)
-        elif self.dither == "yliluoma":
+        elif dither == "yliluoma":
             image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
-        elif(self.dither == "none"):
+        elif(dither == "none"):
             image = self._filterImage(image, Image.NONE)
 
         image = image.convert("RGB")
