@@ -116,7 +116,6 @@ class VirtualEPD:
                 image = self._ditherImage(image, dither)
                 self._logger.debug(f"Applying dither: {dither}")
 
-
         return image
 
     """
@@ -180,7 +179,7 @@ class VirtualEPD:
 
     def _ditherImage(self, image, dither):
         if(self.mode == 'bw'):
-            palette=[255, 255, 255, 0, 0, 0]
+            palette = [255, 255, 255, 0, 0, 0]
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
