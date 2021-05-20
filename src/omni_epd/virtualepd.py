@@ -152,7 +152,7 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image, dither=None):
+    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG):
         if(self.mode == 'bw'):
             image = image.convert("1", dither=dither)
         else:
@@ -202,7 +202,7 @@ class VirtualEPD:
         elif dither == "yliluoma":
             image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
         elif dither == "floyd-steinberg":
-            image = self._filterImage(image, Image.FLOYDSTEINBERG)
+            image = self._filterImage(image)
         elif dither == "none":
             image = self._filterImage(image, Image.NONE)
 
