@@ -112,9 +112,8 @@ class VirtualEPD:
 
         if(self._config.has_option(IMAGE_DISPLAY, "dither")) and self._config.get(IMAGE_DISPLAY, "dither") in self.dither_modes:
             dither = self._config.get(IMAGE_DISPLAY, "dither")
-            if(dither != "floyd-steinberg"):
-                image = self._ditherImage(image, dither)
-                self._logger.debug(f"Applying dither: {dither}")
+            image = self._ditherImage(image, dither)
+            self._logger.debug(f"Applying dither: {dither}")
 
         return image
 
@@ -153,7 +152,7 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG):
+    def _filterImage(self, image, dither=None):
         if(self.mode == 'bw'):
             image = image.convert("1", dither=dither)
         else:
@@ -202,7 +201,9 @@ class VirtualEPD:
             image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds)
         elif dither == "yliluoma":
             image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
-        elif(dither == "none"):
+        elif dither == "floyd-steinberg":
+            image = self._filterImage(image, Image.FLOYDSTEINBERG)
+        elif dither == "none":
             image = self._filterImage(image, Image.NONE)
 
         image = image.convert("RGB")
