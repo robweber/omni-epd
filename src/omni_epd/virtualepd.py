@@ -191,16 +191,18 @@ class VirtualEPD:
 
         # split the palette into RGB sublists
         palette = hitherdither.palette.Palette([palette[x:x+3] for x in range(0, len(palette), 3)])
-        thresholds = [128, 128, 128]
+        
+        threshold = json.loads(self._config.get(IMAGE_DISPLAY, "threshold", fallback="[128, 128, 128]"))
+        order = self._config.getint(IMAGE_DISPLAY, "order", fallback=None)
 
         if dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
-            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, method=dither)
+            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, dither)
         elif dither == "bayer":
-            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, thresholds)
+            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, threshold, order or 8)
         elif dither == "cluster-dot":
-            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, thresholds)
+            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, threshold, order or 4)
         elif dither == "yliluoma":
-            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette)
+            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette, order or 8)
         elif dither == "floyd-steinberg":
             image = self._filterImage(image)
         elif dither == "none":
