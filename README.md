@@ -103,7 +103,7 @@ brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
-When using the `dither` option the following values are allowed. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects. 
+When using the `dither` option the following values are allowed. Be aware that some dithering algorithms take a lot of time to run on smaller systems, like a Raspberry Pi. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects. 
 
 * floyd-steinberg
 * jarvis-judice-ninke
