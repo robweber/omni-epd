@@ -80,7 +80,7 @@ user@server:~ $ omni-epd-test -e omni_epd.mock -i /path/to/image.jpg
 
 There are scenarios where additional post-processing needs to be done for a particular project, or a particular display. An example of this might be to rotate the display 180 degrees to account for how the physical hardware is mounted. Another might be always adjusting the image with brightness or contrast settings. These are modifications that are specific to display requirements or user preferences and can be applied by use of a .ini file instead of having to modify code or allow for options via implementing scripts.
 
-Two types of __ini__ files can be used in these situations. A global file, named `omni-epd.ini`, or a device specific file; which is the device name from the table below with a `.ini` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the `os.getcwd()` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations. Some displays also have options specific to them only. [Consult with that list](https://github.com/robweber/omni-epd/wiki/Device-Specific-Options) if these additional options are needed in your situation. 
+Two types of __ini__ files can be used in these situations. A global file, named `omni-epd.ini`, or a device specific file; which is the device name from the table below with a `.ini` suffix. These must exist in the root directory where the calling script is run. This is the directory given by the `os.getcwd()` method call. Valid options for this file are listed below. These will be applied on top of any processing done to the passed in image object. For example, if the implementing script is already modifying the image object to rotate 90 degrees, adding a rotate command will rotate an additional X degrees. For precedence device specific configurations trump any global configurations. Some displays also have options specific to them only. [Consult with that list](https://github.com/robweber/omni-epd/wiki/Device-Specific-Options) if these additional options are needed in your situation.
 
 ```
 # file shown with default values
@@ -92,6 +92,9 @@ mode=bw  # the mode of the display, typically b+w by default. See list of suppor
 rotate=0  # rotate final image written to display by X degrees [0-360]
 flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
+dither=floyd-steinberg  # apply a dithering algorithm to the image, valid options list below
+order=8  # when using bayer and yiluoma dithers defines the matrix size, must be a power of 2. When using cluster-dot dither this defines the dot size, can be 4 or 8
+threshold=[128, 128, 128]  # for dithers this defines the color snap threshold. Takes an RGB list.
 
 [Image Enhancements]
 palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must be less than or equal to max colors the display supports
@@ -99,6 +102,20 @@ contrast=1  # adjust image contrast, 1 = no adjustment
 brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
+
+When using the `dither` option the following values are allowed. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects. 
+
+* floyd-steinberg
+* jarvis-judice-ninke
+* stucki
+* burkes
+* sierra3
+* sierra2
+* sierra-2-4a
+* atkinson
+* bayer
+* cluster-dot
+* yliluoma
 
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
@@ -167,7 +184,7 @@ The [Waveshare device library](https://github.com/waveshare/e-Paper) requires th
 ## Implementing Projects
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
 
-* [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process. 
+* [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process.
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 
 ## Contributing
