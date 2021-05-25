@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import importlib
 import logging
+import hitherdither
 from PIL import Image, ImageEnhance
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -47,6 +48,9 @@ class VirtualEPD:
     # only used by displays that need palette filtering before sending to display driver
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
+
+    dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes",
+                    "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma", "none")
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
@@ -106,6 +110,11 @@ class VirtualEPD:
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
+        if(self._config.has_option(IMAGE_DISPLAY, "dither")) and self._config.get(IMAGE_DISPLAY, "dither") in self.dither_modes:
+            dither = self._config.get(IMAGE_DISPLAY, "dither")
+            image = self._ditherImage(image, dither)
+            self._logger.debug(f"Applying dither: {dither}")
+
         return image
 
     """
@@ -143,10 +152,9 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image):
-
+    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG):
         if(self.mode == 'bw'):
-            image = image.convert("1")
+            image = image.convert("1", dither=dither)
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
@@ -164,8 +172,43 @@ class VirtualEPD:
             palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
 
             # apply the palette
-            image = image.quantize(palette=palette_image)
+            image = image.quantize(palette=palette_image, dither=dither)
 
+        return image
+
+    def _ditherImage(self, image, dither):
+        if(self.mode == 'bw'):
+            palette = [255, 255, 255, 0, 0, 0]
+        else:
+            # load palette - this is a catch in case it was changed by the user
+            colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+
+            # check if we have too many colors in the palette
+            if(len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
+
+            palette = self.__generate_palette(colors)
+
+        # split the palette into RGB sublists
+        palette = hitherdither.palette.Palette([palette[x:x+3] for x in range(0, len(palette), 3)])
+
+        threshold = json.loads(self._config.get(IMAGE_DISPLAY, "threshold", fallback="[128, 128, 128]"))
+        order = self._config.getint(IMAGE_DISPLAY, "order", fallback=None)
+
+        if dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
+            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, dither)
+        elif dither == "bayer":
+            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, threshold, order or 8)
+        elif dither == "cluster-dot":
+            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, threshold, order or 4)
+        elif dither == "yliluoma":
+            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette, order or 8)
+        elif dither == "floyd-steinberg":
+            image = self._filterImage(image)
+        elif dither == "none":
+            image = self._filterImage(image, Image.NONE)
+
+        image = image.convert("RGB")
         return image
 
     # helper method to load a concrete display object based on the package and class name
