@@ -220,7 +220,6 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     This class is for the Waveshare displays that support 4 shade grayscale
 
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd2in7.py
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd3in7.py
     https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
     """
 
@@ -228,7 +227,6 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     max_colors = 4
 
     deviceMap = {"epd2in7": {"alt_clear": False},
-                 "epd3in7": {"alt_clear": True},
                  "epd4in2": {"alt_clear": False}}  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
@@ -246,44 +244,64 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
         return result
 
     def prepare(self):
-        # 3.7 in has different init methods
-        if(self._device_name == "epd3in7"):
-            if(self.mode == 'gray4'):
-                self._device.init(0)
-            else:
-                self._device.init(1)
+
+        if(self.mode == "gray4"):
+            self._device.Init_4Gray()
         else:
-            if(self.mode == "gray4"):
-                self._device.Init_4Gray()
-            else:
-                self._device.init()
+            self._device.init()
 
     def _display(self, image):
         # no need to adjust image, done in waveshare lib
-
-        if(self._device_name == "epd3in7"):
-            # clear the display first
-            self.clear()
-
         if(self.mode == "gray4"):
             self._device.display_4Gray(self._device.getbuffer_4Gray(image))
         else:
-            # 3.7 in has different bw method
-            if(self._device_name == "epd3in7"):
-                self._device.display_1Gray(self._device.getbuffer(image))
-            else:
-                self._device.display(self._device.getbuffer(image))
+            self._device.display(self._device.getbuffer(image))
 
     def clear(self):
         if(self.deviceMap[self._device_name]['alt_clear']):
-            # 3.7 in needs mode and color to clear
-            if(self._device_name == "epd3in7"):
-                mode = 0 if self.mode == "gray4" else 1
-                self._device.Clear(0xFF, mode)
-            else:
-                self._device.Clear(0xFF)  # use white for clear
+            self._device.Clear(0xFF)  # use white for clear
         else:
             self._device.Clear()
+
+
+class Waveshare3in7Display(WaveshareDisplay):
+    """
+    This class is for the Waveshare displays that support 4 shade grayscale
+
+    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd3in7.py
+    """
+
+    modes_available = ("gray4")
+    mode = "gray4"
+    max_colors = 4
+
+    deviceMap = {"epd3in7": {"alt_clear": True}}  # devices that support 4 shade grayscale
+
+    def __init__(self, deviceName, config):
+        super().__init__(deviceName, config)
+
+        # device object created in parent class
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.epd3in7"]
+
+        return result
+
+    def prepare(self):
+        # 3.7 in has different init methods
+        self._device.init(0)
+
+    def _display(self, image):
+        # no need to adjust image, done in waveshare lib
+        self._device.display_4Gray(self._device.getbuffer_4Gray(image))
+
+    def clear(self):
+        # 3.7 in needs mode and color to clear
+        self._device.Clear(0xFF, 0)
 
 
 class Waveshare102inDisplay(WaveshareDisplay):
