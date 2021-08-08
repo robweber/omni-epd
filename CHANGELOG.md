@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.2.3
+
+### Added
+
+- dithering options in `ini` file added using the [hitherdither](https://github.com/hbldh/hitherdither) library, thanks @missionfloyd
+
 ## Version 0.2.2
 
 ### Added
