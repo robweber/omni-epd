@@ -280,7 +280,9 @@ class Waveshare3in7Display(WaveshareDisplay):
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        # device object created in parent class
+        # for this device the height/width are reversed in the official files
+        self.width = self._device.height
+        self.height = self._device.width 
 
     @staticmethod
     def get_supported_devices():
