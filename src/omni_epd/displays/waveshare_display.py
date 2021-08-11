@@ -282,7 +282,7 @@ class Waveshare3in7Display(WaveshareDisplay):
 
         # for this device the height/width are reversed in the official files
         self.width = self._device.height
-        self.height = self._device.width 
+        self.height = self._device.width
 
     @staticmethod
     def get_supported_devices():
