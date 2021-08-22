@@ -171,7 +171,8 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
                  "epd7in5b_HD": {"driver": "epd7in5b_HD", "modes": ("bw", "red")}}
 
     def __init__(self, deviceName, config):
-        super().__init__(deviceName, config)
+        driverName = self.deviceMap[deviceName]['driver']
+        super().__init__(driverName, config)
 
         # device object loaded in parent class
 
