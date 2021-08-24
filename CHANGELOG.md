@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.2.5
+
+### Fixed
+
+- fixed overlay colors in epd5in83c tri-color display (thanks @dr-boehmerie)
+
+### Added
+
+- `waveshare_epd.epd2in9` and `waveshare_epd.epd5in83c` are now tested (thanks @dr-boehmerie)
+
 ## Version 0.2.4
 
 ### Fixed

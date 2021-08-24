@@ -195,6 +195,7 @@ PRs accepted! If there a fix for any of the documentation or something is not qu
 
 * [@missionfloyd](https://github.com/missionfloyd)
 * [@qubist](https://github.com/qubist)
+* [@dr-boehmerie](https://github.com/dr-boehmerie)
 
 ## License
 [GPLv3](/LICENSE)
