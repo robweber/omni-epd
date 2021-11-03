@@ -28,6 +28,7 @@ from . virtualepd import VirtualEPD
 from . displays.mock_display import MockDisplay  # noqa: F401
 from . displays.waveshare_display import WaveshareDisplay  # noqa: F401
 from . displays.inky_display import InkyDisplay, InkyImpressionDisplay  # noqa: F401
+from . displays.it8951_display import IT8951Display  # noqa: F401
 
 
 def __loadConfig(deviceName):
