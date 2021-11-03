@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import logging
-import os.path
 from .. virtualepd import VirtualEPD
 
 
@@ -38,7 +37,7 @@ class IT8951Display(VirtualEPD):
 
         self.logger = logging.getLogger(__name__)
 
-        # this is normally where you'd load actual device class but nothing to load here
+        # this is normally where you'd load actual device class
 
         # set the width and height
         self.width = 400
@@ -53,10 +52,10 @@ class IT8951Display(VirtualEPD):
         self.logger.info(f"preparing {self.__str__()}")
 
     def _display(self, image):
-      # keep this as it applies any filters defined in INI file
-      image = self._filterImage(image)
+        # keep this as it applies any filters defined in INI file
+        image = self._filterImage(image)
 
-      self.logger.info(f"{self.__str__()} writing image to EPD")
+        self.logger.info(f"{self.__str__()} writing image to EPD")
 
     def sleep(self):
         self.logger.info(f"{self.__str__()} is sleeping")
