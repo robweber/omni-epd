@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased 
+
+### Removed
+
+- removed dependency inky[fonts], this is not needed. Thanks @missionfloyd
+
 ## Version 0.2.5
 
 ### Fixed
