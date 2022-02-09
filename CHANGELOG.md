@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Unreleased 
 
+### Fixed
+
+- fixed typos in 5.65in Waveshare implementation - thanks @aaronr8684
+
 ### Removed
 
 - removed dependency inky[fonts], this is not needed. Thanks @missionfloyd
