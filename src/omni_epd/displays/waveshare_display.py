@@ -352,7 +352,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in64f", "epd4in01f"]
+    deviceList = ["epd5in65f", "epd4in01f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -374,6 +374,6 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     def _display(self, image):
         # driver takes care of filtering when in color mode
         if(self.mode == 'bw'):
-            image = self._applyFilter(image)
+            image = self._filterImage(image)
 
         self._device.display(self._device.getbuffer(image))
