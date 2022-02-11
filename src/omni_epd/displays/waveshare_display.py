@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
+from PIL import Image
+
 
 WAVESHARE_PKG = "waveshare_epd"
 
@@ -201,7 +203,8 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
 
         if(self.mode == 'bw'):
             # send the black/white image and blank second image (safer since some drivers require data)
-            self._device.display(self._device.getbuffer(image), [0] * (int(self.width/8) * self.height))
+            img_white = Image.new('1', (self._device.height, self._device.width), 255)
+            self._device.display(self._device.getbuffer(image), self._device.getbuffer(img_white))
         else:
             # apply the color filter to get a 3 color image
             image = self._filterImage(image)
