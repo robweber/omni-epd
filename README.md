@@ -183,6 +183,10 @@ __Waveshare__
 
 The [Waveshare device library](https://github.com/waveshare/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.  
 
+__IT8951__
+
+IT8951 devices, such as the Waveshare 6-in EPD, are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Meyer. This module is downloaded as part of omni-epd setup but it won't automatically install library pre-requisites, which may or may not be installed on your system. Please check the [requirements file](https://github.com/GregDMeyer/IT8951/blob/master/requirements.txt) on that project for a list of current requirements. 
+
 ## Implementing Projects
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
 
