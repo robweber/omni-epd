@@ -24,7 +24,7 @@ from .. virtualepd import VirtualEPD
 
 class IT8951Display(VirtualEPD):
     """
-    This will communicate with IT8951 type displays utilzing the driver built by Greg GregDMeyer
+    This will communicate with IT8951 type displays utilzing the driver built by GregDMeyer
     https://github.com/GregDMeyer/IT8951
     """
 
@@ -67,11 +67,11 @@ class IT8951Display(VirtualEPD):
         dims = (self.width, self.height)
         image.thumbnail(dims)
 
-        paste_coords = [dims[i] - image.size[i] for i in (0,1)]  # align image with bottom of display
+        paste_coords = [dims[i] - image.size[i] for i in (0, 1)]  # align image with bottom of display
 
         # write image to display
-        self._device.frame_buf.paste(pil_im, paste_coords)
-        self._device.draw_full(it8951_constants.DisplayModes.GC16)
+        self._device.frame_buf.paste(image, paste_coords)
+        self._device.draw_full(self.it8951_constants.DisplayModes.GC16)
 
         self.logger.info(f"{self.__str__()} writing image to EPD")
 
