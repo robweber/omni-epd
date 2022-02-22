@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
+from PIL import Image
+
 
 WAVESHARE_PKG = "waveshare_epd"
 
@@ -81,20 +83,20 @@ class WaveshareBWDisplay(WaveshareDisplay):
     """
 
     # devices that use alternate init methods
-    deviceMap = {"epd1in54": {"alt_init": True, "lut_init": True, "alt_clear": True},
-                 "epd1in54_V2": {"alt_init": False, "lut_init": False, "alt_clear": True},
-                 "epd2in9": {"alt_init": True, "lut_init": True, "alt_clear": True},
-                 "epd2in9_V2": {"alt_init": False, "lut_init": False, "alt_clear": True},
-                 "epd2in9d": {"alt_init": False, "lut_init": False, "alt_clear": True},
-                 "epd2in13": {"alt_init": True, "lut_init": True, "alt_clear": True},
-                 "epd2in13_V2": {"alt_init": True, "lut_init": False, "alt_clear": False},
-                 "epd2in13d": {"alt_init": False, "lut_init": False, "alt_clear": True},
-                 "epd2in66": {"alt_init": True, "lut_init": False, "alt_clear": False},
-                 "epd5in83": {"alt_init": False, "lut_init": False, "alt_clear": False},
-                 "epd5in83_V2": {"alt_init": False, "lut_init": False, "alt_clear": False},
-                 "epd7in5": {"alt_init": False, "lut_init": False, "alt_clear": False},
-                 "epd7in5_HD": {"alt_init": False, "lut_init": False, "alt_clear": False},
-                 "epd7in5_V2": {"alt_init": False, "lut_init": False, "alt_clear": False}}
+    deviceMap = {"epd1in54": {"alt_init": True, "lut_init": True, "alt_clear": True, "version": 1},
+                 "epd1in54_V2": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 2},
+                 "epd2in9": {"alt_init": True, "lut_init": True, "alt_clear": True, "version": 1},
+                 "epd2in9_V2": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 2},
+                 "epd2in9d": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 1},
+                 "epd2in13": {"alt_init": True, "lut_init": True, "alt_clear": True, "version": 1},
+                 "epd2in13_V2": {"alt_init": True, "lut_init": False, "alt_clear": False, "version": 2},
+                 "epd2in13d": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 1},
+                 "epd2in66": {"alt_init": True, "lut_init": False, "alt_clear": False, "version": 1},
+                 "epd5in83": {"alt_init": False, "lut_init": False, "alt_clear": False, "version": 1},
+                 "epd5in83_V2": {"alt_init": False, "lut_init": False, "alt_clear": False, "version": 2},
+                 "epd7in5": {"alt_init": False, "lut_init": False, "alt_clear": False, "version": 1},
+                 "epd7in5_HD": {"alt_init": False, "lut_init": False, "alt_clear": False, "version": 1},
+                 "epd7in5_V2": {"alt_init": False, "lut_init": False, "alt_clear": False, "version": 2}}
 
     alt_init_param = 0  # the parameter to pass to init - specifies update mode (full vs partial)
 
@@ -147,28 +149,28 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
     max_colors = 3
 
     # list of all devices - some drivers cover more than one device
-    deviceMap = {"epd1in54b": {"driver": "epd1in54b", "modes": ("bw", "red")},
-                 "epd1in54b_V2": {"driver": "epd1in54b_V2", "modes": ("bw", "red")},
-                 "epd1in54c": {"driver": "epd1in54c", "modes": ("bw", "yellow")},
-                 "epd2in13b": {"driver": "epd2in13bc", "modes": ("bw", "red")},
-                 "epd2in13b_V3": {"driver": "epd2in13b_V3", "modes": ("bw", "red")},
-                 "epd2in13c": {"driver": "epd2in13bc", "modes": ("bw", "yellow")},
-                 "epd2in66b": {"driver": "epd2in66b", "modes": ("bw", "red")},
-                 "epd2in7b": {"driver": "epd2in7b", "modes": ("bw", "red")},
-                 "epd2in7b_V2": {"driver": "epd2in7b_V2", "modes": ("bw", "red")},
-                 "epd2in9b": {"driver": "epd2in9bc", "modes": ("bw", "red")},
-                 "epd2in9b_V3": {"driver": "epd2in9b_V3", "modes": ("bw", "red")},
-                 "epd2in9c": {"driver": "epd2in9bc", "modes": ("bw", "yellow")},
-                 "epd4in2b": {"driver": "epd4in2bc", "modes": ("bw", "red")},
-                 "epd4in2c": {"driver": "epd4in2bc", "modes": ("bw", "yellow")},
-                 "epd4in2b_V2": {"driver": "epd4in2b_V2", "modes": ("bw", "red")},
-                 "epd5in83b": {"driver": "epd5in83bc", "modes": ("bw", "red")},
-                 "epd5in83c": {"driver": "epd5in83bc", "modes": ("bw", "yellow")},
-                 "epd5in83b_V2": {"driver": "epd5in83b_V2", "modes": ("bw", "red")},
-                 "epd7in5b": {"driver": "epd7in5bc", "modes": ("bw", "red")},
-                 "epd7in5c": {"driver": "epd7in5bc", "modes": ("bw", "yellow")},
-                 "epd7in5b_V2": {"driver": "epd7in5b_V2", "modes": ("bw", "red")},
-                 "epd7in5b_HD": {"driver": "epd7in5b_HD", "modes": ("bw", "red")}}
+    deviceMap = {"epd1in54b": {"driver": "epd1in54b", "modes": ("bw", "red"), "version": 1},
+                 "epd1in54b_V2": {"driver": "epd1in54b_V2", "modes": ("bw", "red"), "version": 2},
+                 "epd1in54c": {"driver": "epd1in54c", "modes": ("bw", "yellow"), "version": 1},
+                 "epd2in13b": {"driver": "epd2in13bc", "modes": ("bw", "red"), "version": 1},
+                 "epd2in13b_V3": {"driver": "epd2in13b_V3", "modes": ("bw", "red"), "version": 3},
+                 "epd2in13c": {"driver": "epd2in13bc", "modes": ("bw", "yellow"), "version": 1},
+                 "epd2in66b": {"driver": "epd2in66b", "modes": ("bw", "red"), "version": 1},
+                 "epd2in7b": {"driver": "epd2in7b", "modes": ("bw", "red"), "version": 1},
+                 "epd2in7b_V2": {"driver": "epd2in7b_V2", "modes": ("bw", "red"), "version": 2},
+                 "epd2in9b": {"driver": "epd2in9bc", "modes": ("bw", "red"), "version": 1},
+                 "epd2in9b_V3": {"driver": "epd2in9b_V3", "modes": ("bw", "red"), "version": 3},
+                 "epd2in9c": {"driver": "epd2in9bc", "modes": ("bw", "yellow"), "version": 1},
+                 "epd4in2b": {"driver": "epd4in2bc", "modes": ("bw", "red"), "version": 1},
+                 "epd4in2c": {"driver": "epd4in2bc", "modes": ("bw", "yellow"), "version": 1},
+                 "epd4in2b_V2": {"driver": "epd4in2b_V2", "modes": ("bw", "red"), "version": 2},
+                 "epd5in83b": {"driver": "epd5in83bc", "modes": ("bw", "red"), "version": 1},
+                 "epd5in83c": {"driver": "epd5in83bc", "modes": ("bw", "yellow"), "version": 1},
+                 "epd5in83b_V2": {"driver": "epd5in83b_V2", "modes": ("bw", "red"), "version": 2},
+                 "epd7in5b": {"driver": "epd7in5bc", "modes": ("bw", "red"), "version": 1},
+                 "epd7in5c": {"driver": "epd7in5bc", "modes": ("bw", "yellow"), "version": 1},
+                 "epd7in5b_V2": {"driver": "epd7in5b_V2", "modes": ("bw", "red"), "version": 2},
+                 "epd7in5b_HD": {"driver": "epd7in5b_HD", "modes": ("bw", "red"), "version": 1}}
 
     def __init__(self, deviceName, config):
         driverName = self.deviceMap[deviceName]['driver']
@@ -201,14 +203,15 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
 
         if(self.mode == 'bw'):
             # send the black/white image and blank second image (safer since some drivers require data)
-            self._device.display(self._device.getbuffer(image), [255] * (int(self.width/8) * self.height))
+            img_white = Image.new('1', (self._device.height, self._device.width), 255)
+            self._device.display(self._device.getbuffer(image), self._device.getbuffer(img_white))
         else:
             # apply the color filter to get a 3 color image
             image = self._filterImage(image)
 
             # separate out black from the other color
             img_black = image.copy()
-            img_black.putpalette((255, 255, 255, 0, 0, 0, 255, 255, 255) + (255, 255, 255)*253)
+            img_black.putpalette((0, 0, 0, 255, 255, 255))
 
             img_color = image.copy()
             img_color.putpalette((255, 255, 255, 255, 255, 255, 0, 0, 0) + (255, 255, 255)*253)
@@ -227,8 +230,8 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     modes_available = ("bw", "gray4")
     max_colors = 4
 
-    deviceMap = {"epd2in7": {"alt_clear": False},
-                 "epd4in2": {"alt_clear": False}}  # devices that support 4 shade grayscale
+    deviceMap = {"epd2in7": {"alt_clear": False, "version": 1},
+                 "epd4in2": {"alt_clear": False, "version": 1}}  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -276,7 +279,7 @@ class Waveshare3in7Display(WaveshareDisplay):
     mode = "gray4"
     max_colors = 4
 
-    deviceMap = {"epd3in7": {"alt_clear": True}}  # devices that support 4 shade grayscale
+    deviceMap = {"epd3in7": {"alt_clear": True, "version": 1}}  # devices that support 4 shade grayscale
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -352,7 +355,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in64f", "epd4in01f"]
+    deviceList = ["epd5in65f", "epd4in01f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -374,6 +377,6 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     def _display(self, image):
         # driver takes care of filtering when in color mode
         if(self.mode == 'bw'):
-            image = self._applyFilter(image)
+            image = self._filterImage(image)
 
         self._device.display(self._device.getbuffer(image))

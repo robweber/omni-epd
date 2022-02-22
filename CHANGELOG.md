@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## 0.2.6
+
+### Added
+
+- added `version` identifier for Waveshare devices so that V2 and V3 boards can be identified from the others
+
+### Fixed
+
+- fixed typos in 5.65in Waveshare implementation - thanks @aaronr8684
+- fixed issues with BW display on 7.5 tri-color screens - thanks @aaronr8684
+
+### Removed
+
+- removed dependency inky[fonts], this is not needed. Thanks @missionfloyd
+
 ## Version 0.2.5
 
 ### Fixed
@@ -18,7 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
-- fixed issues with Waveshare 3.7in devices not working properly. 
+- fixed issues with Waveshare 3.7in devices not working properly.
 
 ## Version 0.2.3
 
