@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## 0.2.6
 
 ### Added
 
@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - fixed typos in 5.65in Waveshare implementation - thanks @aaronr8684
+- fixed issues with BW display on 7.5 tri-color screens - thanks @aaronr8684
 
 ### Removed
 
