@@ -158,10 +158,12 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
 |  | [5.83inch e-Paper HAT C](https://www.waveshare.com/5.83inch-e-Paper-HAT-C.htm) | __waveshare_epd.epd5in83c__ | bw, yellow |
-|  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) |waveshare_epd.epd7in5 <br> __waveshare_epd.epd7in5_V2__ | bw |
+|  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | waveshare_epd.epd7in5 | bw |
+|  | [7.5inch e-Paper HAT V2](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | __waveshare_epd.epd7in5_V2__ | bw |
 |  | [7.5inch HD e-Paper HAT](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT.htm) |waveshare_epd.epd7in5_HD | bw |
 |  | [7.5inch HD e-Paper HAT B](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm) |waveshare_epd.epd7in5b_HD | bw, red |
-|  | [7.5inch e-Paper HAT B](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| waveshare_epd.epd7in5b <br> waveshare_epd.epd7in5b_V2 | bw, red |
+|  | [7.5inch e-Paper HAT B](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| waveshare_epd.epd7in5b | bw, red |
+|  | [7.5inch e-Paper HAT B V2](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| __waveshare_epd.epd7in5b_V2__ | bw, red |
 |  | [7.5inch e-Paper HAT C](https://www.waveshare.com/7.5inch-e-Paper-HAT-C.htm) | waveshare_epd.epd7in5c | bw, yellow |
 
 
