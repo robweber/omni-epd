@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Fixed
+
+- calls to `Image.quantize` require an RGB or L mode Image object, convert any loaded image before applying new palettes
+- when filling palette too many colors were being set (< 256), wrong length variable was being used
+
 ## 0.2.6
 
 ### Added
