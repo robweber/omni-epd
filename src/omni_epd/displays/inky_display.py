@@ -20,9 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
-
 INKY_PKG = "inky"
-
 
 class InkyDisplay(VirtualEPD):
     """
@@ -38,7 +36,11 @@ class InkyDisplay(VirtualEPD):
         super().__init__(deviceName, config)
 
         # need to figure out what type of device we have
-        dType, dColor = deviceName.split('_')
+        deviceDetail = deviceName.split('_')
+        if(len(deviceDetail) > 1):
+            dType, dColor = deviceDetail
+        else:
+            dType = deviceDetail[0] # inky.auto
 
         if(dType == 'phat'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
@@ -49,6 +51,10 @@ class InkyDisplay(VirtualEPD):
         elif(dType == 'what'):
             deviceObj = self.load_display_driver(self.pkg_name, 'what')
             self._device = deviceObj.InkyWHAT(dColor)
+        elif(dType == 'auto'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'auto')
+            self._device = deviceObj.auto()
+            self.mode = dColor = self._device.colour
 
         # set mode to black + any other color supported
         if(self.mode != "black"):
@@ -72,7 +78,7 @@ class InkyDisplay(VirtualEPD):
 
         deviceList = ["phat_black", "phat_red", "phat_yellow",
                       "phat1608_black", "phat1608_red", "phat1608_yellow",
-                      "what_black", "what_red", "what_yellow"]
+                      "what_black", "what_red", "what_yellow", "auto"]
 
         # python libs for this might not be installed - that's ok, return nothing
         if(check_module_installed(INKY_PKG)):
