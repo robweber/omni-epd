@@ -36,12 +36,8 @@ class InkyDisplay(VirtualEPD):
         super().__init__(deviceName, config)
 
         # need to figure out what type of device we have
-        deviceDetail = deviceName.split('_')
-        if(len(deviceDetail) > 1):
-            dType, dColor = deviceDetail
-        else:
-            dType = deviceDetail[0] # inky.auto
-
+        dType, dColor = self.get_device_type(deviceName)
+       
         if(dType == 'phat'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
             self._device = deviceObj.InkyPHAT(dColor)
@@ -54,17 +50,15 @@ class InkyDisplay(VirtualEPD):
         elif(dType == 'auto'):
             deviceObj = self.load_display_driver(self.pkg_name, 'auto')
             self._device = deviceObj.auto()
-            self.mode = dColor = self._device.colour
-
+            
         # set mode to black + any other color supported
-        if(self.mode != "black"):
-            self.modes_available = ('black', dColor)
+        self.modes_available = ('black', self._device.colour)
 
         # phat and what devices expect colors in the order white, black, other
-        if(self.mode == "red" and dColor == "red"):
+        if(self.mode == "red" and self._device.colour == "red"):
             self.palette_filter.append([255, 0, 0])
             self.max_colors = 3
-        elif(self.mode == "yellow" and dColor == "yellow"):
+        elif(self.mode == "yellow" and self._device.colour == "yellow"):
             self.palette_filter.append([255, 255, 0])
             self.max_colors = 3
 
@@ -72,6 +66,13 @@ class InkyDisplay(VirtualEPD):
         self.width = self._device.width
         self.height = self._device.height
 
+    def get_device_type(self, deviceName):
+        deviceDetail = deviceName.split('_')
+        if(len(deviceDetail) == 2):
+            return (deviceDetail[0], deviceDetail[1])
+        else:
+            return (deviceDetail[0], None)  # inky.auto
+    
     @staticmethod
     def get_supported_devices():
         result = []
