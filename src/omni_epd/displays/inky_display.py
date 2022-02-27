@@ -51,6 +51,7 @@ class InkyDisplay(VirtualEPD):
         elif(dType == 'auto'):
             deviceObj = self.load_display_driver(self.pkg_name, 'auto')
             self._device = deviceObj.auto()
+            dColor = 'color' if self._device.colour == 'multi' else self._device.colour
 
         # set mode to black + any other color supported
         if(self.mode != "black"):
