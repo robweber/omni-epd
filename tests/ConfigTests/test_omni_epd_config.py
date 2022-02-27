@@ -10,6 +10,8 @@ from omni_epd import displayfactory
 from omni_epd.virtualepd import VirtualEPD
 from omni_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
 
+TEST_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+
 
 class TestomniEpd(unittest.TestCase):
     goodEpd = "omni_epd.mock"  # this should always be a valid EPD
@@ -32,6 +34,9 @@ class TestomniEpd(unittest.TestCase):
 
         # clean up any files made during this test
         self._delete_ini()
+
+    def setup_config(self, source_config_file_name, target_config_file_name):
+        copyfile(os.path.join(TEST_PATH, source_config_file_name), os.path.join(os.getcwd(), target_config_file_name))
 
     def test_supported_diplays(self):
         """
@@ -62,7 +67,7 @@ class TestomniEpd(unittest.TestCase):
         Also confirm values not in the config file aren't changed from defaults
         """
         # set up a global config file
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
+        self.setup_config(CONFIG_FILE, CONFIG_FILE)
         time.sleep(1)
 
         epd = displayfactory.load_display_driver(self.goodEpd)
@@ -81,8 +86,8 @@ class TestomniEpd(unittest.TestCase):
         deviceConfig = self.goodEpd + ".ini"
 
         # set up a global config file and device config
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
-        copyfile(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
+        self.setup_config(CONFIG_FILE, CONFIG_FILE)
+        self.setup_config(deviceConfig, deviceConfig)
         time.sleep(1)
 
         epd = displayfactory.load_display_driver(self.goodEpd)
@@ -103,8 +108,8 @@ class TestomniEpd(unittest.TestCase):
         deviceConfig = self.goodEpd + ".ini"
 
         # set up a global config file
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
-        copyfile(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
+        self.setup_config(CONFIG_FILE, CONFIG_FILE)
+        self.setup_config(deviceConfig, deviceConfig)
         time.sleep(1)
 
         # should load driver from ini file without error
@@ -125,7 +130,7 @@ class TestomniEpd(unittest.TestCase):
         deviceConfig = self.goodEpd + ".ini"
 
         # copy bad config file to be loaded
-        copyfile(os.path.join(os.getcwd(), "tests", self.badConfig), os.path.join(os.getcwd(), deviceConfig))
+        self.setup_config(self.badConfig, deviceConfig)
 
         # load the display driver, shoudl throw EPDConfigurationError
         self.assertRaises(EPDConfigurationError, displayfactory.load_display_driver, self.goodEpd)
