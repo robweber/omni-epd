@@ -22,6 +22,7 @@ from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
 INKY_PKG = "inky"
 
+
 class InkyDisplay(VirtualEPD):
     """
     This is an abstraction for Pimoroni Inky pHat and wHat devices
