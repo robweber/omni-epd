@@ -132,7 +132,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 | | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | inky.what_red | black, red |
 | | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow | black, yellow |
 | | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black | black |
-| | [Inky wHAT AutoDetect](https://shop.pimoroni.com/search?q=inky) | inky.auto | black, yellow, red, colour |
+| | [Inky wHAT AutoDetect](https://shop.pimoroni.com/search?q=inky) | inky.auto | black, yellow, red, color |
 | Omni-EPD | Mock Display (emulates EPD with no hardware) | __omni_epd.mock__ | bw, color, palette |
 | [Waveshare](https://github.com/waveshare/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin02 | bw |
 |  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 | bw |
