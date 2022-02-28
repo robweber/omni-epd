@@ -37,7 +37,7 @@ class InkyDisplay(VirtualEPD):
         super().__init__(deviceName, config)
 
         # need to figure out what type of device we have
-        dType, dColor = self.get_device_info(deviceName)
+        dType, dColor = deviceName.split('_') + [None]
 
         if(dType == 'phat'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
@@ -68,9 +68,6 @@ class InkyDisplay(VirtualEPD):
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
-
-    def get_device_info(self, deviceName):
-        return deviceName.split('_') + [None]
 
     @staticmethod
     def get_supported_devices():
