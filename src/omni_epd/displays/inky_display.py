@@ -70,11 +70,7 @@ class InkyDisplay(VirtualEPD):
         self.height = self._device.height
 
     def get_device_info(self, deviceName):
-        deviceDetail = deviceName.split('_')
-        if(deviceDetail[0] == 'auto'):
-            return deviceDetail[0], None
-        else:
-            return deviceDetail[0], deviceDetail[1]
+        return deviceName.split('_') + [None]
 
     @staticmethod
     def get_supported_devices():
