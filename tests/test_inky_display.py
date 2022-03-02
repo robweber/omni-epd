@@ -1,3 +1,4 @@
+
 from omni_epd import displayfactory
 from PIL import Image
 import unittest
@@ -15,3 +16,4 @@ class TestInkyDisplay(unittest.TestCase):
         image = Image.open(image_path)
         image = image.resize((epd.width, epd.height))
         epd.display(image)
+        epd.close()
