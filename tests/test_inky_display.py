@@ -19,6 +19,7 @@ test_params = [
     ('auto in default mode', inky_auto, empty_config),
 ]
 
+
 class TestDeviceMeta(type):
     def __new__(mcs, name, bases, dict):
         def gen_test(name, device, config_dict):
@@ -36,6 +37,7 @@ class TestDeviceMeta(type):
             dict[test_name] = gen_test(*test_param)
 
         return type.__new__(mcs, name, bases, dict)
+
 
 @pytest.mark.skip("requires a connected inky")
 class DeviceTests(unittest.TestCase, metaclass=TestDeviceMeta):
