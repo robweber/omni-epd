@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 from inky.inky_uc8159 import DESATURATED_PALETTE
-
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
 INKY_PKG = "inky"
@@ -36,7 +35,8 @@ class InkyDisplay(VirtualEPD):
 
     deviceList = ["phat_black", "phat_red", "phat_yellow",
                     "phat1608_black", "phat1608_red", "phat1608_yellow",
-                    "what_black", "what_red", "what_yellow", "auto", "impression"]
+                    "what_black", "what_red", "what_yellow", "auto", 
+                    "impression"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -95,8 +95,8 @@ class InkyDisplay(VirtualEPD):
     def _display(self, image):
         # set border
         self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
-        
-        # apply any needed conversions to this image based on the mode        
+
+        # apply any needed conversions to this image based on the mode
         if(self.mode == 'color'):
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
             self._device.set_image(image.convert("RGB"), saturation=saturation)
@@ -113,6 +113,7 @@ class InkyDisplay(VirtualEPD):
                     self._device.set_pixel(x, y, self.clear_color)
 
         self._device.show()
+
 
 # left here for back-compat
 class InkyImpressionDisplay(InkyDisplay):
