@@ -40,5 +40,5 @@ class DeviceMetaTest(type):
 
 
 @pytest.mark.skip("requires a connected inky")
-class DeviceTests(unittest.TestCase, metaclass=DeviceMetaTest):
+class TestInkyDeviceWithConfigs(unittest.TestCase, metaclass=DeviceMetaTest):
     __metaclass__ = DeviceMetaTest
