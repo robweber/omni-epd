@@ -20,7 +20,7 @@ test_params = [
 ]
 
 
-class TestDeviceMeta(type):
+class DeviceMetaTest(type):
     def __new__(mcs, name, bases, dict):
         def gen_test(name, device, config_dict):
             def test(self):
@@ -40,5 +40,5 @@ class TestDeviceMeta(type):
 
 
 @pytest.mark.skip("requires a connected inky")
-class DeviceTests(unittest.TestCase, metaclass=TestDeviceMeta):
-    __metaclass__ = TestDeviceMeta
+class DeviceTests(unittest.TestCase, metaclass=DeviceMetaTest):
+    __metaclass__ = DeviceMetaTest
