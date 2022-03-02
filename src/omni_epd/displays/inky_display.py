@@ -17,31 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-
-from .. virtualepd import VirtualEPD
-from .. conf import check_module_installed
-INKY_PKG = "inky"
-
-
-"""
-Copyright 2021 Rob Weber
-
-This file is part of omni-epd
-
-omni-epd is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-"""
+from inky.inky_uc8159 import DESATURATED_PALETTE
 
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
@@ -69,12 +45,12 @@ class InkyDisplay(VirtualEPD):
         dType, dColor, *_ = deviceName.split('_') + [None]
 
         self._device, self.clear_color, dColor = self.load_device(dType, dColor)
-        
+
         # set mode to black + any other color supported
         if(self.mode != "black"):
             self.modes_available = ('black', dColor)
 
-        # phat and what devices expect colors in the order white, black, other, 
+        # phat and what devices expect colors in the order white, black, other
         if(self.mode == "red" and dColor == "red"):
             self.palette_filter.append([255, 0, 0])
             self.max_colors = 3
@@ -82,7 +58,6 @@ class InkyDisplay(VirtualEPD):
             self.palette_filter.append([255, 255, 0])
             self.max_colors = 3
         elif(self.mode == "color" and dColor == "color"):
-            from inky.inky_uc8159 import DESATURATED_PALETTE
             self.palette_filter = DESATURATED_PALETTE
             self.max_colors = 8
 
@@ -145,7 +120,7 @@ class InkyImpressionDisplay(InkyDisplay):
     def get_supported_devices():
         return []
 
-    devices = [] # allow base to handle them all
+    devices = []  # allow base to handle them all
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
