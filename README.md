@@ -200,6 +200,7 @@ PRs accepted! If there a fix for any of the documentation or something is not qu
 * [@qubist](https://github.com/qubist)
 * [@dr-boehmerie](https://github.com/dr-boehmerie)
 * [@aaronr8684](https://github.com/aaronr8684)
+* [@donbing](https://github.com/donbing)
 
 ## License
 [GPLv3](/LICENSE)
