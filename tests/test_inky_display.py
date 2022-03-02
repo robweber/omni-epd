@@ -6,8 +6,6 @@ import pytest
 import os
 
 
-pytest.skip("requires a connected inky")
-
 image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA03519_small.jpg'
 inky_impression = 'inky.impression'
 inky_auto = 'inky.auto'
@@ -39,6 +37,6 @@ class TestDeviceMeta(type):
 
         return type.__new__(mcs, name, bases, dict)
 
-
+@pytest.mark.skip("requires a connected inky")
 class DeviceTests(unittest.TestCase, metaclass=TestDeviceMeta):
     __metaclass__ = TestDeviceMeta
