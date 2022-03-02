@@ -34,9 +34,9 @@ class InkyDisplay(VirtualEPD):
     modes_available = ("black")
 
     deviceList = ["phat_black", "phat_red", "phat_yellow",
-                    "phat1608_black", "phat1608_red", "phat1608_yellow",
-                    "what_black", "what_red", "what_yellow", "auto", 
-                    "impression"]
+                  "phat1608_black", "phat1608_red", "phat1608_yellow",
+                  "what_black", "what_red", "what_yellow", "auto",
+                  "impression"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
