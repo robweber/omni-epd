@@ -32,13 +32,12 @@ class InkyDisplay(VirtualEPD):
     """
 
     pkg_name = INKY_PKG
-    modes_available = ("black")
+    mode = "bw"  # default mode is black
+    modes_available = ("bw")
     deviceList = ["phat_black", "phat_red", "phat_yellow",
                   "phat1608_black", "phat1608_red", "phat1608_yellow",
                   "what_black", "what_red", "what_yellow", "auto",
                   "impression"]
-    mode = "bw"  # default mode is black
-    modes_available = ("bw")
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
