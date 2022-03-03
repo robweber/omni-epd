@@ -66,7 +66,7 @@ class VirtualEPD:
         self.mode = self._get_device_option('mode', self.mode)
 
         if(self.mode == 'black'):
-            self._logger.warn(f"The mode 'black' is deprecated, 'bw' should be used instead. This will be removed in a future release.")
+            self._logger.warn("The mode 'black' is deprecated, 'bw' should be used instead. This will be removed in a future release.")
             self.mode = 'bw'
 
     def __str__(self):
