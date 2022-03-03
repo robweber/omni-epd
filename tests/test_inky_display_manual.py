@@ -4,7 +4,7 @@ from PIL import Image
 import unittest
 import pytest
 import os
-
+import time
 
 image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA03519_small.jpg'
 inky_impression = 'inky.impression'
@@ -25,11 +25,13 @@ class DeviceMetaTest(type):
         def gen_test(name, device, config_dict):
             def test(self):
                 epd = displayfactory.load_display_driver(device, config_dict)
-                image = Image.open(image_path)
-                image = image.resize((epd.width, epd.height))
-                epd.display(image)
+                # display image
+                epd.display(Image.open(image_path).resize((epd.width, epd.height)))
+                # wait while you verify the image
+                time.sleep(5)
+                # clear the image after
+                epd.clear()
                 epd.close()
-
             return test
 
         for test_param in test_params:

@@ -18,8 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
 from inky.inky_uc8159 import DESATURATED_PALETTE
+from PIL import Image
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
+
 INKY_PKG = "inky"
 
 
@@ -48,24 +50,21 @@ class InkyDisplay(VirtualEPD):
             self.modes_available = ('black', dColor)
 
         # phat and what devices expect colors in the order white, black, other
-        if(self.mode == "red" and dColor == "red"):
+        if(self.mode == dColor == "red"):
             self.palette_filter.append([255, 0, 0])
-            self.max_colors = 3
-        elif(self.mode == "yellow" and dColor == "yellow"):
+        elif(self.mode == dColor == "yellow"):
             self.palette_filter.append([255, 255, 0])
-            self.max_colors = 3
-        elif(self.mode == "color" and dColor == "color"):
+        elif(self.mode == dColor == "color"):
             self.palette_filter = DESATURATED_PALETTE
-            self.max_colors = 8
 
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
+        self.max_colors = len(self.palette_filter)
 
     def load_device(self, deviceName):
         # need to figure out what type of device we have
         dType, dColor, *_ = deviceName.split('_') + [None]
-
         if(dType == 'phat'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
             device = deviceObj.InkyPHAT(dColor)
@@ -107,9 +106,6 @@ class InkyDisplay(VirtualEPD):
         self._device.show()
 
     def clear(self):
-        for _ in range(2):
-            for y in range(self.height - 1):
-                for x in range(self.width - 1):
-                    self._device.set_pixel(x, y, self.clear_color)
-
+        clear_image = Image.new("P", (self.width, self.height), self.clear_color)
+        self._device.set_image(clear_image)
         self._device.show()
