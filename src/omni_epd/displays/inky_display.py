@@ -31,8 +31,8 @@ class InkyDisplay(VirtualEPD):
     """
 
     pkg_name = INKY_PKG
-    mode = "black"  # default mode is black
-    modes_available = ("black")
+    mode = "bw"  # default mode is black
+    modes_available = ("bw")
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
@@ -51,8 +51,8 @@ class InkyDisplay(VirtualEPD):
             self._device = deviceObj.InkyWHAT(dColor)
 
         # set mode to black + any other color supported
-        if(self.mode != "black"):
-            self.modes_available = ('black', dColor)
+        if(self.mode != "bw"):
+            self.modes_available = ('bw', dColor)
 
         # phat and what devices expect colors in the order white, black, other
         if(self.mode == "red" and dColor == "red"):
