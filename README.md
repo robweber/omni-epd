@@ -158,6 +158,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
 |  | [5.83inch e-Paper HAT C](https://www.waveshare.com/5.83inch-e-Paper-HAT-C.htm) | __waveshare_epd.epd5in83c__ | bw, yellow |
+|  | [6inch e-Ink Display](https://www.waveshare.com/6inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
 |  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | waveshare_epd.epd7in5 | bw |
 |  | [7.5inch e-Paper HAT V2](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | __waveshare_epd.epd7in5_V2__ | bw |
 |  | [7.5inch HD e-Paper HAT](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT.htm) |waveshare_epd.epd7in5_HD | bw |
@@ -165,7 +166,8 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [7.5inch e-Paper HAT B](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| waveshare_epd.epd7in5b | bw, red |
 |  | [7.5inch e-Paper HAT B V2](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| __waveshare_epd.epd7in5b_V2__ | bw, red |
 |  | [7.5inch e-Paper HAT C](https://www.waveshare.com/7.5inch-e-Paper-HAT-C.htm) | waveshare_epd.epd7in5c | bw, yellow |
-
+|  | [7.8inch e-Ink Display](https://www.waveshare.com/7.8inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
+|  | [9.7inch e-Ink Display](https://www.waveshare.com/9.7inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
 
 ### Display Driver Installation
 
@@ -185,7 +187,7 @@ The [Waveshare device library](https://github.com/waveshare/e-Paper) requires th
 
 __IT8951__
 
-IT8951 devices, such as the Waveshare 6-in EPD, are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Meyer. This module is downloaded as part of omni-epd setup but it won't automatically install library pre-requisites, which may or may not be installed on your system. Please check the [requirements file](https://github.com/GregDMeyer/IT8951/blob/master/requirements.txt) on that project for a list of current requirements. 
+IT8951 devices, such as the [Waveshare 6in EPD](https://www.waveshare.com/6inch-e-paper-hat.htm), are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Meyer. This module is downloaded as part of omni-epd setup but it won't automatically install library pre-requisites, which may or may not be installed on your system. Please check the [requirements file](https://github.com/GregDMeyer/IT8951/blob/master/requirements.txt) on that project for a list of current requirements.
 
 ## Implementing Projects
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
