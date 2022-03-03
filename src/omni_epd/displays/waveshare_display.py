@@ -381,6 +381,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
 
         self._device.display(self._device.getbuffer(image))
 
+
 class IT8951Display(VirtualEPD):
     """
     This will communicate with IT8951 type displays utilzing the driver built by GregDMeyer
@@ -393,8 +394,6 @@ class IT8951Display(VirtualEPD):
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
-
-        self.logger = logging.getLogger(__name__)
 
         # load the IT8951.display package and create the object
         deviceObj = self.load_display_driver(self.it8951_pkg_name, "display")
