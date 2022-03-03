@@ -34,7 +34,6 @@ class InkyDisplay(VirtualEPD):
     pkg_name = INKY_PKG
     mode = "black"  # default mode is black
     modes_available = ("black")
-
     deviceList = ["phat_black", "phat_red", "phat_yellow",
                   "phat1608_black", "phat1608_red", "phat1608_yellow",
                   "what_black", "what_red", "what_yellow", "auto",

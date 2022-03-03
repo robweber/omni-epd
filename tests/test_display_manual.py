@@ -7,16 +7,22 @@ import os
 import time
 
 image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA03519_small.jpg'
+
 inky_impression = 'inky.impression'
 inky_auto = 'inky.auto'
+waveshare_27bV2 = 'waveshare_epd.epd2in7b_V2'
+
 empty_config = {}
 color_config = {'EPD': {'mode': 'color'}}
+red_config = {'EPD': {'mode': 'red'}}
 
 test_params = [
     ('impression in color mode', inky_impression, color_config),
     ('impression in default mode', inky_impression, empty_config),
     ('auto in color mode', inky_auto, color_config),
     ('auto in default mode', inky_auto, empty_config),
+    ('epd2in7b_V2 in red mode', waveshare_27bV2, red_config),
+    ('epd2in7b_V2 in default mode', waveshare_27bV2, empty_config),
 ]
 
 
@@ -25,6 +31,7 @@ class DeviceMetaTest(type):
         def gen_test(name, device, config_dict):
             def test(self):
                 epd = displayfactory.load_display_driver(device, config_dict)
+                epd.prepare()
                 # display image
                 epd.display(Image.open(image_path).resize((epd.width, epd.height)))
                 # wait while you verify the image
