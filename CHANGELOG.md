@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - make sure Pillow and Inky packages are known working versions or above - thanks @donbing
+- `bw` standardized as the consistent naming for the default black/white device mode. `black` will throw a warning, affects Inky devices - thanks @missionfloyd
 
 ## 0.2.6
 
