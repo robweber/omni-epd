@@ -60,10 +60,14 @@ class VirtualEPD:
         self._config = config
         self._device_name = deviceName
 
+        self._logger = logging.getLogger(self.__str__())
+
         # set the display mode
         self.mode = self._get_device_option('mode', self.mode)
 
-        self._logger = logging.getLogger(self.__str__())
+        if(self.mode == 'black'):
+            self._logger.warn(f"The mode 'black' is deprecated, 'bw' should be used instead. This will be removed in a future release.")
+            self.mode = 'bw'
 
     def __str__(self):
         return f"{self.pkg_name}.{self._device_name}"
@@ -169,7 +173,11 @@ class VirtualEPD:
             palette_image = Image.new("P", (1, 1))
 
             # set the palette, set all other colors to 0
-            palette_image.putpalette(palette + [0, 0, 0] * (256-len(palette)))
+            palette_image.putpalette(palette + [0, 0, 0] * (256-len(colors)))
+
+            if(image.mode != 'RGB'):
+                # convert to RGB as quantize requires it
+                image = image.convert(mode='RGB')
 
             # apply the palette
             image = image.quantize(palette=palette_image, dither=dither)
