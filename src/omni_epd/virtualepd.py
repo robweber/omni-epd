@@ -43,6 +43,7 @@ class VirtualEPD:
     width = 0   # width of display
     height = 0  # height of display
     mode = "bw"  # mode of the display, bw by default, others defined by display class
+    threshold = 16  # greyscale threshold of bw selection for the display, default = 16, valid values from 0 (all white) to 255 (all black)
     modes_available = ("bw")  # modes this display supports, set in __init__
 
     # only used by displays that need palette filtering before sending to display driver
@@ -62,6 +63,7 @@ class VirtualEPD:
 
         # set the display mode
         self.mode = self._get_device_option('mode', self.mode)
+        self.threshold = int(self._get_device_option('threshold', self.threshold))
 
         self._logger = logging.getLogger(self.__str__())
 
