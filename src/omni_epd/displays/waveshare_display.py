@@ -208,14 +208,24 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
         else:
             # apply the color filter to get a 3 color image
             image = self._filterImage(image)
-
-            # separate out black from the other color
+            
+            # convert to greyscale 
+            image = image.convert('L')
+            
+            # separate out black from the image
             img_black = image.copy()
-            img_black.putpalette((0, 0, 0, 255, 255, 255))
-
+            
+            # convert greys to black or white based on threshold (default value: 16)
+            img_black = img_black.point( lambda p: 255 if p > self.threshold else 0 )
+            
+            # separate out red from the image
             img_color = image.copy()
-            img_color.putpalette((255, 255, 255, 255, 255, 255, 0, 0, 0) + (255, 255, 255)*253)
-
+            
+            # convert greys to red (represented as black in the image) or white based on threshold (default value: 16)
+            img_color = img_color.point( lambda p: 0 if p > self.threshold and p < (255-self.threshold) else 255 )
+            # img_color = img_color.point( lambda p: 0 if p > 16 and p < 240 else 255 )
+            
+            # send to display
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
 
