@@ -51,6 +51,6 @@ class DeviceMetaTest(type):
         return type.__new__(mcs, name, bases, dict)
 
 
-@pytest.mark.skip("requires a connected inky")
+@pytest.mark.skip("requires a connected epd")
 class TestInkyDeviceWithConfigs(unittest.TestCase, metaclass=DeviceMetaTest):
     __metaclass__ = DeviceMetaTest
