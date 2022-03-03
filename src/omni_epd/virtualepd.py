@@ -60,10 +60,14 @@ class VirtualEPD:
         self._config = config
         self._device_name = deviceName
 
+        self._logger = logging.getLogger(self.__str__())
+
         # set the display mode
         self.mode = self._get_device_option('mode', self.mode)
 
-        self._logger = logging.getLogger(self.__str__())
+        if(self.mode == 'black'):
+            self._logger.warn("The mode 'black' is deprecated, 'bw' should be used instead. This will be removed in a future release.")
+            self.mode = 'bw'
 
     def __str__(self):
         return f"{self.pkg_name}.{self._device_name}"
