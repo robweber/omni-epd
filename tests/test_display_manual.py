@@ -4,7 +4,6 @@ from PIL import Image
 import unittest
 import pytest
 import os
-import time
 
 image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA03519_small.jpg'
 
@@ -37,10 +36,11 @@ class DeviceMetaTest(type):
                 epd.prepare()
                 # display image
                 epd.display(Image.open(image_path).resize((epd.width, epd.height)))
-                # wait while you verify the image
-                #time.sleep(5)
+                # wait while you verify the image and then clear
+                # import time
+                # time.sleep(5)
                 # clear the image after
-                #epd.clear()
+                # epd.clear()
                 epd.close()
             return test
 
