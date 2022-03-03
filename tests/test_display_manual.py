@@ -11,6 +11,7 @@ image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA0351
 inky_impression = 'inky.impression'
 inky_auto = 'inky.auto'
 waveshare_27bV2 = 'waveshare_epd.epd2in7b_V2'
+waveshare_42bV2 = 'waveshare_epd.epd4in2b_V2'
 
 empty_config = {}
 color_config = {'EPD': {'mode': 'color'}}
@@ -23,6 +24,8 @@ test_params = [
     ('auto in default mode', inky_auto, empty_config),
     ('epd2in7b_V2 in red mode', waveshare_27bV2, red_config),
     ('epd2in7b_V2 in default mode', waveshare_27bV2, empty_config),
+    ('epd4in2b_V2 in red mode', waveshare_42bV2, red_config),
+    ('epd4in2b_V2 in default mode', waveshare_42bV2, empty_config),
 ]
 
 
@@ -35,9 +38,9 @@ class DeviceMetaTest(type):
                 # display image
                 epd.display(Image.open(image_path).resize((epd.width, epd.height)))
                 # wait while you verify the image
-                time.sleep(5)
+                #time.sleep(5)
                 # clear the image after
-                epd.clear()
+                #epd.clear()
                 epd.close()
             return test
 
