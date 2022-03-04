@@ -94,12 +94,12 @@ class InkyDisplay(VirtualEPD):
         # apply any needed conversions to this image based on the mode - force palette based conversion
         if(self.mode != 'color'):
             image = self._filterImage(image, force_palette=True)
-        
+
         # set border
         self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
 
         # apply any needed conversions to this image based on the mode
-        if( self._device.colour == 'multi'):
+        if(self._device.colour == 'multi'):
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
             self._device.set_image(image.convert("RGB"), saturation=saturation)
         else:
