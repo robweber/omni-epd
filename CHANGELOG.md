@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - added `force_palette` argument to the `virtualepd._filter()` function. Will force palette based conversion if wanted, default is False
+- added additional tested displays per #63 comments
 
 ### Fixed
 
