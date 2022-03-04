@@ -1,16 +1,13 @@
 import unittest
 import os
 import time
-import json
 import glob
 import pytest
 from . import constants as constants
 from PIL import Image
 from shutil import copyfile
-from omni_epd import EPDNotFoundError, EPDConfigurationError
 from omni_epd import displayfactory
-from omni_epd.virtualepd import VirtualEPD
-from omni_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
+from omni_epd.conf import CONFIG_FILE
 
 
 class TestImageProcessing(unittest.TestCase):
