@@ -156,8 +156,8 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG):
-        if(self.mode == 'bw'):
+    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG, force_palette=False):
+        if(self.mode == 'bw' and not force_palette):
             image = image.convert("1", dither=dither)
         else:
             # load palette - this is a catch in case it was changed by the user

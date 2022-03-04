@@ -209,13 +209,17 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
             # apply the color filter to get a 3 color image
             image = self._filterImage(image)
 
-            # separate out black from the other color
-            img_black = image.copy()
-            img_black.putpalette((0, 0, 0, 255, 255, 255))
+            # convert to greyscale
+            image = image.convert('L')
 
-            img_color = image.copy()
-            img_color.putpalette((255, 255, 255, 255, 255, 255, 0, 0, 0) + (255, 255, 255)*253)
+            # convert greys to black or white based on threshold of 20
+            # https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.point
+            img_black = image.point(lambda p: 255 if p >= 20 else 0)
 
+            # convert greys to third color (represented as black in the image) or white based on threshold of 20
+            img_color = image.point(lambda p: 0 if 20 < p < 235 else 255)
+
+            # send to display
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
 

@@ -85,7 +85,6 @@ class InkyDisplay(VirtualEPD):
         else:
             return device, device.WHITE, device.colour
 
-
     @staticmethod
     def get_supported_devices():
         return [] if not check_module_installed(INKY_PKG) else [f"{INKY_PKG}.{n}" for n in InkyDisplay.deviceList]
@@ -100,7 +99,8 @@ class InkyDisplay(VirtualEPD):
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
             self._device.set_image(image.convert("RGB"), saturation=saturation)
         else:
-            image = self._filterImage(image)
+            # apply any needed conversions to this image based on the mode - force palette based conversion
+            image = self._filterImage(image, force_palette=True)
             self._device.set_image(image.convert("RGB"))
 
         self._device.show()
