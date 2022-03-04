@@ -223,7 +223,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
 
             # convert greys to red (represented as black in the image) or white based on threshold (default value: 16)
             img_color = img_color.point(lambda p: 0 if 20 < p < 235 else 255)
-            
+
             # send to display
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
