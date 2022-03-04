@@ -19,8 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import os.path
 
-GOOD_EPD_CONFIG = "omni_epd.mock"  # this should always be a valid EPD
-BAD_EPD_CONFIG = "omni_epd.bad"  # this is not a valid EPD
+GOOD_EPD_NAME = "omni_epd.mock"  # this should always be a valid EPD
+BAD_EPD_NAME = "omni_epd.bad"  # this is not a valid EPD
+
 BAD_CONFIG_FILE = 'bad_conf.ini'  # name of invalid configuration file
 ALL_IMAGE_OPTIONS = "all_options.ini"  # ini file that attempt to run all base options
 

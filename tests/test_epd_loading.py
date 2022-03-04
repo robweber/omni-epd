@@ -43,13 +43,13 @@ class TestEpdLoading(unittest.TestCase):
         """
         Confirm error thrown if an invalid name passed to load function
         """
-        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, constants.BAD_EPD_CONFIG)
+        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, constants.BAD_EPD_NAME)
 
     def test_loading_success(self):
         """
         Confirm a good display can be loaded and extends VirtualEPD
         """
-        epd = displayfactory.load_display_driver(constants.GOOD_EPD_CONFIG)
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
 
         assert isinstance(epd, VirtualEPD)
 
@@ -63,7 +63,7 @@ class TestEpdLoading(unittest.TestCase):
         copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
         time.sleep(1)
 
-        epd = displayfactory.load_display_driver(constants.GOOD_EPD_CONFIG)
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
 
         assert epd._config.has_option(IMAGE_DISPLAY, 'rotate')
         assert epd._config.getfloat(IMAGE_DISPLAY, 'rotate') == 90
@@ -76,14 +76,14 @@ class TestEpdLoading(unittest.TestCase):
         Test that when both omni-epd.ini file is present and device specific INI present
         that the device specific config overrides options in global config
         """
-        deviceConfig = constants.GOOD_EPD_CONFIG + ".ini"
+        deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # set up a global config file and device config
         copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
         copyfile(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
         time.sleep(1)
 
-        epd = displayfactory.load_display_driver(constants.GOOD_EPD_CONFIG)
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
 
         # device should override global
         assert epd._config.has_option(IMAGE_DISPLAY, 'flip_horizontal')
@@ -98,7 +98,7 @@ class TestEpdLoading(unittest.TestCase):
         Test that a device will load when given the type= option in the omni-epd.ini file
         and no args to load_display_driver()
         """
-        deviceConfig = constants.GOOD_EPD_CONFIG + ".ini"
+        deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # set up a global config file
         copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
@@ -113,17 +113,17 @@ class TestEpdLoading(unittest.TestCase):
         self.assertFalse(epd._config.getboolean(IMAGE_DISPLAY, 'flip_horizontal'))
 
         # should attempt to load passed in driver, and fail, instead of one in conf file
-        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, constants.BAD_EPD_CONFIG)
+        self.assertRaises(EPDNotFoundError, displayfactory.load_display_driver, constants.BAD_EPD_NAME)
 
     def test_configuration_error(self):
         """
         Confirm that an EPDConfigurationError is thrown by passing a bad mode value
         to a display
         """
-        deviceConfig = constants.GOOD_EPD_CONFIG + ".ini"
+        deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # copy bad config file to be loaded
         copyfile(os.path.join(os.getcwd(), "tests", constants.BAD_CONFIG_FILE), os.path.join(os.getcwd(), deviceConfig))
 
         # load the display driver, shoudl throw EPDConfigurationError
-        self.assertRaises(EPDConfigurationError, displayfactory.load_display_driver, constants.GOOD_EPD_CONFIG)
+        self.assertRaises(EPDConfigurationError, displayfactory.load_display_driver, constants.GOOD_EPD_NAME)

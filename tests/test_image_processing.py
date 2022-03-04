@@ -42,7 +42,7 @@ class TestImageProcessing(unittest.TestCase):
         copyfile(os.path.join(os.getcwd(), "tests", constants.ALL_IMAGE_OPTIONS), os.path.join(os.getcwd(), CONFIG_FILE))
         time.sleep(1)
 
-        epd = displayfactory.load_display_driver(constants.GOOD_EPD_CONFIG)
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
 
         # write the image
         image = Image.open(constants.GALAXY_IMAGE)
