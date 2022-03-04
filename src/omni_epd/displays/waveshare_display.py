@@ -216,13 +216,13 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
             img_black = image.copy()
 
             # convert greys to black or white based on threshold (default value: 16)
-            img_black = img_black.point(lambda p: 255 if p > self.threshold else 0)
+            img_black = img_black.point(lambda p: 255 if p >= 20 else 0)
 
             # separate out red from the image
             img_color = image.copy()
 
             # convert greys to red (represented as black in the image) or white based on threshold (default value: 16)
-            img_color = img_color.point(lambda p: 0 if p > self.threshold and p < (255-self.threshold) else 255)
+            img_color = img_color.point(lambda p: 0 if 20 < p < 235 else 255)
             # img_color = img_color.point( lambda p: 0 if p > 16 and p < 240 else 255 )
 
             # send to display
