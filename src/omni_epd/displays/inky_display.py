@@ -82,8 +82,8 @@ class InkyDisplay(VirtualEPD):
         return result
 
     def _display(self, image):
-        # apply any needed conversions to this image based on the mode
-        image = self._filterImage(image)
+        # apply any needed conversions to this image based on the mode - force palette based conversion
+        image = self._filterImage(image, force_palette=True)
 
         # set the image and display
         self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
