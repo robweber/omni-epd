@@ -12,7 +12,7 @@ from omni_epd.virtualepd import VirtualEPD
 from omni_epd.conf import IMAGE_DISPLAY, CONFIG_FILE
 
 
-class TestomniEpd(unittest.TestCase):
+class TestEpdLoading(unittest.TestCase):
 
     def _delete_ini(self):
         fileList = glob.glob(os.path.join(os.getcwd(), "*.ini"))
