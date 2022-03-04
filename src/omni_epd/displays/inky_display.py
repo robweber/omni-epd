@@ -101,7 +101,7 @@ class InkyDisplay(VirtualEPD):
         else:
             # apply any needed conversions to this image based on the mode - force palette based conversion
             image = self._filterImage(image, force_palette=True)
-            self._device.set_image(image.convert("RGB"))
+            self._device.set_image(image)
 
         self._device.show()
 

@@ -9,6 +9,7 @@ image_path = os.path.dirname(os.path.realpath(__file__)) + '/../examples/PIA0351
 
 inky_impression = 'inky.impression'
 inky_auto = 'inky.auto'
+inky_what_red = 'inky.what_red'
 waveshare_27bV2 = 'waveshare_epd.epd2in7b_V2'
 waveshare_42bV2 = 'waveshare_epd.epd4in2b_V2'
 
@@ -17,10 +18,13 @@ color_config = {'EPD': {'mode': 'color'}}
 red_config = {'EPD': {'mode': 'red'}}
 
 test_params = [
-    ('impression in color mode', inky_impression, color_config),
-    ('impression in default mode', inky_impression, empty_config),
-    ('auto in color mode', inky_auto, color_config),
-    ('auto in default mode', inky_auto, empty_config),
+    ('inky impression in color mode', inky_impression, color_config),
+    ('inky impression in default mode', inky_impression, empty_config),
+    ('inky auto in color mode', inky_auto, color_config),
+    ('inky auto in default mode', inky_auto, empty_config),
+    ('inky auto in red mode', inky_auto, red_config),
+    ('inky what_red in red mode', inky_what_red, red_config),
+    ('inky what_red in default mode', inky_what_red, empty_config),
     ('epd2in7b_V2 in red mode', waveshare_27bV2, red_config),
     ('epd2in7b_V2 in default mode', waveshare_27bV2, empty_config),
     ('epd4in2b_V2 in red mode', waveshare_42bV2, red_config),
