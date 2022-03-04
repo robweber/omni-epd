@@ -83,7 +83,8 @@ class InkyDisplay(VirtualEPD):
         if(device.colour == 'multi'):
             return device, device.CLEAN, 'color'
         else:
-            return device, device.WHITE, dColor
+            return device, device.WHITE, device.colour
+
 
     @staticmethod
     def get_supported_devices():
