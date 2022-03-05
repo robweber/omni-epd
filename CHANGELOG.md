@@ -6,10 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Unreleased
 
+### Added
+
+- added `force_palette` argument to the `virtualepd._filter()` function. Will force palette based conversion if wanted, default is False
+- added additional tested displays per #63 comments
+- new unit tests to make sure image processing components run without error
+- support for `inky.auto` as a valid EPD device. This will auto detect Inky devices and load the correct driver. Thanks @donbing
+
 ### Fixed
 
 - calls to `Image.quantize` require an RGB or L mode Image object, convert any loaded image before applying new palettes
 - when filling palette too many colors were being set (< 256), wrong length variable was being used
+- fixed regression where Inky `bw` mode was causing colors to be inverted
+- universal fix for Waveshare Tri-color displays as original fixes broke some displays - thanks @aaron8684
 
 ### Changed
 

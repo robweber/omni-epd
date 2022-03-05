@@ -38,7 +38,7 @@ This will install the abstraction library. The [test utility](#display-testing) 
 
 git clone https://github.com/robweber/omni-epd.git
 cd omni-epd
-sudo pip3 install .
+sudo pip3 install --prefer-binary .
 
 ```
 
@@ -122,14 +122,15 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 
 | Device Library | Device Name | Omni Device Name | Color Modes |
 |:---------------|:------------|:-----------------|-------------|
-| [Inky](https://github.com/pimoroni/inky) | [Inky Impression 7 Color](https://shop.pimoroni.com/products/inky-impression) | __inky.impression__ | bw, color |
+| [Inky](https://github.com/pimoroni/inky) | [Inky AutoDetect](https://shop.pimoroni.com/search?q=inky) | inky.auto | bw, yellow, red, color |
+| | [Inky Impression 7 Color](https://shop.pimoroni.com/products/inky-impression) | __inky.impression__ | bw, color |
 | | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 212x104 | __inky.phat_red__ | bw, red |
 | | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 212x104 | inky.phat_yellow | bw, yellow |
 | | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) - 212x104 | inky.phat_black | bw |
 | | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 250x122 | inky.phat1608_red | bw, red |
 | | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 250x122 | inky.phat1608_yellow | bw, yellow |
 | | [Inky pHAT Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707) - 250x122 | inky.phat1608_black | bw |
-| | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | inky.what_red | bw, red |
+| | [Inky wHAT Red/Black/White](https://shop.pimoroni.com/products/inky-what?variant=13590497624147) | __inky.what_red__ | bw, red |
 | | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow | bw, yellow |
 | | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black | bw |
 | Omni-EPD | Mock Display (emulates EPD with no hardware) | __omni_epd.mock__ | bw, color, palette |
@@ -144,7 +145,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [2.66inch e-Paper Module](https://www.waveshare.com/2.66inch-e-Paper-Module.htm) | waveshare_epd.epd2in66 | bw |
 |  | [2.66inch e-Paper Module B](https://www.waveshare.com/2.66inch-e-Paper-Module-B.htm) | waveshare_epd.epd2in66b | bw, red |
 |  | [2.7inch e-Paper HAT](https://www.waveshare.com/2.7inch-e-Paper-HAT.htm) | __waveshare_epd.epd2in7__ | bw |
-|  | [2.7inch e-Paper HAT B](https://www.waveshare.com/2.7inch-e-Paper-HAT-B.htm) | waveshare_epd.epd2in7b <br> waveshare_epd.epd2in7b_V2 | bw, red |
+|  | [2.7inch e-Paper HAT B](https://www.waveshare.com/2.7inch-e-Paper-HAT-B.htm) | waveshare_epd.epd2in7b <br> __waveshare_epd.epd2in7b_V2__ | bw, red |
 |  | [2.9inch e-Paper Module](https://www.waveshare.com/2.9inch-e-Paper-Module.htm) | __waveshare_epd.epd2in9__ <br> waveshare_epd.epd2in9_V2 | bw |
 |  | [2.9inch e-Paper Module B](https://www.waveshare.com/2.9inch-e-Paper-Module-B.htm) | waveshare_epd.epd2in9b <br> waveshare_epd.epd2in9b_V3 | bw, red |
 |  | [2.9inch e-Paper Module C](https://www.waveshare.com/2.9inch-e-Paper-Module-C.htm) | waveshare_epd.epd2in9c | bw, yellow |
