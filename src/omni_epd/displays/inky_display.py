@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-
+from inky.inky_uc8159 import DESATURATED_PALETTE
+from PIL import Image
 from .. virtualepd import VirtualEPD
 from .. conf import check_module_installed
 
@@ -33,123 +34,80 @@ class InkyDisplay(VirtualEPD):
     pkg_name = INKY_PKG
     mode = "bw"  # default mode is black
     modes_available = ("bw")
+    deviceList = ["phat_black", "phat_red", "phat_yellow",
+                  "phat1608_black", "phat1608_red", "phat1608_yellow",
+                  "what_black", "what_red", "what_yellow", "auto",
+                  "impression"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
 
-        # need to figure out what type of device we have
-        dType, dColor = deviceName.split('_')
-
-        if(dType == 'phat'):
-            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
-            self._device = deviceObj.InkyPHAT(dColor)
-        elif(dType == 'phat1608'):
-            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
-            self._device = deviceObj.InkyPHAT_SSD1608(dColor)
-        elif(dType == 'what'):
-            deviceObj = self.load_display_driver(self.pkg_name, 'what')
-            self._device = deviceObj.InkyWHAT(dColor)
+        self._device, self.clear_color, dColor = self.load_device(deviceName)
 
         # set mode to black + any other color supported
         if(self.mode != "bw"):
             self.modes_available = ('bw', dColor)
 
         # phat and what devices expect colors in the order white, black, other
-        if(self.mode == "red" and dColor == "red"):
+        if(self.mode == dColor == "red"):
             self.palette_filter.append([255, 0, 0])
-            self.max_colors = 3
-        elif(self.mode == "yellow" and dColor == "yellow"):
+        elif(self.mode == dColor == "yellow"):
             self.palette_filter.append([255, 255, 0])
-            self.max_colors = 3
+        elif(self.mode == dColor == "color"):
+            self.palette_filter = DESATURATED_PALETTE
 
         # set the width and height
         self.width = self._device.width
         self.height = self._device.height
+        self.max_colors = len(self.palette_filter)
+
+    def load_device(self, deviceName):
+        # need to figure out what type of device we have
+        dType, dColor, *_ = deviceName.split('_') + [None]
+        if(dType == 'phat'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
+            device = deviceObj.InkyPHAT(dColor)
+        elif(dType == 'phat1608'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'phat')
+            device = deviceObj.InkyPHAT_SSD1608(dColor)
+        elif(dType == 'what'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'what')
+            device = deviceObj.InkyWHAT(dColor)
+        elif(dType == 'impression'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
+            device = deviceObj.Inky()
+        elif(dType == 'auto'):
+            deviceObj = self.load_display_driver(self.pkg_name, 'auto')
+            device = deviceObj.auto()
+
+        if(device.colour == 'multi'):
+            return device, device.CLEAN, 'color'
+        else:
+            return device, device.WHITE, device.colour
 
     @staticmethod
     def get_supported_devices():
-        result = []
+        return [] if not check_module_installed(INKY_PKG) else [f"{INKY_PKG}.{n}" for n in InkyDisplay.deviceList]
 
-        deviceList = ["phat_black", "phat_red", "phat_yellow",
-                      "phat1608_black", "phat1608_red", "phat1608_yellow",
-                      "what_black", "what_red", "what_yellow"]
-
-        # python libs for this might not be installed - that's ok, return nothing
-        if(check_module_installed(INKY_PKG)):
-            # if passed return list of devices
-            result = [f"{INKY_PKG}.{n}" for n in deviceList]
-
-        return result
-
+    # set the image and display
     def _display(self, image):
         # apply any needed conversions to this image based on the mode - force palette based conversion
-        image = self._filterImage(image, force_palette=True)
+        if(self.mode != 'color'):
+            image = self._filterImage(image, force_palette=True)
 
-        # set the image and display
+        # set border
         self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
-        self._device.set_image(image)
+
+        # apply any needed conversions to this image based on the mode
+        if(self._device.colour == 'multi'):
+            saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
+            self._device.set_image(image.convert("RGB"), saturation=saturation)
+        else:
+            self._device.set_image(image)
+
         self._device.show()
 
     def clear(self):
-        for _ in range(2):
-            for y in range(self.height - 1):
-                for x in range(self.width - 1):
-                    self._device.set_pixel(x, y, self._device.WHITE)
-
-        self._device.show()
-
-
-class InkyImpressionDisplay(VirtualEPD):
-    """
-    This is an abstraction for Pimoroni Inky Impression devices
-    https://shop.pimoroni.com/products/inky-impression
-    https://github.com/pimoroni/inky
-    """
-
-    pkg_name = INKY_PKG
-    mode = 'color'  # this uses color by default
-    max_colors = 8  # 7 + CLEAN (no color)
-    modes_available = ('bw', 'color')
-
-    def __init__(self, deviceName, config):
-        super().__init__(deviceName, config)
-
-        # load the device driver
-        deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
-        self._device = deviceObj.Inky()
-
-        # set the width and height
-        self.width = self._device.width
-        self.height = self._device.height
-
-        # get colors from the inky lib (won't be used normally as inky does conversion)
-        self.palette_filter = deviceObj.DESATURATED_PALETTE
-
-    @staticmethod
-    def get_supported_devices():
-        result = []
-
-        # python libs for this might not be installed - that's ok, return nothing
-        if(check_module_installed(INKY_PKG)):
-            # if passed return list of devices
-            result = [f"{INKY_PKG}.impression"]
-
-        return result
-
-    def _display(self, image):
-
-        # no palette adjustments when color as the Inky lib does them from the image
-        if(self.mode == 'bw'):
-            image = self._filterImage(image)
-
-        self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
-        self._device.set_image(image.convert("RGB"), saturation=self._getfloat_device_option('saturation', .5))  # .5 is default from Inky lib
-        self._device.show()
-
-    def clear(self):
-        for _ in range(2):
-            for y in range(self.height - 1):
-                for x in range(self.width - 1):
-                    self._device.set_pixel(x, y, self._device.CLEAN)
-
+        clear_image = Image.new("P", (self.width, self.height), self.clear_color)
+        self._device.set_image(clear_image)
         self._device.show()
