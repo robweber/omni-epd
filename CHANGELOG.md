@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - added `force_palette` argument to the `virtualepd._filter()` function. Will force palette based conversion if wanted, default is False
 - added additional tested displays per #63 comments
 - new unit tests to make sure image processing components run without error
+- support for `inky.auto` as a valid EPD device. This will auto detect Inky devices and load the correct driver. Thanks @donbing
 
 ### Fixed
 
