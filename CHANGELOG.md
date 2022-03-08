@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Added
+
+- `omni_epd.mock` can now set both the width and height values within the `.ini` file. Thanks @missionfloyd
+
 ## 0.3.0
 
 ### Added
