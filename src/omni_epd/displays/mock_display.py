@@ -44,9 +44,9 @@ class MockDisplay(VirtualEPD):
         # set location to write test image - can be set in ini file
         self.output_file = self._get_device_option("file", os.path.join(os.getcwd(), self.output_file))
 
-        # set the width and height
-        self.width = 400
-        self.height = 200
+        # set the width and height - can be set in ini file
+        self.width = self._getint_device_option("width", 400)
+        self.height = self._getint_device_option("height", 200)
 
     @staticmethod
     def get_supported_devices():
