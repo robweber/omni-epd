@@ -44,28 +44,28 @@ sudo pip3 install --prefer-binary .
 
 ## Usage
 
-Usage in this case refers to EPD project implementers that wish to abstract their code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/omni-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. For testing, the device `omni_epd.mock` can be used to write output to a JPEG file instead of to a display.
+Usage in this case refers to EPD project implementers that wish to abstract their code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/omni-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. For testing, the device `omni_epd.mock` can be used to write output to a PNG file instead of to a display.
 
 ### VirtualEPD Object
 
 Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available to be implemented once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
 
-* `width` and `height` - these are convience attributes to get the width and height of the display in your code. See the above example for their use.
+* `width` and `height` - these are convenience attributes to get the width and height of the display in your code. 
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
 * `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
-* `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains better life of the display.
+* `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains longer life of the display.
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
 
-If the display you're implementing supports any advanced features, like multiple colors, these can be handled by setting some additional variables. Specifically you can set the variables below in the `__init()__` method. See currently implemented displays for a better idea of how to handle multiple colors.
+If the display you're using supports any advanced features, like multiple colors, these can be handled by setting some additional variables. See [advanced display control](advanced-epd-control) for a better idea of how to additional options.
 
-* `modes_available` - a tuple containing the names of valid modes, BW available by default
+* `modes_available` - a tuple containing the names of valid modes, __BW__ available by default
 * `max_colors` - The maximum number of colors supported (up to 256 RGB)
 * `palette_filter` - a tuple of RGB values for valid colors an `Image` can send to the display
 
 ### Display Testing
 
-There is a utility, `omni-epd-test` to verify the display. This is useful to provide users with a way their hardware is working properly. Many displays have specific library requirements that need to be installed with OS level package utilities and may throw errors until they are resolved. The test utility helps confirm all requirements are met before doing more advanced work with the display. This can be run from the command line, specifying the device from the table below.
+There is a utility, `omni-epd-test` to verify the display. This is useful to provide users with a way to test that their hardware is working properly. Many displays have specific library requirements that need to be installed with OS level package utilities and may throw errors until they are resolved. The test utility helps confirm all requirements are met before doing more advanced work with the display. This can be run from the command line, specifying the device from the table below.
 
 ```
 # this will draw a series of rectangles
@@ -181,6 +181,8 @@ Inky makes things pretty easy with a one-line installer. This makes the necessar
 ```
 curl https://get.pimoroni.com/inky | bash
 ```
+
+If installing Inky manually be sure that SPI and I2C are enabled via `sudo raspi-config`.
 
 __Waveshare__
 
