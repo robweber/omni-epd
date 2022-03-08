@@ -219,6 +219,8 @@ class VirtualEPD:
             cmd += ["odm", dither]
         elif(dither in self.dither_modes_diffusion):
             cmd += ["edm", dither]
+        elif(dither.startswith("bayer")):
+            cmd += ["bayer", dither[5:]]
         else:
             # custom dithering matrix from JSON file or string
             if(os.path.isfile(dither)):
@@ -239,11 +241,11 @@ class VirtualEPD:
         buf.close()
 
         if(proc.returncode):
+            self._logger.error(out.decode().strip())
             return image
 
         buf = io.BytesIO(out)
-        image = Image.open(buf)
-        image = image.convert("RGB")
+        image = Image.open(buf).convert("RGB")
         buf.close()
 
         return image

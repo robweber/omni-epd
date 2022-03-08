@@ -119,6 +119,7 @@ When using the `dither` option the following values are allowed. Be aware that s
   * `ClusteredDot6x6_2`
   * `ClusteredDot6x6_3`
   * `ClusteredDotDiagonal8x8_3`
+  * `bayerXxY`, where `X` and `Y` are the dimensions of the bayer matrix. Both must be powers of 2, except for `3x3`, `3x5` and `5x3`.
 * Error Diffusion
   * `Simple2D`
   * `FloydSteinberg`
