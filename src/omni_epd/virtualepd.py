@@ -208,6 +208,7 @@ class VirtualEPD:
         palette = " ".join(palette)
 
         cmd = ["didder", "--in", "-", "--out", "-", "--palette", palette]
+        cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
         if(dither == "floydsteinberg"):
             return self._filterImage(image)
