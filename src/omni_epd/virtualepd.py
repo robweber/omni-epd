@@ -57,7 +57,7 @@ class VirtualEPD:
                             "clustereddotverticalline", "clustereddot8x8", "clustereddot6x6_2",
                             "clustereddot6x6_3", "clustereddotdiagonal8x8_3")
 
-    dither_modes_diffusion = ("simple2d", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
+    dither_modes_diffusion = ("simple2d", "floydsteinberg", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
                               "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon")
 
     _device = None  # concrete device class, initialize in __init__
@@ -210,18 +210,18 @@ class VirtualEPD:
         cmd = ["didder", "--in", "-", "--out", "-", "--palette", palette]
         cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
-        if(dither == "floydsteinberg"):
-            return self._filterImage(image)
-        elif(dither == "none"):
+        if(dither == "none"):
             return self._filterImage(image, Image.NONE)
-        elif(dither == "random"):
-            cmd += ["random", "-0.5,0.5"]
         elif(dither in self.dither_modes_ordered):
             cmd += ["odm", dither]
         elif(dither in self.dither_modes_diffusion):
             cmd += ["edm", dither]
-        elif(dither.startswith("bayer")):
-            cmd += ["bayer", dither[5:]]
+        elif(dither == "bayer"):
+            # dither_args: X,Y dimensions of bayer matrix - powers of two, 3x3, 3x5, or 5x3
+            cmd += ["bayer", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='4,4')]
+        elif(dither == "random"):
+            # dither_args: min,max or min_r,max_r,min_g,max_g,min_b,max_b
+            cmd += ["random", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='-0.5,0.5')]
         else:
             # custom dithering matrix from JSON file or string
             if(os.path.isfile(dither)):

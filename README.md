@@ -119,7 +119,7 @@ When using the `dither` option the following values are allowed. Be aware that s
   * `ClusteredDot6x6_2`
   * `ClusteredDot6x6_3`
   * `ClusteredDotDiagonal8x8_3`
-  * `bayerXxY`, where `X` and `Y` are the dimensions of the bayer matrix. Both must be powers of 2, except for `3x3`, `3x5` and `5x3`.
+  * `Bayer`.
 * Error Diffusion
   * `Simple2D`
   * `FloydSteinberg`
@@ -132,6 +132,7 @@ When using the `dither` option the following values are allowed. Be aware that s
   * `TwoRowSierra`
   * `SierraLite`
   * `StevenPigeon`
+* `Random` (random noise)
 
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
