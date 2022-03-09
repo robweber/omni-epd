@@ -23,7 +23,6 @@ import importlib
 import logging
 import subprocess
 import io
-import os
 from PIL import Image, ImageEnhance
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -222,18 +221,12 @@ class VirtualEPD:
         elif(dither == "random"):
             # dither_args: min,max or min_r,max_r,min_g,max_g,min_b,max_b
             cmd += ["random", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='-0.5,0.5')]
-        else:
-            # custom dithering matrix from JSON file or string
-            if(os.path.isfile(dither)):
-                with open(dither) as file:
-                    data = json.load(file)
-            else:
-                data = json.loads(dither)
-
-            if(isinstance(data, dict)):
-                cmd += ["odm", dither]
-            if(isinstance(data, list)):
-                cmd += ["edm", dither]
+        elif(dither == "customordered"):
+            # dither_args: JSON file or string
+            cmd += ["odm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
+            # dither_args: JSON file or string
+        elif(dither == "customdiffusion"):
+            cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
 
         buf = io.BytesIO()
         image.save(buf, "PNG")
