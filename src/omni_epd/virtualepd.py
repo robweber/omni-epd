@@ -228,8 +228,7 @@ class VirtualEPD:
         elif(dither == "customdiffusion"):
             cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
 
-        if(dither in self.dither_modes_diffusion + ("customdiffusion",) and
-           self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
+        if(cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
             cmd.insert(-1, "--serpentine")
 
         buf = io.BytesIO()
