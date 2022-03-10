@@ -441,14 +441,15 @@ class IT8951Display(VirtualEPD):
     def clear(self):
         self._device.clear()
 
+
 class Waveshare1248inDisplay(VirtualEPD):
     """
     This class is for the Waveshare 12.48 in display only as it's in a separate repo
     https://github.com/waveshare/12.48inch-e-paper
     """
-    
+
     pkg_name = WAVESHARE_PKG
-    #placeholder - repo lacks setup.py
+    # placeholder - repo lacks setup.py
     waveshare1248_pkg_name = 'waveshare_epd_1248'
 
     def __init__(self, deviceName, config):
@@ -479,16 +480,17 @@ class Waveshare1248inDisplay(VirtualEPD):
     def clear(self):
         self._device.clear()
 
+
 class Waveshare1248inTricolorDisplay(Waveshare1248inDisplay):
     """
     This class is for the Waveshare 12.48 in display only as it's in a separate repo
     https://github.com/waveshare/12.48inch-e-paper
     """
-    
+
     max_colors = 3
-    
+
     pkg_name = WAVESHARE_PKG
-    #placeholder - repo lacks setup.py
+    # placeholder - repo lacks setup.py
     waveshare1248_pkg_name = 'waveshare_epd_1248'
 
     def __init__(self, deviceName, config):
@@ -529,4 +531,4 @@ class Waveshare1248inTricolorDisplay(Waveshare1248inDisplay):
             img_color = image.point(lambda p: 0 if 20 < p < 235 else 255)
 
             # send to display
-            self._device.display(img_black, img_color))
+            self._device.display(img_black, img_color)
