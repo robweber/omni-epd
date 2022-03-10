@@ -193,7 +193,7 @@ class VirtualEPD:
 
     def _ditherImage(self, image, dither):
         if(self.mode == 'bw'):
-            palette = [[255, 255, 255], [0, 0, 0]]
+            colors = [[255, 255, 255], [0, 0, 0]]
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
@@ -227,6 +227,9 @@ class VirtualEPD:
             # dither_args: JSON file or string
         elif(dither == "customdiffusion"):
             cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
+
+        if(dither in self.dither_modes_diffusion + ("customdiffusion",) and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
+            cmd.insert(-1, "--serpentine")
 
         buf = io.BytesIO()
         image.save(buf, "PNG")
