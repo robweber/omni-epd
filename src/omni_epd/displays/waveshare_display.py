@@ -440,3 +440,93 @@ class IT8951Display(VirtualEPD):
 
     def clear(self):
         self._device.clear()
+
+class Waveshare1248inDisplay(VirtualEPD):
+    """
+    This class is for the Waveshare 12.48 in display only as it's in a separate repo
+    https://github.com/waveshare/12.48inch-e-paper
+    """
+    
+    pkg_name = WAVESHARE_PKG
+    #placeholder - repo lacks setup.py
+    waveshare1248_pkg_name = 'waveshare_epd_1248'
+
+    def __init__(self, deviceName, config):
+        super().__init__(deviceName, config)
+
+        # load the IT8951.display package and create the object
+        deviceObj = self.load_display_driver(self.waveshare1248_pkg_name, "epd12in48")
+        self._device = deviceObj.EPD()
+
+        # set the width and height
+        self.width = self._device.width
+        self.height = self._device.height
+
+    @staticmethod
+    def get_supported_devices():
+        return [f"{WAVESHARE_PKG}.epd12in48"]
+
+    def prepare(self):
+        self._device.Init()
+
+    def _display(self, image):
+        # this driver combines getbuffer() into display()
+        self._device.display(image)
+
+    def sleep(self):
+        self._device.EPD_Sleep()
+
+    def clear(self):
+        self._device.clear()
+
+class Waveshare1248inTricolorDisplay(Waveshare1248inDisplay):
+    """
+    This class is for the Waveshare 12.48 in display only as it's in a separate repo
+    https://github.com/waveshare/12.48inch-e-paper
+    """
+    
+    max_colors = 3
+    
+    pkg_name = WAVESHARE_PKG
+    #placeholder - repo lacks setup.py
+    waveshare1248_pkg_name = 'waveshare_epd_1248'
+
+    def __init__(self, deviceName, config):
+        driverName = "epd12in48b"
+        super().__init__(driverName, config)
+
+        # device object loaded in parent class
+
+        # set the allowed modes
+        self.modes_available = ("bw", "red")
+        self.palette_filter.append([255, 0, 0])
+
+    @staticmethod
+    def get_supported_devices():
+        return [f"{WAVESHARE_PKG}.epd12in48b"]
+
+    def prepare(self):
+        self._device.Init()
+
+    def _display(self, image):
+        # this driver combines getbuffer() into display()
+        if(self.mode == 'bw'):
+            # send the black/white image and blank second image (safer since some drivers require data)
+            img_white = Image.new('1', (self._device.height, self._device.width), 255)
+            self._device.display(image, img_white)
+        else:
+            # apply the color filter to get a 3 color image
+            image = self._filterImage(image)
+
+            # convert to greyscale
+            image = image.convert('L')
+
+            # convert greys to black or white based on threshold of 20
+            # https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.point
+            img_black = image.point(lambda p: 255 if p >= 20 else 0)
+
+            # convert greys to third color (represented as black in the image) or white based on threshold of 20
+            img_color = image.point(lambda p: 0 if 20 < p < 235 else 255)
+
+            # send to display
+            self._device.display(img_black, img_color))
