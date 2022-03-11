@@ -232,19 +232,17 @@ class VirtualEPD:
         if(cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
             cmd.insert(-1, "--serpentine")
 
-        buf = io.BytesIO()
-        image.save(buf, "PNG")
-        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        out, err = proc.communicate(input=buf.getvalue())
-        buf.close()
+        with io.BytesIO() as buf:
+            image.save(buf, "PNG")
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            out, err = proc.communicate(input=buf.getvalue())
 
         if(proc.returncode):
             self._logger.error(out.decode().strip())
             return image
 
-        buf = io.BytesIO(out)
-        image = Image.open(buf).convert("RGB")
-        buf.close()
+        with io.BytesIO(out) as buf:
+            image = Image.open(buf).convert("RGB")
 
         return image
 
