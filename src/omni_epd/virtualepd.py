@@ -57,7 +57,8 @@ class VirtualEPD:
                             "clustereddot6x6_3", "clustereddotdiagonal8x8_3")
 
     dither_modes_diffusion = ("simple2d", "floydsteinberg", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
-                              "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon")
+                              "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon", "sierra3",
+                              "sierra2", "sierra2_4a")
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
@@ -122,7 +123,7 @@ class VirtualEPD:
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
         if(self._config.has_option(IMAGE_DISPLAY, "dither") and self._config.get(IMAGE_DISPLAY, "dither")):
-            dither = self._config.get(IMAGE_DISPLAY, "dither")
+            dither = self._config.get(IMAGE_DISPLAY, "dither").lower().replace("sierra-2-4a", "sierralite").replace("-", "")
             image = self._ditherImage(image, dither)
             self._logger.debug(f"Applying dither: {dither}")
 
