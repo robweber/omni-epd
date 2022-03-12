@@ -210,7 +210,7 @@ class VirtualEPD:
 
         with resources.path("omni_epd", "didder") as p:
             didder = p
-        
+
         cmd = [didder, "--in", "-", "--out", "-", "--palette", palette]
         cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
