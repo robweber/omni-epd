@@ -23,6 +23,7 @@ import importlib
 import logging
 import subprocess
 import io
+from importlib import resources
 from PIL import Image, ImageEnhance
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -207,7 +208,10 @@ class VirtualEPD:
         palette = [",".join(map(str, x)) for x in colors]
         palette = " ".join(palette)
 
-        cmd = ["didder", "--in", "-", "--out", "-", "--palette", palette]
+        with resources.path("omni_epd", "didder") as p:
+            didder = p
+        
+        cmd = [didder, "--in", "-", "--out", "-", "--palette", palette]
         cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
         if(dither == "none"):
