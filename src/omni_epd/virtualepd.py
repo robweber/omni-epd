@@ -241,7 +241,7 @@ class VirtualEPD:
             proc = subprocess.run(cmd, input=buf.getvalue(), capture_output=True)
 
         if(proc.returncode):
-            self._logger.error(out.decode().strip())
+            self._logger.error(proc.stdout.decode().strip())
             return image
 
         with io.BytesIO(proc.stdout) as buf:
