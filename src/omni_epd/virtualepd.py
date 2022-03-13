@@ -238,14 +238,13 @@ class VirtualEPD:
 
         with io.BytesIO() as buf:
             image.save(buf, "PNG")
-            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-            out, err = proc.communicate(input=buf.getvalue())
+            proc = subprocess.run(cmd, input=buf.getvalue(), capture_output=True)
 
         if(proc.returncode):
             self._logger.error(out.decode().strip())
             return image
 
-        with io.BytesIO(out) as buf:
+        with io.BytesIO(proc.stdout) as buf:
             image = Image.open(buf).convert("RGB")
 
         return image
