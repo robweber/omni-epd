@@ -51,16 +51,6 @@ class VirtualEPD:
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
 
-    dither_modes_ordered = ("clustereddot4x4", "clustereddotdiagonal8x8", "vertical5x3", "horizontal3x5",
-                            "clustereddotdiagonal6x6", "clustereddotdiagonal8x8_2", "clustereddotdiagonal16x16",
-                            "clustereddot6x6", "clustereddotspiral5x5", "clustereddothorizontalline",
-                            "clustereddotverticalline", "clustereddot8x8", "clustereddot6x6_2",
-                            "clustereddot6x6_3", "clustereddotdiagonal8x8_3")
-
-    dither_modes_diffusion = ("simple2d", "floydsteinberg", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
-                              "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon", "sierra3",
-                              "sierra2", "sierra2_4a")
-
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
     _device_name = ""  # name of this device
@@ -194,6 +184,16 @@ class VirtualEPD:
         return image
 
     def _ditherImage(self, image, dither):
+        dither_modes_ordered = ("clustereddot4x4", "clustereddotdiagonal8x8", "vertical5x3", "horizontal3x5",
+                                "clustereddotdiagonal6x6", "clustereddotdiagonal8x8_2", "clustereddotdiagonal16x16",
+                                "clustereddot6x6", "clustereddotspiral5x5", "clustereddothorizontalline",
+                                "clustereddotverticalline", "clustereddot8x8", "clustereddot6x6_2",
+                                "clustereddot6x6_3", "clustereddotdiagonal8x8_3")
+
+        dither_modes_diffusion = ("simple2d", "floydsteinberg", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
+                                  "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon", "sierra3",
+                                  "sierra2", "sierra2_4a")
+
         if(self.mode == 'bw'):
             colors = [[255, 255, 255], [0, 0, 0]]
         else:
@@ -216,9 +216,9 @@ class VirtualEPD:
 
         if(dither == "none"):
             return self._filterImage(image, Image.NONE)
-        elif(dither in self.dither_modes_ordered):
+        elif(dither in dither_modes_ordered):
             cmd += ["odm", dither]
-        elif(dither in self.dither_modes_diffusion):
+        elif(dither in dither_modes_diffusion):
             cmd += ["edm", dither]
         elif(dither == "bayer"):
             # dither_args: X,Y dimensions of bayer matrix - powers of two, 3x3, 3x5, or 5x3
@@ -229,8 +229,8 @@ class VirtualEPD:
         elif(dither == "customordered"):
             # dither_args: JSON file or string
             cmd += ["odm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
-            # dither_args: JSON file or string
         elif(dither == "customdiffusion"):
+            # dither_args: JSON file or string
             cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
 
         if(cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
