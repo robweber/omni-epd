@@ -50,7 +50,7 @@ Usage in this case refers to EPD project implementers that wish to abstract thei
 
 Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available to be implemented once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
 
-* `width` and `height` - these are convenience attributes to get the width and height of the display in your code. 
+* `width` and `height` - these are convenience attributes to get the width and height of the display in your code.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
 * `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains longer life of the display.
@@ -154,7 +154,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [4.01inch 7 color e-Paper HAT](https://www.waveshare.com/4.01inch-e-paper-hat-f.htm) | waveshare_epd.epd4in01f | bw, color |
 |  | [4.2inch e-Paper Module](https://www.waveshare.com/4.2inch-e-Paper-Module.htm) |waveshare_epd.epd4in2 | bw |
 |  | [4.2inch e-Paper Module B](https://www.waveshare.com/4.2inch-e-Paper-Module-B.htm) |waveshare_epd.epd4in2b <br> waveshare_epd.epd4in2b_V2 | bw, red |
-|  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) |waveshare_epd.epd4in2c | bw, yellow |
+|  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) | __waveshare_epd.epd4in2c__ | bw, yellow |
 |  | [5.65inch e-Paper Module F](https://www.waveshare.com/5.65inch-e-Paper-Module-F.htm) |__waveshare_epd.epd5in65f__ | bw, color |
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
