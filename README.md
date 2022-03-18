@@ -15,9 +15,11 @@ For project maintainers this expands the number of displays you can use for your
   - [VirtualEPD Object](#virtualepd-object)
   - [Display Testing](#display-testing)
   - [Advanced EPD Control](#advanced-epd-control)
+  - [Dithering](#dithering)
 - [Displays Implemented](#displays-implemented)
   - [Display Driver Installation](#display-driver-installation)
 - [Implementing Projects](#implementing-projects)
+- [Acknowledgements](#acknowledgements)
 - [Contributing](#contributing)
   - [Contributors](#contributors)
 - [License](#license)
@@ -92,7 +94,7 @@ mode=bw  # the mode of the display, typically b+w by default. See list of suppor
 rotate=0  # rotate final image written to display by X degrees [0-360]
 flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
-dither=floydsteinberg  # apply a dithering algorithm to the image, valid options list below
+dither=FloydSteinberg  # apply a dithering algorithm to the image
 
 [Image Enhancements]
 palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must be less than or equal to max colors the display supports
@@ -101,38 +103,9 @@ brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
-When using the `dither` option the following values are allowed. Be aware that some dithering algorithms take a lot of time to run on smaller systems, like a Raspberry Pi. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects.
+### Dithering
 
-* Ordered
-  * `ClusteredDot4x4`
-  * `ClusteredDotDiagonal8x8`
-  * `Vertical5x3`
-  * `Horizontal3x5`
-  * `ClusteredDotDiagonal6x6`
-  * `ClusteredDotDiagonal8x8_2`
-  * `ClusteredDotDiagonal16x16`
-  * `ClusteredDot6x6`
-  * `ClusteredDotSpiral5x5`
-  * `ClusteredDotHorizontalLine`
-  * `ClusteredDotVerticalLine`
-  * `ClusteredDot8x8`
-  * `ClusteredDot6x6_2`
-  * `ClusteredDot6x6_3`
-  * `ClusteredDotDiagonal8x8_3`
-  * `Bayer`.
-* Error Diffusion
-  * `Simple2D`
-  * `FloydSteinberg`
-  * `FalseFloydSteinberg`
-  * `JarvisJudiceNinke`
-  * `Atkinson`
-  * `Stucki`
-  * `Burkes`
-  * `Sierra`
-  * `TwoRowSierra`
-  * `SierraLite`
-  * `StevenPigeon`
-* `Random` (random noise)
+When using the `dither` option many algorithms are available. Please read the [full instructions](https://github.com/robweber/omni-epd/wiki/Image-Dithering-Options) for dithering and how it can be used.
 
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
@@ -216,7 +189,8 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 
 ## Acknowledgements
-* https://github.com/makeworld-the-better-one/didder
+
+Dithering support provided by the __didder__ Tool - https://github.com/makeworld-the-better-one/didder
 
 ## Contributing
 
