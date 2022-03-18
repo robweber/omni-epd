@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - `omni_epd.mock` can now set both the width and height values within the `.ini` file. Thanks @missionfloyd
 
+### Changed
+
+- dithering is now done with [didder](https://github.com/makeworld-the-better-one/didder) - this is a massive improvement both in scope and speed to hitherdither. Thanks @missionfloyd
+
+### Removed
+
+- removed `hitherdither` as a dependency
+
 ## 0.3.0
 
 ### Added
