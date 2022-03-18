@@ -37,6 +37,7 @@ class TestomniEpd(unittest.TestCase):
 
     def setup_config(self, source_config_file_name, target_config_file_name):
         copyfile(os.path.join(TEST_PATH, 'ini', source_config_file_name), os.path.join(os.getcwd(), target_config_file_name))
+        time.sleep(1)
 
     def test_supported_diplays(self):
         """
@@ -68,7 +69,6 @@ class TestomniEpd(unittest.TestCase):
         """
         # set up a global config file
         self.setup_config(CONFIG_FILE, CONFIG_FILE)
-        time.sleep(1)
 
         epd = displayfactory.load_display_driver(self.goodEpd)
 
@@ -88,7 +88,6 @@ class TestomniEpd(unittest.TestCase):
         # set up a global config file and device config
         self.setup_config(CONFIG_FILE, CONFIG_FILE)
         self.setup_config(deviceConfig, deviceConfig)
-        time.sleep(1)
 
         epd = displayfactory.load_display_driver(self.goodEpd)
 
@@ -110,7 +109,6 @@ class TestomniEpd(unittest.TestCase):
         # set up a global config file
         self.setup_config(CONFIG_FILE, CONFIG_FILE)
         self.setup_config(deviceConfig, deviceConfig)
-        time.sleep(1)
 
         # should load driver from ini file without error
         epd = displayfactory.load_display_driver()
