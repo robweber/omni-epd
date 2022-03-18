@@ -24,12 +24,12 @@ class TestImageProcessing(unittest.TestCase):
     def run_before_and_after_tests(self):
         # clean up any files left over from previous tests
         self._delete_files()
-        self._delete_files('.png')
+        self._delete_files('png')
         yield
 
         # clean up any files made during this test
         self._delete_files()
-        self._delete_files('.png')
+        self._delete_files('png')
 
     def setup_config(self, source_config_file_name, target_config_file_name):
         copyfile(os.path.join(TEST_PATH, 'ini', source_config_file_name), os.path.join(os.getcwd(), target_config_file_name))
