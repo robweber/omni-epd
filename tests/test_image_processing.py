@@ -11,6 +11,7 @@ from omni_epd.conf import CONFIG_FILE
 
 TEST_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
+
 class TestImageProcessing(unittest.TestCase):
 
     def _delete_files(self, file_type='ini'):
@@ -75,6 +76,39 @@ class TestImageProcessing(unittest.TestCase):
         Dithering will return same image if not applied or dither algorithm does not exist
         """
         self.setup_config(constants.BASIC_DITHER, CONFIG_FILE)
+
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
+
+        # write the image
+        image = self.open_image(constants.GALAXY_IMAGE, epd.width, epd.height)
+        epd.display(image)
+
+        # compare the two images should be different (dither applied)
+        assert not self.compare_images(constants.MOCK_EPD_OUTPUT, constants.MASTER_IMAGE)
+
+    def test_custom_dither(self):
+        """
+        Tests that custom dithering can be applied via either the INI file
+        Tests that generated images are not the same as a master (non-modified image)
+        """
+        self.setup_config(constants.CUSTOM_DITHER_INI, CONFIG_FILE)
+
+        epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
+
+        # write the image
+        image = self.open_image(constants.GALAXY_IMAGE, epd.width, epd.height)
+        epd.display(image)
+
+        # compare the two images should be different (dither applied)
+        assert not self.compare_images(constants.MOCK_EPD_OUTPUT, constants.MASTER_IMAGE)
+
+    def test_custom_dither_json(self):
+        """
+        Tests that custom dithering can be applied from a JSON file
+        Tests that generated images are not the same as a master (non-modified image)
+        This will fail if JSON file can't be loaded, the same image will be returned by didder
+        """
+        self.setup_config(constants.CUSTOM_DITHER_JSON, CONFIG_FILE)
 
         epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
 

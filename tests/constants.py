@@ -22,9 +22,12 @@ import os.path
 GOOD_EPD_NAME = "omni_epd.mock"  # this should always be a valid EPD
 BAD_EPD_NAME = "omni_epd.bad"  # this is not a valid EPD
 
+# INI files
 BAD_CONFIG_FILE = 'bad_conf.ini'  # name of invalid configuration file
 ALL_IMAGE_OPTIONS = "all_options.ini"  # ini file that attempt to run all base options
-BASIC_DITHER = "basic_dither.ini"
+BASIC_DITHER = "basic_dither.ini"  # in file with basic dither applied
+CUSTOM_DITHER_INI = "custom_dither.ini"
+CUSTOM_DITHER_JSON = "custom_dither_json.ini"
 
 # Testing Images
 MOCK_EPD_OUTPUT = os.path.join(os.getcwd(), 'mock_output.png')  # path to where output will be generated
