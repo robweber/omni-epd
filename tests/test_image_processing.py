@@ -32,7 +32,7 @@ class TestImageProcessing(unittest.TestCase):
 
     def test_image_processing_options(self):
         """
-        Test all common image processing options (rotating, dithering, contrast, etc)
+        Test all common image processing options (rotating, contrast, etc)
         https://github.com/robweber/omni-epd#advanced-epd-control
         """
 
