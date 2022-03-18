@@ -63,7 +63,7 @@ class MockDisplay(VirtualEPD):
         for i in range(0, 216):
             row = int(i/6)
             # red = row/6, green=row%6, blue=current column
-            result.append([shades[int(row/6)], shades[int(row%6)], shades[i - (row * 6)]])
+            result.append([shades[int(row/6)], shades[int(row % 6)], shades[i - (row * 6)]])
 
         return result
 
