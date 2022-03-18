@@ -24,6 +24,9 @@ BAD_EPD_NAME = "omni_epd.bad"  # this is not a valid EPD
 
 BAD_CONFIG_FILE = 'bad_conf.ini'  # name of invalid configuration file
 ALL_IMAGE_OPTIONS = "all_options.ini"  # ini file that attempt to run all base options
+BASIC_DITHER = "basic_dither.ini"
 
 # Testing Images
+MOCK_EPD_OUTPUT = os.path.join(os.getcwd(), 'mock_output.png')  # path to where output will be generated
 GALAXY_IMAGE = os.path.join(os.getcwd(), "examples", "PIA03519_small.jpg")
+MASTER_IMAGE = os.path.join(os.getcwd(), "tests", "master_bw_output.png")
