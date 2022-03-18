@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - `omni_epd.mock` can now set both the width and height values within the `.ini` file. Thanks @missionfloyd
 
+### Fixed
+
+- `omni_epd.mock` device now returns a palette filter when using the color mode. Previously this returned only b/w and resulted in image processing enhancements resulting in a black and white only image, even when color was selected. Hardcoded palette based on web safe colors. 
+
 ### Changed
 
 - dithering is now done with [didder](https://github.com/makeworld-the-better-one/didder) - this is a massive improvement both in scope and speed to hitherdither. Thanks @missionfloyd
