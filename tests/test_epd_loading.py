@@ -60,7 +60,7 @@ class TestEpdLoading(unittest.TestCase):
         Also confirm values not in the config file aren't changed from defaults
         """
         # set up a global config file
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
         time.sleep(1)
 
         epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
@@ -79,8 +79,8 @@ class TestEpdLoading(unittest.TestCase):
         deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # set up a global config file and device config
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
-        copyfile(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', deviceConfig), os.path.join(os.getcwd(), deviceConfig))
         time.sleep(1)
 
         epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)
@@ -101,8 +101,8 @@ class TestEpdLoading(unittest.TestCase):
         deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # set up a global config file
-        copyfile(os.path.join(os.getcwd(), "tests", CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
-        copyfile(os.path.join(os.getcwd(), "tests", deviceConfig), os.path.join(os.getcwd(), deviceConfig))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', CONFIG_FILE), os.path.join(os.getcwd(), CONFIG_FILE))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', deviceConfig), os.path.join(os.getcwd(), deviceConfig))
         time.sleep(1)
 
         # should load driver from ini file without error
@@ -123,7 +123,7 @@ class TestEpdLoading(unittest.TestCase):
         deviceConfig = constants.GOOD_EPD_NAME + ".ini"
 
         # copy bad config file to be loaded
-        copyfile(os.path.join(os.getcwd(), "tests", constants.BAD_CONFIG_FILE), os.path.join(os.getcwd(), deviceConfig))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', constants.BAD_CONFIG_FILE), os.path.join(os.getcwd(), deviceConfig))
 
         # load the display driver, shoudl throw EPDConfigurationError
         self.assertRaises(EPDConfigurationError, displayfactory.load_display_driver, constants.GOOD_EPD_NAME)

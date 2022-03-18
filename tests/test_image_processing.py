@@ -36,7 +36,7 @@ class TestImageProcessing(unittest.TestCase):
         https://github.com/robweber/omni-epd#advanced-epd-control
         """
 
-        copyfile(os.path.join(os.getcwd(), "tests", constants.ALL_IMAGE_OPTIONS), os.path.join(os.getcwd(), CONFIG_FILE))
+        copyfile(os.path.join(os.getcwd(), "tests", 'ini', constants.ALL_IMAGE_OPTIONS), os.path.join(os.getcwd(), CONFIG_FILE))
         time.sleep(1)
 
         epd = displayfactory.load_display_driver(constants.GOOD_EPD_NAME)

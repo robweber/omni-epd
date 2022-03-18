@@ -36,7 +36,7 @@ class TestomniEpd(unittest.TestCase):
         self._delete_ini()
 
     def setup_config(self, source_config_file_name, target_config_file_name):
-        copyfile(os.path.join(TEST_PATH, source_config_file_name), os.path.join(os.getcwd(), target_config_file_name))
+        copyfile(os.path.join(TEST_PATH, 'ini', source_config_file_name), os.path.join(os.getcwd(), target_config_file_name))
 
     def test_supported_diplays(self):
         """
