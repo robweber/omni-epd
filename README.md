@@ -4,9 +4,9 @@
 
 An EPD (electronic paper display) class abstraction to simplify communications across multiple display types.
 
-There are several great EPD projects all over the internet, many in written in Python. The problem with a lot of these is that the code is often for one specific type of display, or perhaps a family of displays. This project abstracts the EPD communications into a common interface so a variety of displays can be interchangeably used in the same project.
+There are several great EPD projects all over the internet, many in written in Python. The problem with a lot of these is that the code is often for one specific type of display, or perhaps a family of displays. This project abstracts the EPD communications into a common interface so a variety of displays can be interchangeably used in the same project. It also adds a lot of [helpful conveniences](#advanced-epd-control) such as the ability to automatically to rotate, add contrast, or dither images on their way to the display. This gives more control to end users without having to add extra features in your upstream project.
 
-For project maintainers this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the list below.
+For EPD project builders this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the [list below](#displays-implmented).
 
 ## Table Of Contents
 
