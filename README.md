@@ -92,9 +92,7 @@ mode=bw  # the mode of the display, typically b+w by default. See list of suppor
 rotate=0  # rotate final image written to display by X degrees [0-360]
 flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
-dither=floyd-steinberg  # apply a dithering algorithm to the image, valid options list below
-order=8  # when using bayer and yiluoma dithers defines the matrix size, must be a power of 2. When using cluster-dot dither this defines the dot size, can be 4 or 8
-threshold=[128, 128, 128]  # for dithers this defines the color snap threshold. Takes an RGB list.
+dither=floydsteinberg  # apply a dithering algorithm to the image, valid options list below
 
 [Image Enhancements]
 palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must be less than or equal to max colors the display supports
@@ -105,17 +103,36 @@ sharpness=1  # adjust image sharpness, 1 = no adjustment
 
 When using the `dither` option the following values are allowed. Be aware that some dithering algorithms take a lot of time to run on smaller systems, like a Raspberry Pi. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects.
 
-* floyd-steinberg
-* jarvis-judice-ninke
-* stucki
-* burkes
-* sierra3
-* sierra2
-* sierra-2-4a
-* atkinson
-* bayer
-* cluster-dot
-* yliluoma
+* Ordered
+  * `ClusteredDot4x4`
+  * `ClusteredDotDiagonal8x8`
+  * `Vertical5x3`
+  * `Horizontal3x5`
+  * `ClusteredDotDiagonal6x6`
+  * `ClusteredDotDiagonal8x8_2`
+  * `ClusteredDotDiagonal16x16`
+  * `ClusteredDot6x6`
+  * `ClusteredDotSpiral5x5`
+  * `ClusteredDotHorizontalLine`
+  * `ClusteredDotVerticalLine`
+  * `ClusteredDot8x8`
+  * `ClusteredDot6x6_2`
+  * `ClusteredDot6x6_3`
+  * `ClusteredDotDiagonal8x8_3`
+  * `Bayer`.
+* Error Diffusion
+  * `Simple2D`
+  * `FloydSteinberg`
+  * `FalseFloydSteinberg`
+  * `JarvisJudiceNinke`
+  * `Atkinson`
+  * `Stucki`
+  * `Burkes`
+  * `Sierra`
+  * `TwoRowSierra`
+  * `SierraLite`
+  * `StevenPigeon`
+* `Random` (random noise)
 
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
@@ -197,6 +214,9 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 
 * [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process.
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
+
+## Acknowledgements
+* https://github.com/makeworld-the-better-one/didder
 
 ## Contributing
 

@@ -21,7 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 import importlib
 import logging
-import hitherdither
+import subprocess
+import io
+from importlib import resources
 from PIL import Image, ImageEnhance
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -48,9 +50,6 @@ class VirtualEPD:
     # only used by displays that need palette filtering before sending to display driver
     max_colors = 2  # assume only b+w supported by default, set in __init__
     palette_filter = [[255, 255, 255], [0, 0, 0]]  # assume only b+w supported by default, set in __init__
-
-    dither_modes = ("floyd-steinberg", "atkinson", "jarvis-judice-ninke", "stucki", "burkes",
-                    "sierra3", "sierra2", "sierra-2-4a", "bayer", "cluster-dot", "yliluoma", "none")
 
     _device = None  # concrete device class, initialize in __init__
     _config = None  # configuration options passed in via dict at runtime or .ini file
@@ -114,8 +113,8 @@ class VirtualEPD:
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "dither")) and self._config.get(IMAGE_DISPLAY, "dither") in self.dither_modes:
-            dither = self._config.get(IMAGE_DISPLAY, "dither")
+        if(self._config.has_option(IMAGE_DISPLAY, "dither") and self._config.get(IMAGE_DISPLAY, "dither")):
+            dither = self._config.get(IMAGE_DISPLAY, "dither").lower().replace("sierra-2-4a", "sierralite").replace("-", "")
             image = self._ditherImage(image, dither)
             self._logger.debug(f"Applying dither: {dither}")
 
@@ -185,8 +184,18 @@ class VirtualEPD:
         return image
 
     def _ditherImage(self, image, dither):
+        dither_modes_ordered = ("clustereddot4x4", "clustereddotdiagonal8x8", "vertical5x3", "horizontal3x5",
+                                "clustereddotdiagonal6x6", "clustereddotdiagonal8x8_2", "clustereddotdiagonal16x16",
+                                "clustereddot6x6", "clustereddotspiral5x5", "clustereddothorizontalline",
+                                "clustereddotverticalline", "clustereddot8x8", "clustereddot6x6_2",
+                                "clustereddot6x6_3", "clustereddotdiagonal8x8_3")
+
+        dither_modes_diffusion = ("simple2d", "floydsteinberg", "falsefloydsteinberg", "jarvisjudiceninke", "atkinson",
+                                  "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon", "sierra3",
+                                  "sierra2", "sierra2_4a")
+
         if(self.mode == 'bw'):
-            palette = [255, 255, 255, 0, 0, 0]
+            colors = [[255, 255, 255], [0, 0, 0]]
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
@@ -195,28 +204,49 @@ class VirtualEPD:
             if(len(colors) > self.max_colors):
                 raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
 
-            palette = self.__generate_palette(colors)
+        # format palette the way didder expects it
+        palette = [",".join(map(str, x)) for x in colors]
+        palette = " ".join(palette)
 
-        # split the palette into RGB sublists
-        palette = hitherdither.palette.Palette([palette[x:x+3] for x in range(0, len(palette), 3)])
+        with resources.path("omni_epd", "didder") as p:
+            didder = p
 
-        threshold = json.loads(self._config.get(IMAGE_DISPLAY, "threshold", fallback="[128, 128, 128]"))
-        order = self._config.getint(IMAGE_DISPLAY, "order", fallback=None)
+        cmd = [didder, "--in", "-", "--out", "-", "--palette", palette]
+        cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
-        if dither in ("atkinson", "jarvis-judice-ninke", "stucki", "burkes", "sierra3", "sierra2", "sierra-2-4a"):
-            image = hitherdither.diffusion.error_diffusion_dithering(image, palette, dither)
-        elif dither == "bayer":
-            image = hitherdither.ordered.bayer.bayer_dithering(image, palette, threshold, order or 8)
-        elif dither == "cluster-dot":
-            image = hitherdither.ordered.cluster.cluster_dot_dithering(image, palette, threshold, order or 4)
-        elif dither == "yliluoma":
-            image = hitherdither.ordered.yliluoma.yliluomas_1_ordered_dithering(image, palette, order or 8)
-        elif dither == "floyd-steinberg":
-            image = self._filterImage(image)
-        elif dither == "none":
-            image = self._filterImage(image, Image.NONE)
+        if(dither == "none"):
+            return self._filterImage(image, Image.NONE)
+        elif(dither in dither_modes_ordered):
+            cmd += ["odm", dither]
+        elif(dither in dither_modes_diffusion):
+            cmd += ["edm", dither]
+        elif(dither == "bayer"):
+            # dither_args: X,Y dimensions of bayer matrix - powers of two, 3x3, 3x5, or 5x3
+            cmd += ["bayer", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='4,4')]
+        elif(dither == "random"):
+            # dither_args: min,max or min_r,max_r,min_g,max_g,min_b,max_b
+            cmd += ["random", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='-0.5,0.5')]
+        elif(dither == "customordered"):
+            # dither_args: JSON file or string
+            cmd += ["odm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
+        elif(dither == "customdiffusion"):
+            # dither_args: JSON file or string
+            cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
 
-        image = image.convert("RGB")
+        if(cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
+            cmd.insert(-1, "--serpentine")
+
+        with io.BytesIO() as buf:
+            image.save(buf, "PNG")
+            proc = subprocess.run(cmd, input=buf.getvalue(), capture_output=True)
+
+        if(proc.returncode):
+            self._logger.error(proc.stdout.decode().strip())
+            return image
+
+        with io.BytesIO(proc.stdout) as buf:
+            image = Image.open(buf).convert("RGB")
+
         return image
 
     # helper method to load a concrete display object based on the package and class name
