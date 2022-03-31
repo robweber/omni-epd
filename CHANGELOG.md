@@ -12,7 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 
-- `omni_epd.mock` device now returns a palette filter when using the color mode. Previously this returned only b/w and resulted in image processing enhancements resulting in a black and white only image, even when color was selected. Hardcoded palette based on web safe colors. 
+- `omni_epd.mock` device now returns a palette filter when using the color mode. Previously this returned only b/w and resulted in image processing enhancements resulting in a black and white only image, even when color was selected. Hardcoded palette based on web safe colors.
+
+- Waveshare device `epd2in13_V2` should use the alternate clear method which requires a color parameter. Thanks @ThatIsAPseudo for pointing this out
 
 ### Changed
 
