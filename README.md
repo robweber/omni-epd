@@ -4,9 +4,9 @@
 
 An EPD (electronic paper display) class abstraction to simplify communications across multiple display types.
 
-There are several great EPD projects all over the internet, many in written in Python. The problem with a lot of these is that the code is often for one specific type of display, or perhaps a family of displays. This project abstracts the EPD communications into a common interface so a variety of displays can be interchangeably used in the same project.
+There are several great EPD projects all over the internet, many in written in Python. The problem with a lot of these is that the code is often for one specific type of display, or perhaps a family of displays. This project abstracts the EPD communications into a common interface so a variety of displays can be interchangeably used in the same project. It also adds a lot of [helpful conveniences](#advanced-epd-control) such as the ability to automatically to rotate, add contrast, or dither images on their way to the display. This gives more control to end users without having to add extra features in your upstream project.
 
-For project maintainers this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the list below.
+For EPD project builders this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the [list below](#displays-implmented).
 
 ## Table Of Contents
 
@@ -15,9 +15,11 @@ For project maintainers this expands the number of displays you can use for your
   - [VirtualEPD Object](#virtualepd-object)
   - [Display Testing](#display-testing)
   - [Advanced EPD Control](#advanced-epd-control)
+  - [Dithering](#dithering)
 - [Displays Implemented](#displays-implemented)
   - [Display Driver Installation](#display-driver-installation)
 - [Implementing Projects](#implementing-projects)
+- [Acknowledgements](#acknowledgements)
 - [Contributing](#contributing)
   - [Contributors](#contributors)
 - [License](#license)
@@ -50,7 +52,7 @@ Usage in this case refers to EPD project implementers that wish to abstract thei
 
 Objects returned by the `displayfactory` class all inherit methods from the `VirtualEPD` class. The following methods are available to be implemented once the object is loaded. Be aware that not all displays may implement all methods but `display` is required.
 
-* `width` and `height` - these are convenience attributes to get the width and height of the display in your code. 
+* `width` and `height` - these are convenience attributes to get the width and height of the display in your code.
 * `prepare()` - does any initializing information on the display. This is waking up from sleep or doing anything else prior to a new image being drawn.
 * `display(image)` - draws an image on the display. The image must be a [Pillow Image](https://pillow.readthedocs.io/en/stable/reference/Image.html) object.
 * `sleep()` - puts the display into sleep mode, if available for that device. Generally this is lower power consumption and maintains longer life of the display.
@@ -92,9 +94,7 @@ mode=bw  # the mode of the display, typically b+w by default. See list of suppor
 rotate=0  # rotate final image written to display by X degrees [0-360]
 flip_horizontal=False  # flip image horizontally
 flip_vertical=False  # flip image vertically
-dither=floyd-steinberg  # apply a dithering algorithm to the image, valid options list below
-order=8  # when using bayer and yiluoma dithers defines the matrix size, must be a power of 2. When using cluster-dot dither this defines the dot size, can be 4 or 8
-threshold=[128, 128, 128]  # for dithers this defines the color snap threshold. Takes an RGB list.
+dither=FloydSteinberg  # apply a dithering algorithm to the image
 
 [Image Enhancements]
 palette_filter=[[R,G,B], [R,G,B]]  # for multi color displays the palette filter used to determine colors passed to the display, must be less than or equal to max colors the display supports
@@ -103,19 +103,9 @@ brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
-When using the `dither` option the following values are allowed. Be aware that some dithering algorithms take a lot of time to run on smaller systems, like a Raspberry Pi. [Click here](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) for more information on dithering, and it's effects.
+### Dithering
 
-* floyd-steinberg
-* jarvis-judice-ninke
-* stucki
-* burkes
-* sierra3
-* sierra2
-* sierra-2-4a
-* atkinson
-* bayer
-* cluster-dot
-* yliluoma
+When using the `dither` option many algorithms are available. Please read the [full instructions](https://github.com/robweber/omni-epd/wiki/Image-Dithering-Options) for dithering and how it can be used.
 
 ## Displays Implemented
 Below is a list of displays currently implemented in the library. The Omni Device Name is what you'd pass to `displaymanager.load_display_driver(deviceName)` to load the correct device driver. Generally this is the `packagename.devicename` Devices in __bold__ have been tested on actual hardware while others have been implemented but not verified. This often happens when multiple displays use the same libraries but no physical verification has happened for all models. The color modes are available modes that can be set on the device.
@@ -154,7 +144,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [4.01inch 7 color e-Paper HAT](https://www.waveshare.com/4.01inch-e-paper-hat-f.htm) | waveshare_epd.epd4in01f | bw, color |
 |  | [4.2inch e-Paper Module](https://www.waveshare.com/4.2inch-e-Paper-Module.htm) |waveshare_epd.epd4in2 | bw |
 |  | [4.2inch e-Paper Module B](https://www.waveshare.com/4.2inch-e-Paper-Module-B.htm) |waveshare_epd.epd4in2b <br> waveshare_epd.epd4in2b_V2 | bw, red |
-|  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) |waveshare_epd.epd4in2c | bw, yellow |
+|  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) | __waveshare_epd.epd4in2c__ | bw, yellow |
 |  | [5.65inch e-Paper Module F](https://www.waveshare.com/5.65inch-e-Paper-Module-F.htm) |__waveshare_epd.epd5in65f__ | bw, color |
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
@@ -197,6 +187,10 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 
 * [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process.
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
+
+## Acknowledgements
+
+Dithering support provided by the __didder__ Tool - https://github.com/makeworld-the-better-one/didder
 
 ## Contributing
 

@@ -48,6 +48,25 @@ class MockDisplay(VirtualEPD):
         self.width = self._getint_device_option("width", 400)
         self.height = self._getint_device_option("height", 200)
 
+        if(self.mode == 'color'):
+            self.palette_filter = self.__generate_colors()
+
+    def __generate_colors(self):
+        """returns a list of 216 "web safe" colors, each color is represented with 6 shades
+        https://en.wikipedia.org/wiki/Web_colors#Web-safe_colors
+        """
+        # 6 shades per color
+        shades = (0, 51, 102, 153, 204, 255)
+
+        # 216 colors total
+        result = []
+        for i in range(0, 216):
+            row = int(i/6)
+            # red = row/6, green=row%6, blue=current column
+            result.append([shades[int(row/6)], shades[int(row % 6)], shades[i - (row * 6)]])
+
+        return result
+
     @staticmethod
     def get_supported_devices():
         # only one display supported, the test display
