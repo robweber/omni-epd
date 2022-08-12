@@ -172,7 +172,7 @@ class VirtualEPD:
             palette_image = Image.new("P", (1, 1))
 
             # set the palette, set all other colors to 0
-            palette_image.putpalette(palette + [0, 0, 0] * (256-len(colors)))
+            palette_image.putpalette(palette + [0, 0, 0] * (256 - len(colors)))
 
             if(image.mode != 'RGB'):
                 # convert to RGB as quantize requires it
