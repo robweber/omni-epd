@@ -91,11 +91,11 @@ class VirtualEPD:
             self._logger.debug(f"Rotating image {self._config.getfloat(IMAGE_DISPLAY, 'rotate')}")
 
         if(self._config.has_option(IMAGE_DISPLAY, "flip_horizontal") and self._config.getboolean(IMAGE_DISPLAY, "flip_horizontal")):
-            image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
+            image = image.transpose(method=Image.Transpose.FLIP_LEFT_RIGHT)
             self._logger.debug("Flipping image horizontally")
 
         if(self._config.has_option(IMAGE_DISPLAY, "flip_vertical") and self._config.getboolean(IMAGE_DISPLAY, "flip_vertical")):
-            image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
+            image = image.transpose(method=Image.Transpose.FLIP_TOP_BOTTOM)
             self._logger.debug("Flipping image vertically")
 
         if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
@@ -155,7 +155,7 @@ class VirtualEPD:
     """
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
-    def _filterImage(self, image, dither=Image.FLOYDSTEINBERG, force_palette=False):
+    def _filterImage(self, image, dither=Image.Dither.FLOYDSTEINBERG, force_palette=False):
         if(self.mode == 'bw' and not force_palette):
             image = image.convert("1", dither=dither)
         else:
@@ -215,7 +215,7 @@ class VirtualEPD:
         cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
         if(dither == "none"):
-            return self._filterImage(image, Image.NONE)
+            return self._filterImage(image, Image.Dither.NONE)
         elif(dither in dither_modes_ordered):
             cmd += ["odm", dither]
         elif(dither in dither_modes_diffusion):
