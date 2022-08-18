@@ -222,6 +222,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
             # send to display
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
+
 class WaveshareQuadColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 colors
@@ -412,7 +413,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in65f"f", "epd4in01f"]
+    deviceList = ["epd5in65f", "epd4in01f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
