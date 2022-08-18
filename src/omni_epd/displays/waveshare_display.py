@@ -222,6 +222,59 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
             # send to display
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
+class WaveshareQuadColorDisplay(WaveshareDisplay):
+    """
+    This class is for the Waveshare displays that support 4 colors
+    white/black/yellow/red
+    https://github.com/waveshare/e-Paper
+    """
+
+    max_colors = 4
+
+    # list of all devices - some drivers cover more than one device
+    deviceMap = {"epd1in64g": {"driver": "epd1in64g", "modes": ("bw", "color4"), "version": 1},
+                 "epd2in36g": {"driver": "epd2in36g", "modes": ("bw", "color4"), "version": 1},
+                 "epd3in0g": {"driver": "epd3in0g", "modes": ("bw", "color4"), "version": 1}
+                 "epd4in37g": {"driver": "epd4in37g", "modes": ("bw", "color4"), "version": 1},
+                 "epd7in3g": {"driver": "epd3in0g", "modes": ("bw", "color4"), "version": 1}}
+
+    def __init__(self, deviceName, config):
+        driverName = self.deviceMap[deviceName]['driver']
+        super().__init__(driverName, config)
+
+        # device object loaded in parent class
+
+        # set the allowed modes
+        self.modes_available = self.deviceMap[deviceName]['modes']
+
+        if(self.mode == 'color4'):
+            self.palette_filter.append([255, 255, 0], [255, 0, 0])
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        # python libs for this might not be installed - that's ok, return nothing
+        if(check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareQuadColorDisplay.deviceMap]
+
+        return result
+
+    def prepare(self):
+        self._device.init()
+
+    def _display(self, image):
+
+        if(self.mode == 'bw'):
+            # send the black/white image
+            self._device.display(self._device.getbuffer(image))
+        else:
+            # apply the color filter to get a 4 color image
+            image = self._filterImage(image)
+
+            # send to display
+            self._device.display(self._device.getbuffer(image))
+
 
 class WaveshareGrayscaleDisplay(WaveshareDisplay):
     """
@@ -359,7 +412,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in65f", "epd4in01f"]
+    deviceList = ["epd5in65f"f", "epd4in01f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
