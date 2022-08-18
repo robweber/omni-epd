@@ -48,7 +48,7 @@ class MockDisplay(VirtualEPD):
         self.width = self._getint_device_option("width", 400)
         self.height = self._getint_device_option("height", 200)
 
-        if(self.mode == 'color'):
+        if (self.mode == 'color'):
             self.palette_filter = self.__generate_colors()
 
     def __generate_colors(self):
@@ -61,9 +61,9 @@ class MockDisplay(VirtualEPD):
         # 216 colors total
         result = []
         for i in range(0, 216):
-            row = int(i/6)
+            row = int(i / 6)
             # red = row/6, green=row%6, blue=current column
-            result.append([shades[int(row/6)], shades[int(row % 6)], shades[i - (row * 6)]])
+            result.append([shades[int(row / 6)], shades[int(row % 6)], shades[i - (row * 6)]])
 
         return result
 
@@ -77,10 +77,10 @@ class MockDisplay(VirtualEPD):
 
     def _display(self, image):
 
-        if(self.mode != 'color'):
+        if (self.mode != 'color'):
             image = self._filterImage(image)
 
-        if(self._getboolean_device_option('write_file', True)):
+        if (self._getboolean_device_option('write_file', True)):
             self.logger.info(f"{self.__str__()} writing image to {self.output_file}")
 
             image.save(self.output_file, "PNG")
