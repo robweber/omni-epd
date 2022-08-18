@@ -35,7 +35,7 @@ def check_module_installed(moduleName):
     result = False
 
     # check if the module is already loaded, or can be loaded
-    if(moduleName in sys.modules or (importlib.util.find_spec(moduleName)) is not None):
+    if (moduleName in sys.modules or (importlib.util.find_spec(moduleName)) is not None):
         result = True
 
     return result
