@@ -234,7 +234,7 @@ class WaveshareQuadColorDisplay(WaveshareDisplay):
     # list of all devices - some drivers cover more than one device
     deviceMap = {"epd1in64g": {"driver": "epd1in64g", "modes": ("bw", "color4"), "version": 1},
                  "epd2in36g": {"driver": "epd2in36g", "modes": ("bw", "color4"), "version": 1},
-                 "epd3in0g": {"driver": "epd3in0g", "modes": ("bw", "color4"), "version": 1}
+                 "epd3in0g": {"driver": "epd3in0g", "modes": ("bw", "color4"), "version": 1},
                  "epd4in37g": {"driver": "epd4in37g", "modes": ("bw", "color4"), "version": 1},
                  "epd7in3g": {"driver": "epd3in0g", "modes": ("bw", "color4"), "version": 1}}
 
