@@ -45,7 +45,7 @@ class EPDTestUtility:
 
     def __draw_rectangle(self, imgObj, width, height, x, y, percent, step):
         # draw recursively until we go below 0
-        if(percent > 0):
+        if (percent > 0):
             # calculate the dimensions of the rectangle
             rWidth = width * percent
             rHeight = height * percent
@@ -119,8 +119,8 @@ def main():
 
     test = EPDTestUtility(args.epd)
 
-    if(test.isReady()):
-        if(args.image):
+    if (test.isReady()):
+        if (args.image):
             test.draw_image(args.image)
         else:
             # this will draw a rectangle in the center of the display
