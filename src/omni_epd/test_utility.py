@@ -51,13 +51,13 @@ class EPDTestUtility:
             rHeight = height * percent
 
             # calculate the starting position to center it
-            rX = x + (width - rWidth)/2
-            rY = y + (height - rHeight)/2
+            rX = x + (width - rWidth) / 2
+            rY = y + (height - rHeight) / 2
 
             print(f"Drawing rectangle of width {rWidth} and height {rHeight}")
             imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), outline=ImageColor.getrgb("black"), width=2)
 
-            return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent-step, step)
+            return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent - step, step)
         else:
             return imgObj
 
