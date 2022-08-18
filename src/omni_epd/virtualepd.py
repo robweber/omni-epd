@@ -64,7 +64,7 @@ class VirtualEPD:
         # set the display mode
         self.mode = self._get_device_option('mode', self.mode)
 
-        if(self.mode == 'black'):
+        if (self.mode == 'black'):
             self._logger.warn("The mode 'black' is deprecated, 'bw' should be used instead. This will be removed in a future release.")
             self.mode = 'bw'
 
@@ -86,34 +86,34 @@ class VirtualEPD:
         apply to all images before writing to the epd
         """
 
-        if(self._config.has_option(IMAGE_DISPLAY, "rotate")):
+        if (self._config.has_option(IMAGE_DISPLAY, "rotate")):
             image = image.rotate(self._config.getfloat(IMAGE_DISPLAY, "rotate"))
             self._logger.debug(f"Rotating image {self._config.getfloat(IMAGE_DISPLAY, 'rotate')}")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "flip_horizontal") and self._config.getboolean(IMAGE_DISPLAY, "flip_horizontal")):
+        if (self._config.has_option(IMAGE_DISPLAY, "flip_horizontal") and self._config.getboolean(IMAGE_DISPLAY, "flip_horizontal")):
             image = image.transpose(method=Image.FLIP_LEFT_RIGHT)
             self._logger.debug("Flipping image horizontally")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "flip_vertical") and self._config.getboolean(IMAGE_DISPLAY, "flip_vertical")):
+        if (self._config.has_option(IMAGE_DISPLAY, "flip_vertical") and self._config.getboolean(IMAGE_DISPLAY, "flip_vertical")):
             image = image.transpose(method=Image.FLIP_TOP_BOTTOM)
             self._logger.debug("Flipping image vertically")
 
-        if(self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
+        if (self._config.has_option(IMAGE_ENHANCEMENTS, "contrast")):
             enhancer = ImageEnhance.Contrast(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "contrast"))
             self._logger.debug(f"Applying contrast: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'contrast')}")
 
-        if(self._config.has_option(IMAGE_ENHANCEMENTS, "brightness")):
+        if (self._config.has_option(IMAGE_ENHANCEMENTS, "brightness")):
             enhancer = ImageEnhance.Brightness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "brightness"))
             self._logger.debug(f"Applying brightness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'brightness')}")
 
-        if(self._config.has_option(IMAGE_ENHANCEMENTS, "sharpness")):
+        if (self._config.has_option(IMAGE_ENHANCEMENTS, "sharpness")):
             enhancer = ImageEnhance.Sharpness(image)
             image = enhancer.enhance(self._config.getfloat(IMAGE_ENHANCEMENTS, "sharpness"))
             self._logger.debug(f"Applying sharpness: {self._config.getfloat(IMAGE_ENHANCEMENTS, 'sharpness')}")
 
-        if(self._config.has_option(IMAGE_DISPLAY, "dither") and self._config.get(IMAGE_DISPLAY, "dither")):
+        if (self._config.has_option(IMAGE_DISPLAY, "dither") and self._config.get(IMAGE_DISPLAY, "dither")):
             dither = self._config.get(IMAGE_DISPLAY, "dither").lower().replace("sierra-2-4a", "sierralite").replace("-", "")
             image = self._ditherImage(image, dither)
             self._logger.debug(f"Applying dither: {dither}")
@@ -126,28 +126,28 @@ class VirtualEPD:
     """
     def _get_device_option(self, option, fallback):
         # if exists in local config use that, otherwise check EPD section
-        if(self._config.has_option(self.getName(), option)):
+        if (self._config.has_option(self.getName(), option)):
             return self._config.get(self.getName(), option)
         else:
             return self._config.get(EPD_CONFIG, option, fallback=fallback)
 
     def _getint_device_option(self, option, fallback):
         # if exists in local config use that, otherwise check EPD section
-        if(self._config.has_option(self.getName(), option)):
+        if (self._config.has_option(self.getName(), option)):
             return self._config.getint(self.getName(), option)
         else:
             return self._config.getint(EPD_CONFIG, option, fallback=fallback)
 
     def _getfloat_device_option(self, option, fallback):
         # if exists in local config use that, otherwise check EPD section
-        if(self._config.has_option(self.getName(), option)):
+        if (self._config.has_option(self.getName(), option)):
             return self._config.getfloat(self.getName(), option)
         else:
             return self._config.getfloat(EPD_CONFIG, option, fallback=fallback)
 
     def _getboolean_device_option(self, option, fallback):
         # if exists in local config use that, otherwise check EPD section
-        if(self._config.has_option(self.getName(), option)):
+        if (self._config.has_option(self.getName(), option)):
             return self._config.getboolean(self.getName(), option)
         else:
             return self._config.getboolean(EPD_CONFIG, option, fallback=fallback)
@@ -156,14 +156,14 @@ class VirtualEPD:
     Converts image to b/w or attempts a palette filter based on allowed colors in the display
     """
     def _filterImage(self, image, dither=Image.FLOYDSTEINBERG, force_palette=False):
-        if(self.mode == 'bw' and not force_palette):
+        if (self.mode == 'bw' and not force_palette):
             image = image.convert("1", dither=dither)
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
 
             # check if we have too many colors in the palette
-            if(len(colors) > self.max_colors):
+            if (len(colors) > self.max_colors):
                 raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
 
             palette = self.__generate_palette(colors)
@@ -174,7 +174,7 @@ class VirtualEPD:
             # set the palette, set all other colors to 0
             palette_image.putpalette(palette + [0, 0, 0] * (256-len(colors)))
 
-            if(image.mode != 'RGB'):
+            if (image.mode != 'RGB'):
                 # convert to RGB as quantize requires it
                 image = image.convert(mode='RGB')
 
@@ -194,14 +194,14 @@ class VirtualEPD:
                                   "stucki", "burkes", "sierra", "tworowsierra", "sierralite", "stevenpigeon", "sierra3",
                                   "sierra2", "sierra2_4a")
 
-        if(self.mode == 'bw'):
+        if (self.mode == 'bw'):
             colors = [[255, 255, 255], [0, 0, 0]]
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
 
             # check if we have too many colors in the palette
-            if(len(colors) > self.max_colors):
+            if (len(colors) > self.max_colors):
                 raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
 
         # format palette the way didder expects it
@@ -214,33 +214,33 @@ class VirtualEPD:
         cmd = [didder, "--in", "-", "--out", "-", "--palette", palette]
         cmd += ["--strength", self._config.get(IMAGE_DISPLAY, 'dither_strength', raw=True, fallback='1.0')]
 
-        if(dither == "none"):
+        if (dither == "none"):
             return self._filterImage(image, Image.NONE)
-        elif(dither in dither_modes_ordered):
+        elif (dither in dither_modes_ordered):
             cmd += ["odm", dither]
-        elif(dither in dither_modes_diffusion):
+        elif (dither in dither_modes_diffusion):
             cmd += ["edm", dither]
-        elif(dither == "bayer"):
+        elif (dither == "bayer"):
             # dither_args: X,Y dimensions of bayer matrix - powers of two, 3x3, 3x5, or 5x3
             cmd += ["bayer", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='4,4')]
-        elif(dither == "random"):
+        elif (dither == "random"):
             # dither_args: min,max or min_r,max_r,min_g,max_g,min_b,max_b
             cmd += ["random", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='-0.5,0.5')]
-        elif(dither == "customordered"):
+        elif (dither == "customordered"):
             # dither_args: JSON file or string
             cmd += ["odm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
-        elif(dither == "customdiffusion"):
+        elif (dither == "customdiffusion"):
             # dither_args: JSON file or string
             cmd += ["edm", self._config.get(IMAGE_DISPLAY, 'dither_args', fallback='')]
 
-        if(cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
+        if (cmd[-2] == "edm" and self._config.getboolean(IMAGE_DISPLAY, 'dither_serpentine', fallback=False)):
             cmd.insert(-1, "--serpentine")
 
         with io.BytesIO() as buf:
             image.save(buf, "PNG")
             proc = subprocess.run(cmd, input=buf.getvalue(), capture_output=True)
 
-        if(proc.returncode):
+        if (proc.returncode):
             self._logger.error(proc.stdout.decode().strip())
             return image
 

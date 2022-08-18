@@ -45,15 +45,15 @@ class InkyDisplay(VirtualEPD):
         self._device, self.clear_color, dColor = self.load_device(deviceName)
 
         # set mode to black + any other color supported
-        if(self.mode != "bw"):
+        if (self.mode != "bw"):
             self.modes_available = ('bw', dColor)
 
         # phat and what devices expect colors in the order white, black, other
-        if(self.mode == dColor == "red"):
+        if (self.mode == dColor == "red"):
             self.palette_filter.append([255, 0, 0])
-        elif(self.mode == dColor == "yellow"):
+        elif (self.mode == dColor == "yellow"):
             self.palette_filter.append([255, 255, 0])
-        elif(self.mode == dColor == "color"):
+        elif (self.mode == dColor == "color"):
             self.palette_filter = DESATURATED_PALETTE
 
         # set the width and height
@@ -64,23 +64,23 @@ class InkyDisplay(VirtualEPD):
     def load_device(self, deviceName):
         # need to figure out what type of device we have
         dType, dColor, *_ = deviceName.split('_') + [None]
-        if(dType == 'phat'):
+        if (dType == 'phat'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
             device = deviceObj.InkyPHAT(dColor)
-        elif(dType == 'phat1608'):
+        elif (dType == 'phat1608'):
             deviceObj = self.load_display_driver(self.pkg_name, 'phat')
             device = deviceObj.InkyPHAT_SSD1608(dColor)
-        elif(dType == 'what'):
+        elif (dType == 'what'):
             deviceObj = self.load_display_driver(self.pkg_name, 'what')
             device = deviceObj.InkyWHAT(dColor)
-        elif(dType == 'impression'):
+        elif (dType == 'impression'):
             deviceObj = self.load_display_driver(self.pkg_name, 'inky_uc8159')
             device = deviceObj.Inky()
-        elif(dType == 'auto'):
+        elif (dType == 'auto'):
             deviceObj = self.load_display_driver(self.pkg_name, 'auto')
             device = deviceObj.auto()
 
-        if(device.colour == 'multi'):
+        if (device.colour == 'multi'):
             return device, device.CLEAN, 'color'
         else:
             return device, device.WHITE, device.colour
@@ -92,14 +92,14 @@ class InkyDisplay(VirtualEPD):
     # set the image and display
     def _display(self, image):
         # apply any needed conversions to this image based on the mode - force palette based conversion
-        if(self.mode != 'color'):
+        if (self.mode != 'color'):
             image = self._filterImage(image, force_palette=True)
 
         # set border
         self._device.set_border(getattr(self._device, self._get_device_option('border', '').upper(), self._device.border_colour))
 
         # apply any needed conversions to this image based on the mode
-        if(self._device.colour == 'multi'):
+        if (self._device.colour == 'multi'):
             saturation = self._getfloat_device_option('saturation', .5)  # .5 is default from Inky lib
             self._device.set_image(image.convert("RGB"), saturation=saturation)
         else:

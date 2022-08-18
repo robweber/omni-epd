@@ -106,7 +106,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
         # device object loaded in parent class
 
         # some devices set the full instruction as the param
-        if(self.deviceMap[deviceName]['lut_init']):
+        if (self.deviceMap[deviceName]['lut_init']):
             self.alt_init_param = self._device.lut_full_update
 
     @staticmethod
@@ -114,7 +114,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
         result = []
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             # return a list of all submodules (device types)
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareBWDisplay.deviceMap]
 
@@ -122,7 +122,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
 
     def prepare(self):
         # if device needs an init param
-        if(self.deviceMap[self._device_name]['alt_init']):
+        if (self.deviceMap[self._device_name]['alt_init']):
             self._device.init(self.alt_init_param)
         else:
             self._device.init()
@@ -132,7 +132,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
         self._device.display(self._device.getbuffer(image))
 
     def clear(self):
-        if(self.deviceMap[self._device_name]['alt_clear']):
+        if (self.deviceMap[self._device_name]['alt_clear']):
             # device needs color parameter, hardcode white
             self._device.Clear(0xFF)
         else:
@@ -181,9 +181,9 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
         # set the allowed modes
         self.modes_available = self.deviceMap[deviceName]['modes']
 
-        if(self.mode == 'red'):
+        if (self.mode == 'red'):
             self.palette_filter.append([255, 0, 0])
-        elif(self.mode == 'yellow'):
+        elif (self.mode == 'yellow'):
             self.palette_filter.append([255, 255, 0])
 
     @staticmethod
@@ -191,7 +191,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
         result = []
 
         # python libs for this might not be installed - that's ok, return nothing
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareTriColorDisplay.deviceMap]
 
         return result
@@ -201,7 +201,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
 
     def _display(self, image):
 
-        if(self.mode == 'bw'):
+        if (self.mode == 'bw'):
             # send the black/white image and blank second image (safer since some drivers require data)
             img_white = Image.new('1', (self._device.height, self._device.width), 255)
             self._device.display(self._device.getbuffer(image), self._device.getbuffer(img_white))
@@ -246,27 +246,27 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     def get_supported_devices():
         result = []
 
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareGrayscaleDisplay.deviceMap]
 
         return result
 
     def prepare(self):
 
-        if(self.mode == "gray4"):
+        if (self.mode == "gray4"):
             self._device.Init_4Gray()
         else:
             self._device.init()
 
     def _display(self, image):
         # no need to adjust image, done in waveshare lib
-        if(self.mode == "gray4"):
+        if (self.mode == "gray4"):
             self._device.display_4Gray(self._device.getbuffer_4Gray(image))
         else:
             self._device.display(self._device.getbuffer(image))
 
     def clear(self):
-        if(self.deviceMap[self._device_name]['alt_clear']):
+        if (self.deviceMap[self._device_name]['alt_clear']):
             self._device.Clear(0xFF)  # use white for clear
         else:
             self._device.Clear()
@@ -296,7 +296,7 @@ class Waveshare3in7Display(WaveshareDisplay):
     def get_supported_devices():
         result = []
 
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.epd3in7"]
 
         return result
@@ -329,7 +329,7 @@ class Waveshare102inDisplay(WaveshareDisplay):
     def get_supported_devices():
         result = []
 
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.epd1in02"]
 
         return result
@@ -370,7 +370,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     def get_supported_devices():
         result = []
 
-        if(check_module_installed(WAVESHARE_PKG)):
+        if (check_module_installed(WAVESHARE_PKG)):
             result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareMultiColorDisplay.deviceList]
 
         return result
@@ -380,7 +380,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
 
     def _display(self, image):
         # driver takes care of filtering when in color mode
-        if(self.mode == 'bw'):
+        if (self.mode == 'bw'):
             image = self._filterImage(image)
 
         self._device.display(self._device.getbuffer(image))

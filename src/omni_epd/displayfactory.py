@@ -36,16 +36,16 @@ def __loadConfig(deviceName):
     config = configparser.ConfigParser()
 
     # check for global ini file
-    if(os.path.exists(os.path.join(os.getcwd(), CONFIG_FILE))):
+    if (os.path.exists(os.path.join(os.getcwd(), CONFIG_FILE))):
         config.read(os.path.join(os.getcwd(), CONFIG_FILE))
         logger.debug(f"Loading {CONFIG_FILE}")
 
     # possible device name exists in global configuration file
-    if(not deviceName and config.has_option(EPD_CONFIG, 'type')):
+    if (not deviceName and config.has_option(EPD_CONFIG, 'type')):
         deviceName = config.get(EPD_CONFIG, 'type')
 
     # check for device specific ini file
-    if(deviceName and os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
+    if (deviceName and os.path.exists(os.path.join(os.getcwd(), f"{deviceName}.ini"))):
         config.read(os.path.join(os.getcwd(), f"{deviceName}.ini"))
         logger.debug(f"Loading {deviceName}.ini")
 
@@ -78,7 +78,7 @@ def list_supported_displays(as_dict=False):
         # get the class
         classObj = getattr(mod, className)
 
-        if(as_dict):
+        if (as_dict):
             result.append({'package': modName, 'class': className, 'devices': classObj.get_supported_devices()})
         else:
             # add supported devices of this class
@@ -95,14 +95,14 @@ def load_display_driver(displayName='', configDict={}):
     config.read_dict(configDict)
 
     # possible device name is part of global conf
-    if(not displayName and config.has_option(EPD_CONFIG, 'type')):
+    if (not displayName and config.has_option(EPD_CONFIG, 'type')):
         displayName = config.get(EPD_CONFIG, 'type')
 
     # get a dict of all valid display device classes
     displayClasses = list_supported_displays(True)
     foundClass = list(filter(lambda d: displayName in d['devices'], displayClasses))
 
-    if(len(foundClass) == 1):
+    if (len(foundClass) == 1):
         # split on the pkg.classname
         deviceType = displayName.split('.')
 
@@ -113,7 +113,7 @@ def load_display_driver(displayName='', configDict={}):
         result = classObj(deviceType[1], config)
 
         # check that the display mode is valid - must be done after class loaded
-        if(result.mode not in result.modes_available):
+        if (result.mode not in result.modes_available):
             raise EPDConfigurationError(displayName, "mode", result.mode)
 
     else:
