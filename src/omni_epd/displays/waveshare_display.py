@@ -267,8 +267,9 @@ class WaveshareQuadColorDisplay(WaveshareDisplay):
         self._device.init()
 
     def _display(self, image):
-        # apply the color filter
-        image = self._filterImage(image)
+        # driver takes care of filtering when in 4color mode
+        if (self.mode != '4color'):
+            image = self._filterImage(image)
 
         # send to display
         self._device.display(self._device.getbuffer(image))
