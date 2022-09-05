@@ -223,6 +223,58 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
             self._device.display(self._device.getbuffer(img_black), self._device.getbuffer(img_color))
 
 
+class WaveshareQuadColorDisplay(WaveshareDisplay):
+    """
+    This class is for the Waveshare displays that support 4 colors
+    white/black/yellow/red
+    https://github.com/waveshare/e-Paper
+    """
+    modes_available = ("bw", "red", "yellow", "4color")
+    max_colors = 4
+    mode = "4color"
+
+    # list of all devices - some drivers cover more than one device
+    deviceMap = {"epd1in64g": {"driver": "epd1in64g", "version": 1},
+                 "epd2in36g": {"driver": "epd2in36g", "version": 1},
+                 "epd3in0g": {"driver": "epd3in0g", "version": 1},
+                 "epd4in37g": {"driver": "epd4in37g", "version": 1},
+                 "epd7in3g": {"driver": "epd3in0g", "version": 1}}
+
+    def __init__(self, deviceName, config):
+        driverName = self.deviceMap[deviceName]['driver']
+        super().__init__(driverName, config)
+
+        # device object loaded in parent class
+
+        # set the palette
+        if (self.mode == '4color' or self.mode == 'yellow'):
+            self.palette_filter.append([255, 255, 0])
+
+        if (self.mode == '4color' or self.mode == 'red'):
+            self.palette_filter.append([255, 0, 0])
+
+    @staticmethod
+    def get_supported_devices():
+        result = []
+
+        # python libs for this might not be installed - that's ok, return nothing
+        if (check_module_installed(WAVESHARE_PKG)):
+            result = [f"{WAVESHARE_PKG}.{n}" for n in WaveshareQuadColorDisplay.deviceMap]
+
+        return result
+
+    def prepare(self):
+        self._device.init()
+
+    def _display(self, image):
+        # driver takes care of filtering when in 4color mode
+        if (self.mode != '4color'):
+            image = self._filterImage(image)
+
+        # send to display
+        self._device.display(self._device.getbuffer(image))
+
+
 class WaveshareGrayscaleDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 shade grayscale
