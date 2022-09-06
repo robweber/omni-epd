@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - updated Pillow min version to 9.1+
 - code cleanup for proper style standards - thanks @missionfloyd
 
+### Added
+
+- added new 4 color waveshare displays (epd1in64g, epd2in36g, epd3in0g, epd4in37g, epd7in3g). Thanks @missionfloyd
+
 ## Version 0.3.1
 
 ### Added
