@@ -59,7 +59,7 @@ Objects returned by the `displayfactory` class all inherit methods from the `Vir
 * `clear()` - clears the display
 * `close()` - performs any cleanup operations and closes access to the display. Use at the end of a program or when the object is no longer needed.
 
-If the display you're using supports any advanced features, like multiple colors, these can be handled by setting some additional variables. See [advanced display control](advanced-epd-control) for a better idea of how to additional options.
+If the display you're using supports any advanced features, like multiple colors, these can be handled by setting some additional variables. See [advanced display control](#advanced-epd-control) for a better idea of how to additional options.
 
 * `modes_available` - a tuple containing the names of valid modes, __BW__ available by default
 * `max_colors` - The maximum number of colors supported (up to 256 RGB)
