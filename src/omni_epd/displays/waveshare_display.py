@@ -564,7 +564,7 @@ class Waveshare1248inTricolorDisplay(Waveshare1248inDisplay):
 
     def _display(self, image):
         # this driver combines getbuffer() into display()
-        if(self.mode == 'bw'):
+        if (self.mode == 'bw'):
             # send the black/white image and blank second image (safer since some drivers require data)
             img_white = Image.new('1', (self._device.height, self._device.width), 255)
             self._device.display(image, img_white)
