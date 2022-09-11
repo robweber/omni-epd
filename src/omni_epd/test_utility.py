@@ -45,19 +45,19 @@ class EPDTestUtility:
 
     def __draw_rectangle(self, imgObj, width, height, x, y, percent, step):
         # draw recursively until we go below 0
-        if(percent > 0):
+        if (percent > 0):
             # calculate the dimensions of the rectangle
             rWidth = width * percent
             rHeight = height * percent
 
             # calculate the starting position to center it
-            rX = x + (width - rWidth)/2
-            rY = y + (height - rHeight)/2
+            rX = x + (width - rWidth) / 2
+            rY = y + (height - rHeight) / 2
 
             print(f"Drawing rectangle of width {rWidth} and height {rHeight}")
             imgObj.rectangle((rX, rY, rWidth + rX, rHeight + rY), outline=ImageColor.getrgb("black"), width=2)
 
-            return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent-step, step)
+            return self.__draw_rectangle(imgObj, rWidth, rHeight, rX, rY, percent - step, step)
         else:
             return imgObj
 
@@ -119,8 +119,8 @@ def main():
 
     test = EPDTestUtility(args.epd)
 
-    if(test.isReady()):
-        if(args.image):
+    if (test.isReady()):
+        if (args.image):
             test.draw_image(args.image)
         else:
             # this will draw a rectangle in the center of the display
