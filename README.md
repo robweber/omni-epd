@@ -133,7 +133,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [2.13inch e-Paper HAT B](https://www.waveshare.com/2.13inch-e-Paper-HAT-B.htm) | waveshare_epd.epd2in13b <br> waveshare_epd.epd2in13b_V3 | bw, red |
 |  | [2.13inch e-Paper HAT C ](https://www.waveshare.com/2.13inch-e-Paper-HAT-C.htm) | waveshare_epd.epd2in13c | bw, yellow |
 |  | [2.13inch e-Paper HAT D](https://www.waveshare.com/2.13inch-e-Paper-HAT-D.htm) | waveshare_epd.epd2in13d | bw |
-|  | 2.36inch e-Paper Module G | waveshare_epd.epd2in36g | bw, red, yellow, 4color |
+|  | [2.36inch e-Paper Module G](https://www.waveshare.com/2.36inch-e-paper-module-g.htm) | waveshare_epd.epd2in36g | bw, red, yellow, 4color |
 |  | [2.66inch e-Paper Module](https://www.waveshare.com/2.66inch-e-Paper-Module.htm) | waveshare_epd.epd2in66 | bw |
 |  | [2.66inch e-Paper Module B](https://www.waveshare.com/2.66inch-e-Paper-Module-B.htm) | waveshare_epd.epd2in66b | bw, red |
 |  | [2.7inch e-Paper HAT](https://www.waveshare.com/2.7inch-e-Paper-HAT.htm) | __waveshare_epd.epd2in7__ | bw |
@@ -148,7 +148,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [4.2inch e-Paper Module](https://www.waveshare.com/4.2inch-e-Paper-Module.htm) |waveshare_epd.epd4in2 | bw |
 |  | [4.2inch e-Paper Module B](https://www.waveshare.com/4.2inch-e-Paper-Module-B.htm) |waveshare_epd.epd4in2b <br> waveshare_epd.epd4in2b_V2 | bw, red |
 |  | [4.2inch e-Paper Module C](https://www.waveshare.com/4.2inch-e-Paper-Module-C.htm) | __waveshare_epd.epd4in2c__ | bw, yellow |
-|  | 4.37inch e-Paper Module G | waveshare_epd.epd4in37g | bw, red, yellow, 4color |
+|  | [4.37inch e-Paper Module G](https://www.waveshare.com/4.37inch-e-paper-module-g.htm) | waveshare_epd.epd4in37g | bw, red, yellow, 4color |
 |  | [5.65inch e-Paper Module F](https://www.waveshare.com/5.65inch-e-Paper-Module-F.htm) |__waveshare_epd.epd5in65f__ | bw, color |
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
