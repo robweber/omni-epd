@@ -411,7 +411,7 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in65f", "epd4in01f"]
+    deviceList = ["epd5in65f", "epd4in01f", "epd7in3f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
