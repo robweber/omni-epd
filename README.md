@@ -210,6 +210,7 @@ PRs accepted! If there a fix for any of the documentation or something is not qu
 * [@dr-boehmerie](https://github.com/dr-boehmerie)
 * [@aaronr8684](https://github.com/aaronr8684)
 * [@donbing](https://github.com/donbing)
+* [@evelyndooley](https://github.com/evelyndooley)
 
 ## License
 [GPLv3](/LICENSE)
