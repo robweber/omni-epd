@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - added link to [pycasso](https://github.com/jezs00/pycasso) in the README. Thanks @jezs00
-- added new display, [Waveshare 7.3in 7 Color](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) - thanks @evelyndooley
+- new displays, [Waveshare 7.3in 7 Color](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) - thanks @evelyndooley, [Waveshare 2.13in V3](https://www.waveshare.com/2.13inch-e-paper-hat.htm)
 
 ## Version 0.3.2
 
