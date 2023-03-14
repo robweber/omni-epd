@@ -129,7 +129,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [1.54inch e-Paper Module B](https://www.waveshare.com/1.54inch-e-Paper-Module-B.htm) | waveshare_epd.epdlin54b <br> waveshare_epd.epdlin54b_V2 | bw, red |
 |  | [1.54inch e-Paper Module C ](https://www.waveshare.com/1.54inch-e-Paper-Module-C.htm) | waveshare_epd.epdlin54c | bw, yellow |
 |  | [1.64inch e-Paper Module G ](https://www.waveshare.com/1.64inch-e-paper-module-g.htm) | waveshare_epd.epd1in64g | bw, red, yellow, 4color |
-|  | [2.13inch e-Paper HAT](https://www.waveshare.com/2.13inch-e-Paper-HAT.htm) | waveshare_epd.epd2in13 <br>  waveshare_epd.epd2in13_V2 | bw |
+|  | [2.13inch e-Paper HAT](https://www.waveshare.com/2.13inch-e-Paper-HAT.htm) | waveshare_epd.epd2in13 <br>  waveshare_epd.epd2in13_V2 <br> __waveshare_epd.epd2in13_V3__ | bw |
 |  | [2.13inch e-Paper HAT B](https://www.waveshare.com/2.13inch-e-Paper-HAT-B.htm) | waveshare_epd.epd2in13b <br> waveshare_epd.epd2in13b_V3 | bw, red |
 |  | [2.13inch e-Paper HAT C ](https://www.waveshare.com/2.13inch-e-Paper-HAT-C.htm) | waveshare_epd.epd2in13c | bw, yellow |
 |  | [2.13inch e-Paper HAT D](https://www.waveshare.com/2.13inch-e-Paper-HAT-D.htm) | waveshare_epd.epd2in13d | bw |
