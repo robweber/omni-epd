@@ -23,8 +23,10 @@ import importlib
 import logging
 import subprocess
 import io
+import re
+import itertools
 from importlib import resources
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageColor
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
 
@@ -71,12 +73,19 @@ class VirtualEPD:
     def __str__(self):
         return f"{self.pkg_name}.{self._device_name}"
 
+    def __parse_palette(self, color_str):
+        if re.match(r'#[a-fA-F0-9]{6}', color_str) or color_str.lower() in ImageColor.colormap:
+            return ImageColor.getrgb(color_str)
+        elif re.match(r'\[?(\d{1,3}),(\d{1,3}),(\d{1,3})\]?', color_str):
+            return list(map(int, re.findall(r'\d{1,3}', color_str)))
+        else:
+            raise ValueError(f"Invalid color format: {color_str}")
+
     # generate a palette given the colors available for this display
     def __generate_palette(self, colors):
-        result = []
-
-        for c in colors:
-            result += [int(c[0]), int(c[1]), int(c[2])]
+        result = colors.replace(" ", "")
+        result = re.findall(fr'#[a-fA-F0-9]{{6}}|\[?\d{{1,3}},\d{{1,3}},\d{{1,3}}\]?|{"|".join(ImageColor.colormap.keys())}', result, re.IGNORECASE)
+        result = list(itertools.chain.from_iterable(map(self.__parse_palette, result)))
 
         return result
 
@@ -160,13 +169,12 @@ class VirtualEPD:
             image = image.convert("1", dither=dither)
         else:
             # load palette - this is a catch in case it was changed by the user
-            colors = json.loads(self._get_device_option('palette_filter', json.dumps(self.palette_filter)))
+            colors = self._get_device_option('palette_filter', json.dumps(self.palette_filter))
+            palette = self.__generate_palette(colors)
 
             # check if we have too many colors in the palette
-            if (len(colors) > self.max_colors):
+            if (len(palette) > self.max_colors):
                 raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
-
-            palette = self.__generate_palette(colors)
 
             # create a new image to define the palette
             palette_image = Image.new("P", (1, 1))
