@@ -103,6 +103,10 @@ brightness=1  # adjust image brightness, 1 = no adjustment
 sharpness=1  # adjust image sharpness, 1 = no adjustment
 ```
 
+__Palette Filtering__
+
+The `palette_filter` option controls what colors are passed to multi color displays by filtering the image so only the listed colors remain. The total number of colors must be less than or equal to the max number of colors the display supports. Colors can be specified as an array of RGB values (`[[R,G,B], [R,G,B]]`), hexidecimal values (`#ff0000, #00ff00`), or [color names](https://github.com/python-pillow/Pillow/blob/e3cb4bb8e00fcaf4c3e0783f7c02e51372595659/src/PIL/ImageColor.py#L153-L305) (`blue, maroon`). Combinations of these can also be given as long as each color specified is separated by a comma. 
+
 ### Dithering
 
 When using the `dither` option many algorithms are available. Please read the [full instructions](https://github.com/robweber/omni-epd/wiki/Image-Dithering-Options) for dithering and how it can be used.
