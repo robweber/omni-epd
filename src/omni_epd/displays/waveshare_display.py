@@ -447,6 +447,10 @@ class IT8951Display(VirtualEPD):
     """
 
     pkg_name = WAVESHARE_PKG
+
+    max_colors = 16
+    modes_available = ('bw', 'grey16')
+
     it8951_pkg_name = 'IT8951'
     it8951_constants = None
 
