@@ -479,8 +479,8 @@ class IT8951Display(VirtualEPD):
         self._device.epd.run()
 
     def _display(self, image):
-        # keep this as it applies any filters defined in INI file
-        image = self._filterImage(image)
+        if (self.mode == 'bw'):
+            image = self._filterImage(image)
 
         self.clear()  # not sure if this is needed, was part of example
 
