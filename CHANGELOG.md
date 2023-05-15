@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - `palette_filter` advanced option now supports [color names](https://github.com/python-pillow/Pillow/blob/e3cb4bb8e00fcaf4c3e0783f7c02e51372595659/src/PIL/ImageColor.py#L153-L305) or hex values in addition to RGB colors. Thanks @missionfloyd
+- IT8951 devices now support `gray16` mode for grayscale
+- [Waveshare 10.3 IT8951](https://www.waveshare.com/10.3inch-e-paper-hat.htm) device marked as tested. Thanks @simonjowett
 
 ## Version 0.3.3
 
