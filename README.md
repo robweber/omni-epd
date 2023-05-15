@@ -105,7 +105,7 @@ sharpness=1  # adjust image sharpness, 1 = no adjustment
 
 __Palette Filtering__
 
-The `palette_filter` option controls what colors are passed to multi color displays by filtering the image so only the listed colors remain. The total number of colors must be less than or equal to the max number of colors the display supports. Colors can be specified as an array of RGB values (`[[R,G,B], [R,G,B]]`), hexidecimal values (`#ff0000, #00ff00`), or [color names](https://github.com/python-pillow/Pillow/blob/e3cb4bb8e00fcaf4c3e0783f7c02e51372595659/src/PIL/ImageColor.py#L153-L305) (`blue, maroon`). Combinations of these can also be given as long as each color specified is separated by a comma. 
+The `palette_filter` option controls what colors are passed to multi color displays by filtering the image so only the listed colors remain. The total number of colors must be less than or equal to the max number of colors the display supports. Colors can be specified as an array of RGB values (`[[R,G,B], [R,G,B]]`), hexidecimal values (`#ff0000, #00ff00`), or [color names](https://github.com/python-pillow/Pillow/blob/e3cb4bb8e00fcaf4c3e0783f7c02e51372595659/src/PIL/ImageColor.py#L153-L305) (`blue, maroon`). Combinations of these can also be given as long as each color specified is separated by a comma.
 
 ### Dithering
 
@@ -157,7 +157,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [5.83inch e-Paper HAT](https://www.waveshare.com/5.83inch-e-Paper-HAT.htm) |waveshare_epd.epd5in83 <br> waveshare_epd.epd5in83_V2 | bw |
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
 |  | [5.83inch e-Paper HAT C](https://www.waveshare.com/5.83inch-e-Paper-HAT-C.htm) | __waveshare_epd.epd5in83c__ | bw, yellow |
-|  | [6inch e-Ink Display](https://www.waveshare.com/6inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
+|  | [6inch e-Ink Display](https://www.waveshare.com/6inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
 |  | [7.3inch e-Paper HAT G](https://www.waveshare.com/7.3inch-e-paper-hat-g.htm) | waveshare_epd.epd7in3g | bw, red, yellow, 4color |
 |  | [7.3inch e-Paper HAT F](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) | waveshare_epd.epd7in3f | bw, color |
 |  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | waveshare_epd.epd7in5 | bw |
@@ -167,8 +167,9 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [7.5inch e-Paper HAT B](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| waveshare_epd.epd7in5b | bw, red |
 |  | [7.5inch e-Paper HAT B V2](https://www.waveshare.com/7.5inch-HD-e-Paper-HAT-B.htm)| __waveshare_epd.epd7in5b_V2__ | bw, red |
 |  | [7.5inch e-Paper HAT C](https://www.waveshare.com/7.5inch-e-Paper-HAT-C.htm) | waveshare_epd.epd7in5c | bw, yellow |
-|  | [7.8inch e-Ink Display](https://www.waveshare.com/7.8inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
-|  | [9.7inch e-Ink Display](https://www.waveshare.com/9.7inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw |
+|  | [7.8inch e-Ink Display](https://www.waveshare.com/7.8inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
+|  | [9.7inch e-Ink Display](https://www.waveshare.com/9.7inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
+|  | [10.3inch e-Ink Display](https://www.waveshare.com/10.3inch-e-paper-hat.htm) | __waveshare_epd.it8951__ | bw, gray16 |
 
 ### Display Driver Installation
 
