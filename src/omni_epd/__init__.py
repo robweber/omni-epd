@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-
 from . errors import EPDNotFoundError, EPDConfigurationError  # noqa: F401
 from . test_utility import EPDTestUtility  # noqa: F401
+
+__version__ = "0.3.4"
