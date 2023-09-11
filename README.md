@@ -44,6 +44,18 @@ sudo pip3 install --prefer-binary .
 
 ```
 
+### For Development
+
+If looking to install for development there are a few additional libraries to assist with code formatting and unit testing. To install with development libraries install with:
+
+```
+
+git clone https://github.com/robweber/omni-epd.git
+cd omni-epd
+sudo pip3 install --prefer-binary .[dev]
+
+```
+
 ## Usage
 
 Usage in this case refers to EPD project implementers that wish to abstract their code with this library. In general, this is pretty simple. This library is meant to be very close to a 1:1 replacement for existing EPD code you may have in your project. Function names may vary slightly but most calls are very similar. Refer to the [examples folder](https://github.com/robweber/omni-epd/tree/main/examples) for some working code examples you can run. In general, once the `VirtualEPD` object is loaded it can interact with your display using the methods described below. For testing, the device `omni_epd.mock` can be used to write output to a PNG file instead of to a display.
