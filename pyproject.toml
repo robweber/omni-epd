@@ -4,3 +4,44 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[tool.towncrier]
+directory = "changelog"
+package_dir = "src"
+package = "omni_epd"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+underlines = ["", "", ""]
+template = "changelog/changelog_template.jinja"
+title_format = "## Version [{version}](https://github.com/robweber/omni-epd/tree/v{version})"
+issue_format = "[#{issue}](https://github.com/robweber/omni-epd/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
