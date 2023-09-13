@@ -1,5 +1,0 @@
-[tool.towncrier]
-directory = "changelog"
-filename = "CHANGELOG.md"
-package = "omni_epd"
-package_dir = "src"
