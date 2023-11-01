@@ -8,6 +8,10 @@ There are several great EPD projects all over the internet, many in written in P
 
 For EPD project builders this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the [list below](#displays-implmented).
 
+## Regarding Raspberry Pi OS 12 Bookworm
+
+There are some issues with the [Waveshare Library](https://github.com/waveshareteam/e-Paper/pull/307) and the latest Raspberry Pi OS (Bookworm). The preferred install method for now is to install the [legacy OS 11 (Bullseye)](https://downloads.raspberrypi.com/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/) until these can be resolved.
+
 ## Table Of Contents
 
 - [Install](#install)
