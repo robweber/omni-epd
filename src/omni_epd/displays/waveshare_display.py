@@ -79,7 +79,7 @@ class WaveshareDisplay(VirtualEPD):
 class WaveshareBWDisplay(WaveshareDisplay):
     """
     This is an abstraction for Waveshare EPD devices that are single color only
-    https://github.com/waveshare/e-Paper
+    https://github.com/waveshareteam/e-Paper
     """
 
     # devices that use alternate init methods
@@ -144,7 +144,7 @@ class WaveshareTriColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 3 colors
     typically white/black/red or white/black/yellow
-    https://github.com/waveshare/e-Paper
+    https://github.com/waveshareteam/e-Paper
     """
 
     max_colors = 3
@@ -228,7 +228,7 @@ class WaveshareQuadColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 colors
     white/black/yellow/red
-    https://github.com/waveshare/e-Paper
+    https://github.com/waveshareteam/e-Paper
     """
     modes_available = ("bw", "red", "yellow", "4color")
     max_colors = 4
@@ -280,8 +280,8 @@ class WaveshareGrayscaleDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 shade grayscale
 
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd2in7.py
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd2in7.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
     """
 
     modes_available = ("bw", "gray4")
@@ -329,7 +329,7 @@ class Waveshare3in7Display(WaveshareDisplay):
     """
     This class is for the Waveshare displays that support 4 shade grayscale
 
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd3in7.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd3in7.py
     """
 
     modes_available = ("gray4")
@@ -370,7 +370,7 @@ class Waveshare3in7Display(WaveshareDisplay):
 class Waveshare102inDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare 1.02 in display only as it has some method calls that are different
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd1in02.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd1in02.py
     """
 
     def __init__(self, deviceName, config):
@@ -391,7 +391,7 @@ class Waveshare102inDisplay(WaveshareDisplay):
         self._device.Init()
 
     def _display(self, image):
-        self._device.Display(self._device.getbuffer(image))
+        self._device.display(self._device.getbuffer(image))
 
     def sleep(self):
         # this differs from parent
@@ -405,9 +405,9 @@ class Waveshare102inDisplay(WaveshareDisplay):
 class WaveshareMultiColorDisplay(WaveshareDisplay):
     """
     This class is for the Waveshare 7 color displays
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd5in65f.py
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in01f.py
-    https://github.com/waveshare/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd7in3f.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd5in65f.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in01f.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd7in3f.py
     """
 
     max_colors = 7

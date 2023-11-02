@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - changed valid Python versions from 3.7 < 3.11. Issues currently on 3.11 installs running on Raspberry Pi OS 12 (Bookworm)
 
+### Fixed
+
+- Updated Waveshare GitHub URL to https://github.com/waveshareteam/e-Paper/ in README and documentation
+- Fixed Waveshare 1.02in as the `display()` method [has changed](https://github.com/waveshareteam/e-Paper/pull/283).
+
 ## Version 0.3.4
 
 ### Added
