@@ -213,7 +213,7 @@ The [Waveshare device library](https://github.com/waveshareteam/e-Paper) require
 
 __IT8951__
 
-IT8951 devices, such as the [Waveshare 6in EPD](https://www.waveshare.com/6inch-e-paper-hat.htm), are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Meyer. This module is downloaded as part of omni-epd setup but it won't automatically install library pre-requisites, which may or may not be installed on your system. Please check the [requirements file](https://github.com/GregDMeyer/IT8951/blob/master/requirements.txt) on that project for a list of current requirements.
+IT8951 devices, such as the [Waveshare 6in EPD](https://www.waveshare.com/6inch-e-paper-hat.htm), are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Kahanamoku-Meyer. This module and it's requirements are downloaded as part of omni-epd setup.
 
 ## Implementing Projects
 Below is a list of known projects currently utilizing `omni-epd`. If you're interested in building a very small media player, check them out.
