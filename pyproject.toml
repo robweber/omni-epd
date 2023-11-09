@@ -3,4 +3,52 @@ requires = [
     "setuptools>=42",
     "wheel"
 ]
+
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "omni_epd"
+version = "0.3.5"
+requires-python = ">=3.7, <3.11"
+authors = [
+  {name = "Rob Weber", email = "robweberjr@gmail.com"}
+]
+description = "An EPD class abstraction to simplify communications across multiple display types."
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Operating System :: POSIX :: Linux"
+]
+
+dependencies = [
+  "Pillow>=9.1.0",
+  "waveshare-epd @ git+https://github.com/waveshare/e-Paper.git@4822c075f5df714f88b02e10c336b4eeff7e603e#subdirectory=RaspberryPi_JetsonNano/python&egg=waveshare-epd",
+  "inky[rpi]>=1.3.1",
+  "IT8951[rpi] @ git+https://github.com/GregDMeyer/IT8951.git"
+]
+
+[project.optional-dependencies]
+dev = [
+  "flake8",
+  "Flake8-pyproject",
+  "pytest"
+]
+
+[project.scripts]
+omni-epd-test = "omni_epd.test_utility:main"
+
+[project.urls]
+"Homepage" = "https://github.com/robweber/omni-epd"
+"Bug Reports" = "https://github.com/robweber/omni-epd/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+omni_epd = ["didder"]
+
+[tool.flake8]
+max-line-length = 150

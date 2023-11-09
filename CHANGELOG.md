@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - changed valid Python versions from 3.7 < 3.11. Issues currently on 3.11 installs running on Raspberry Pi OS 12 (Bookworm)
 - pinned Waveshare repo to [4822c07](https://github.com/waveshareteam/e-Paper/commit/4822c075f5df714f88b02e10c336b4eeff7e603e). This is known to work with Python 3.7 < 3.10.
 - pinned IT8951 repo to [6721516](https://github.com/GregDMeyer/IT8951/commit/67215164a7fc471bc6904f72ad55e51030905a97). This is known to work with Python 3.7 < 3.10.
+- all build information moved from `setup.cfg` to `pyproject.toml`
 
 ### Fixed
 
