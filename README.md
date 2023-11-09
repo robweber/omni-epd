@@ -1,4 +1,5 @@
 # Omni-EPD
+![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Frobweber%2Fomni-epd%2Fmain%2Fpyproject.toml)
 [![build-status](https://img.shields.io/github/actions/workflow/status/robweber/omni-epd/pytest.yml?branch=main)](https://github.com/robweber/omni-epd/actions/workflows/pytest.yml?query=branch%3Amain)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
