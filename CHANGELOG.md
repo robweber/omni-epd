@@ -6,9 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Version Unreleased
 
+### Added
+
+- support for Raspberry Pi OS 12 (Bookworm) and Python 3.11 through some dependency fixes
+
 ### Changed
 
 - updated IT8951 repo link to build from source with RPI dependencies
+- Waveshare drivers now loaded from [forked repo](https://github.com/mendhak/waveshare-epaper-sample) to fix Bookworm Rpi detection
 
 ## Version 0.3.5
 

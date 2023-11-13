@@ -9,13 +9,10 @@ There are several great EPD projects all over the internet, many in written in P
 
 For EPD project builders this expands the number of displays you can use for your project without having to code around each one. To utilize this in your project read the usage instructions. For a list of (known) projects that use this abstraction see the [list below](#displays-implmented).
 
-## Regarding Raspberry Pi OS 12 Bookworm
-
-There are some issues with the [Waveshare Library](https://github.com/waveshareteam/e-Paper/pull/307) and the latest Raspberry Pi OS (Bookworm). The preferred install method for now is to install the [legacy OS 11 (Bullseye)](https://downloads.raspberrypi.com/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/) until these can be resolved.
-
 ## Table Of Contents
 
 - [Install](#install)
+  - [Python Virtual Environments](#python-virtual-environments)
 - [Usage](#usage)
   - [VirtualEPD Object](#virtualepd-object)
   - [Display Testing](#display-testing)
@@ -35,7 +32,7 @@ Installing this module installs any required _Python_ library files. Refer to in
 
 ```
 
-sudo pip3 install git+https://github.com/robweber/omni-epd.git#egg=omni-epd
+pip3 install git+https://github.com/robweber/omni-epd.git#egg=omni-epd
 
 ```
 
@@ -45,8 +42,25 @@ This will install the abstraction library. The [test utility](#display-testing) 
 
 git clone https://github.com/robweber/omni-epd.git
 cd omni-epd
-sudo pip3 install --prefer-binary .
+pip3 install --prefer-binary .
 
+```
+
+### Python Virtual Environments
+
+It is best practice to install inside a [virtual environment]( http://rptl.io/venv). For implementing projects you may experience errors installing outside of a virtual environment.
+
+The [numpy](https://numpy.org/) package, required by Pillow, needs access to the system installed version of _numpy_ in order to work properly. When setting up your virtual environment be sure to pass in the `--system-site-packages` argument to enable using system packages if they're available. An example would be:
+
+```
+# create the environment
+python3 -m venv --system-site-packages .venv
+
+# activate the environment
+source .venv/bin/activate
+
+# deactivate the environment
+deactivate
 ```
 
 ## Usage
