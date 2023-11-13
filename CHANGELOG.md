@@ -4,16 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Version Unreleased
+## Version 0.4.0
 
 ### Added
 
 - support for Raspberry Pi OS 12 (Bookworm) and Python 3.11 through some dependency fixes
+- information regarding Python virtual environment usage
+- disclaimer on status of official Waveshare repo support with Bookworm
 
 ### Changed
 
 - updated IT8951 repo link to build from source with RPI dependencies
 - Waveshare drivers now loaded from [forked repo](https://github.com/mendhak/waveshare-epaper-sample) to fix Bookworm Rpi detection
+- `setup.cfg` information merged into `pyproject.toml`
 
 ## Version 0.3.5
 
