@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Unreleased
+## [Version 0.4.1](https://github.com/robweber/omni-epd/compare/v0.4.0...robweber:v0.4.1)
 
 ### Added
 
@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - added development mode install instructions to README
 - changed Waveshare library repo location back to true [Waveshare source](https://github.com/waveshareteam/e-Paper) - now supports Bookworm and Rpi 5
 
-## Version 0.4.0
+## [Version 0.4.0](https://github.com/robweber/omni-epd/compare/v0.3.5...robweber:v0.4.0)
 
 ### Added
 
@@ -30,7 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Waveshare drivers now loaded from [forked repo](https://github.com/mendhak/waveshare-epaper-sample) to fix Bookworm Rpi detection
 - `setup.cfg` information merged into `pyproject.toml`
 
-## Version 0.3.5
+## [Version 0.3.5](https://github.com/robweber/omni-epd/compare/v0.3.4...robweber:v0.3.5)
 
 ### Changed
 
@@ -44,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Updated Waveshare GitHub URL to https://github.com/waveshareteam/e-Paper/ in README and documentation
 - Fixed Waveshare 1.02in as the `display()` method [has changed](https://github.com/waveshareteam/e-Paper/pull/283).
 
-## Version 0.3.4
+## [Version 0.3.4](https://github.com/robweber/omni-epd/compare/v0.3.2...robweber:v0.3.4)
 
 ### Added
 
@@ -59,7 +59,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - added link to [pycasso](https://github.com/jezs00/pycasso) in the README. Thanks @jezs00
 - new displays, [Waveshare 7.3in 7 Color](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) - thanks @evelyndooley, [Waveshare 2.13in V3](https://www.waveshare.com/2.13inch-e-paper-hat.htm)
 
-## Version 0.3.2
+## [Version 0.3.2](https://github.com/robweber/omni-epd/compare/v0.3.1...robweber:v0.3.2)
 
 ### Changed
 
@@ -70,7 +70,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - added new 4 color waveshare displays (epd1in64g, epd2in36g, epd3in0g, epd4in37g, epd7in3g). Thanks @missionfloyd
 
-## Version 0.3.1
+## [Version 0.3.1](https://github.com/robweber/omni-epd/compare/v0.3.0...robweber:v0.3.1)
 
 ### Added
 
@@ -90,7 +90,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - removed `hitherdither` as a dependency
 
-## 0.3.0
+## [0.3.0](https://github.com/robweber/omni-epd/compare/v0.2.6...robweber:v0.3.0)
 
 ### Added
 
