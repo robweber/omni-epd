@@ -95,6 +95,9 @@ user@server:~ $ omni-epd-test -e omni_epd.mock
 # this will draw the specified image
 user@server:~ $ omni-epd-test -e omni_epd.mock -i /path/to/image.jpg
 
+# print a list of all valid EPD options
+user@server:~ $ omni-epd-test --list
+
 ```
 
 ### Advanced EPD Control

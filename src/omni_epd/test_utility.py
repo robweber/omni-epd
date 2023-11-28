@@ -39,9 +39,8 @@ class EPDTestUtility:
             print(f"Loaded {self.epd} with width {self.epd.width} and height {self.epd.height}")
 
         except EPDNotFoundError:
-            validDisplays = displayfactory.list_supported_displays()
             print(f"{displayName} is not a valid display. Valid options are:")
-            print("\n".join(map(str, validDisplays)))
+            list_displays()
 
     def __draw_rectangle(self, imgObj, width, height, x, y, percent, step):
         # draw recursively until we go below 0
@@ -106,22 +105,34 @@ class EPDTestUtility:
         print("Display closed - testing complete")
 
 
+def list_displays():
+    validDisplays = displayfactory.list_supported_displays()
+    print("\n".join(map(str, validDisplays)))
+
+
 def main():
 
-    # get the name of the epd driver to use
+    # parse args
     parser = argparse.ArgumentParser(description='EPD Test Utility')
-    parser.add_argument('-e', '--epd', required=True,
-                        help="The type of EPD driver to test")
+    mutex_group = parser.add_mutually_exclusive_group(required=True)
+    mutex_group.add_argument('-l', '--list', action='store_true',
+                             help="List valid EPD display options")
+    mutex_group.add_argument('-e', '--epd',
+                             help="The type of EPD driver to test")
     parser.add_argument('-i', '--image', required=False, type=str,
                         help="Path to an image file to draw on the display")
 
     args = parser.parse_args()
 
-    test = EPDTestUtility(args.epd)
+    if (args.list):
+        # list valid displays and exist
+        list_displays()
+    else:
+        test = EPDTestUtility(args.epd)
 
-    if (test.isReady()):
-        if (args.image):
-            test.draw_image(args.image)
-        else:
-            # this will draw a rectangle in the center of the display
-            test.draw()
+        if (test.isReady()):
+            if (args.image):
+                test.draw_image(args.image)
+            else:
+                # this will draw a rectangle in the center of the display
+                test.draw()

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Unreleased
+
+### Added
+
+- `--list` argument for the `omni-epd-test` utility. This will list all valid display options and exit. 
+
 ## Version 0.4.0
 
 ### Added
