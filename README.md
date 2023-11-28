@@ -230,7 +230,13 @@ Dithering support provided by the __didder__ Tool - https://github.com/makeworld
 
 ## Contributing
 
-PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you test one of the listed displays, please mark it as verified by __bolding__ it in the [Displays Implemented](#displays-implemented) section. If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example.
+PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you test one of the listed displays, please mark it as verified by __bolding__ it in the [Displays Implemented](#displays-implemented) section. If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example. Installing the library in [development mode](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode) will also make live testing easier. This will allow you test your changes quickly without re-installation. 
+
+```
+
+pip3 install -e .[dev] --prefer-binary
+
+```
 
 ### Contributors
 
