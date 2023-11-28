@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - added development mode install instructions to README
+- changed Waveshare library repo location back to true [Waveshare source](https://github.com/waveshareteam/e-Paper) - now supports Bookworm and Rpi 5
 
 ## Version 0.4.0
 
