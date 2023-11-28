@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - `--list` argument for the `omni-epd-test` utility. This will list all valid display options and exit.
+- Added [PiArtFrame](https://github.com/runezor/PiArtFrame) to projects list
 
 ### Changed
 

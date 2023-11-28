@@ -223,6 +223,7 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 * [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process.
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 * [pycasso](https://github.com/jezs00/pycasso) - System to send AI generated art to an E-Paper display through a Raspberry PI unit.
+* [PiArtFrame](https://github.com/runezor/PiArtFrame) - EPD project that displays randomly generated fractal art. 
 
 ## Acknowledgements
 
@@ -230,7 +231,7 @@ Dithering support provided by the __didder__ Tool - https://github.com/makeworld
 
 ## Contributing
 
-PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you test one of the listed displays, please mark it as verified by __bolding__ it in the [Displays Implemented](#displays-implemented) section. If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example. Installing the library in [development mode](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode) will also make live testing easier. This will allow you test your changes quickly without re-installation. 
+PRs accepted! If there a fix for any of the documentation or something is not quite clear, please [point it out](https://github.com/robweber/omni-epd/issues). If you test one of the listed displays, please mark it as verified by __bolding__ it in the [Displays Implemented](#displays-implemented) section. If you want to extend this framework by adding a new display type; a good place to start is one of the [existing display classes](https://github.com/robweber/omni-epd/tree/main/src/omni_epd/displays) for an example. Installing the library in [development mode](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode) will also make live testing easier. This will allow you test your changes quickly without re-installation.
 
 ```
 
