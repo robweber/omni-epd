@@ -150,10 +150,10 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 | | [Inky wHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-what?variant=21441988558931) | inky.what_yellow | bw, yellow |
 | | [Inky wHAT Black/White](https://shop.pimoroni.com/products/inky-what?variant=21214020436051) | inky.what_black | bw |
 | Omni-EPD | Mock Display (emulates EPD with no hardware) | __omni_epd.mock__ | bw, color, palette |
-| [Waveshare](https://github.com/waveshareteam/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epdlin02 | bw |
-|  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epdlin54 <br> waveshare_epd.epdlin54_V2 | bw |
-|  | [1.54inch e-Paper Module B](https://www.waveshare.com/1.54inch-e-Paper-Module-B.htm) | waveshare_epd.epdlin54b <br> waveshare_epd.epdlin54b_V2 | bw, red |
-|  | [1.54inch e-Paper Module C ](https://www.waveshare.com/1.54inch-e-Paper-Module-C.htm) | waveshare_epd.epdlin54c | bw, yellow |
+| [Waveshare](https://github.com/waveshareteam/e-Paper) | [1.02inch E-Ink display module](https://www.waveshare.com/1.02inch-e-Paper-Module.htm) | waveshare_epd.epd1in02 | bw |
+|  | [1.54inch E-Ink display module](https://www.waveshare.com/1.54inch-e-Paper-Module.htm) | waveshare_epd.epd1in54 <br> waveshare_epd.epd1in54_V2 | bw |
+|  | [1.54inch e-Paper Module B](https://www.waveshare.com/1.54inch-e-Paper-Module-B.htm) | waveshare_epd.epd1in54b <br> waveshare_epd.epd1in54b_V2 | bw, red |
+|  | [1.54inch e-Paper Module C ](https://www.waveshare.com/1.54inch-e-Paper-Module-C.htm) | waveshare_epd.epd1in54c | bw, yellow |
 |  | [1.64inch e-Paper Module G ](https://www.waveshare.com/1.64inch-e-paper-module-g.htm) | waveshare_epd.epd1in64g | bw, red, yellow, 4color |
 |  | [2.13inch e-Paper HAT](https://www.waveshare.com/2.13inch-e-Paper-HAT.htm) | waveshare_epd.epd2in13 <br>  waveshare_epd.epd2in13_V2 <br> __waveshare_epd.epd2in13_V3__ | bw |
 |  | [2.13inch e-Paper HAT B](https://www.waveshare.com/2.13inch-e-Paper-HAT-B.htm) | waveshare_epd.epd2in13b <br> waveshare_epd.epd2in13b_V3 | bw, red |
@@ -223,7 +223,7 @@ Below is a list of known projects currently utilizing `omni-epd`. If you're inte
 * [SlowMovie](https://github.com/TomWhitwell/SlowMovie) - A very popular VSMP player with lots of options for playing files and an easy install process.
 * [VSMP+](https://github.com/robweber/vsmp-plus) - My own VSMP project with a built in web server for easy administration.
 * [pycasso](https://github.com/jezs00/pycasso) - System to send AI generated art to an E-Paper display through a Raspberry PI unit.
-* [PiArtFrame](https://github.com/runezor/PiArtFrame) - EPD project that displays randomly generated fractal art. 
+* [PiArtFrame](https://github.com/runezor/PiArtFrame) - EPD project that displays randomly generated fractal art.
 
 ## Acknowledgements
 
