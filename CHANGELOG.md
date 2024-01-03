@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - added development mode install instructions to README
 
+### Fixed
+
+- waveshare 1in displays had wrong device name in README - thanks @rpdom
+
 ## [Version 0.4.0](https://github.com/robweber/omni-epd/compare/v0.3.5...robweber:v0.4.0)
 
 ### Added
