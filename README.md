@@ -138,7 +138,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 
 | Device Library | Device Name | Omni Device Name | Color Modes |
 |:---------------|:------------|:-----------------|-------------|
-| [Inky](https://github.com/pimoroni/inky) | [Inky AutoDetect](https://shop.pimoroni.com/search?q=inky) | inky.auto | bw, yellow, red, color |
+| [Inky](https://github.com/pimoroni/inky) | [Inky AutoDetect](https://shop.pimoroni.com/search?q=inky) (try this first) | inky.auto | bw, yellow, red, color |
 | | [Inky Impression 7 Color](https://shop.pimoroni.com/products/inky-impression) | __inky.impression__ | bw, color |
 | | [Inky pHAT Red/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254217811) - 212x104 | __inky.phat_red__ | bw, red |
 | | [Inky pHAT Yellow/Black/White](https://shop.pimoroni.com/products/inky-phat?variant=12549254905939) - 212x104 | inky.phat_yellow | bw, yellow |
@@ -199,7 +199,7 @@ Each display type has different install requirements depending on the platform. 
 
 __Inky__
 
-Inky makes things pretty easy with a one-line installer. This makes the necessary OS level changes and pulls in the [Inky library](https://github.com/pimoroni/inky/).
+Inky makes things pretty easy with a one-line installer. This makes the necessary OS level changes and pulls in the [Inky library](https://github.com/pimoroni/inky/). Using the `inky.auto` device type uses Inky library's auto detect method and is the most surefire way of loading the proper driver.
 
 ```
 curl https://get.pimoroni.com/inky | bash
