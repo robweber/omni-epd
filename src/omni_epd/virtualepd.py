@@ -74,6 +74,12 @@ class VirtualEPD:
         return f"{self.pkg_name}.{self._device_name}"
 
     def __parse_palette(self, color_str):
+        """ parse the color infomration to return a RGB color from a color string
+        :param color_str: the color as either a hex value (#000000), RGB list [R,G,B] or color name (blue, red)
+        :raises ValueError: if the color string is in an invalid format
+
+        :returns: the color_str converted to a list of RGB values
+        """
         if re.match(r'#[a-fA-F0-9]{6}', color_str) or color_str.lower() in ImageColor.colormap:
             return ImageColor.getrgb(color_str)
         elif re.match(r'\[?(\d{1,3}),(\d{1,3}),(\d{1,3})\]?', color_str):
@@ -81,8 +87,12 @@ class VirtualEPD:
         else:
             raise ValueError(f"Invalid color format: {color_str}")
 
-    # generate a palette given the colors available for this display
     def __generate_palette(self, colors):
+        """ generate a palette given the colors available for this display
+        :param colors: a list of valid colors as a string
+
+        :returns: a single list of integers representing an RGB value for each color
+        """
         result = colors.replace(" ", "")
         result = re.findall(fr'#[a-fA-F0-9]{{6}}|\[?\d{{1,3}},\d{{1,3}},\d{{1,3}}\]?|{"|".join(ImageColor.colormap.keys())}', result, re.IGNORECASE)
         result = list(itertools.chain.from_iterable(map(self.__parse_palette, result)))
@@ -93,6 +103,10 @@ class VirtualEPD:
         """
         Apply any values passed in from the global configuration that should
         apply to all images before writing to the epd
+
+        :param image: an Image object
+
+        :returns: the modified image
         """
 
         if (self._config.has_option(IMAGE_DISPLAY, "rotate")):
@@ -161,20 +175,24 @@ class VirtualEPD:
         else:
             return self._config.getboolean(EPD_CONFIG, option, fallback=fallback)
 
-    """
-    Converts image to b/w or attempts a palette filter based on allowed colors in the display
-    """
     def _filterImage(self, image, dither=Image.Dither.FLOYDSTEINBERG, force_palette=False):
+        """ Converts image to b/w or attempts a palette filter based on allowed colors in the display
+        :param image: an Image object
+        :param dither: a valid dither technique, default is FLOYDSTEINBERG
+
+        :raises EPDConfigurationError: if more colors are given in the palette than the display can support
+        :returns: the image with the palette filtering applied
+        """
         if (self.mode == 'bw' and not force_palette):
             image = image.convert("1", dither=dither)
         else:
-            # load palette - this is a catch in case it was changed by the user
+            # load palette as string - this is a catch in case it was changed by the user
             colors = self._get_device_option('palette_filter', json.dumps(self.palette_filter))
             palette = self.__generate_palette(colors)
 
-            # check if we have too many colors in the palette
-            if (len(palette) > self.max_colors):
-                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
+            # check if we have too many colors in the palette (*3 values for each color)
+            if (len(palette) > self.max_colors * 3):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{int(len(palette)/3)} colors")
 
             # create a new image to define the palette
             palette_image = Image.new("P", (1, 1))
@@ -192,6 +210,13 @@ class VirtualEPD:
         return image
 
     def _ditherImage(self, image, dither):
+        """ apply a dithering effect to the image using the didder library
+        https://github.com/robweber/omni-epd/wiki/Image-Dithering-Options
+        :param image: an Image object
+        :param dither: dithering effect as a string
+
+        :returns: the image with the effect applied
+        """
         dither_modes_ordered = ("clustereddot4x4", "clustereddotdiagonal8x8", "vertical5x3", "horizontal3x5",
                                 "clustereddotdiagonal6x6", "clustereddotdiagonal8x8_2", "clustereddotdiagonal16x16",
                                 "clustereddot6x6", "clustereddotspiral5x5", "clustereddothorizontalline",
@@ -257,8 +282,8 @@ class VirtualEPD:
 
         return image
 
-    # helper method to load a concrete display object based on the package and class name
     def load_display_driver(self, packageName, className):
+        """helper method to load a concrete display object based on the package and class name"""
         try:
             # load the given driver module
             driver = importlib.import_module(f"{packageName}.{className}")
@@ -269,35 +294,43 @@ class VirtualEPD:
 
         return driver
 
-    # returns package.device name
     def getName(self):
+        """ returns package.device name """
         return self.__str__()
 
-    # REQUIRED - a list of devices supported by this class, format is {pkgname.devicename}
     @staticmethod
     def get_supported_devices():
+        """ REQUIRED - a list of devices supported by this class, format is {pkgname.devicename}
+        :raises NotImplementedError: if not implemented by child class
+        """
         raise NotImplementedError
 
-    # REQUIRED - actual display code, PIL image given
     def _display(self, image):
+        """ REQUIRED - actual display code, PIL image given
+        :raises NotImplementedError: if not implemented by child class
+        """
         raise NotImplementedError
 
-    # OPTIONAL - run at the top of each update to do required pre-work
     def prepare(self):
+        """ OPTIONAL - run at the top of each update to do required pre-work """
         return True
 
-    # DON'T override this method directly, use _display()
     def display(self, image):
+        """ Called to draw an image on the display, this applies configured effects
+        DON'T override this method directly, use _display() in child classes
+
+        :param image: an Image object
+        """
         self._display(self.__applyConfig(image))
 
-    # OPTIONAL - put the display to sleep after each update, if device supports
     def sleep(self):
+        """ OPTIONAL - put the display to sleep after each update, if device supports """
         return True
 
-    # OPTIONAL - clear the display, if device supports
     def clear(self):
+        """ OPTIONAL - clear the display, if device supports """
         return True
 
-    # OPTIONAL close out the device, called when the program ends
     def close(self):
+        """ OPTIONAL close out the device, called when the program ends """
         return True
