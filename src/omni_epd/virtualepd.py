@@ -87,20 +87,15 @@ class VirtualEPD:
         else:
             raise ValueError(f"Invalid color format: {color_str}")
 
-    def __generate_palette(self, colors, chain=True):
+    def __generate_palette(self, colors):
         """ generate a palette given the colors available for this display
         :param colors: a list of valid colors as a string
-        :param chain: if the RGB colors should be chained in one list or not
 
-        :returns: a list integers representing an RGB value or a list of tuples representing RGB values depending on chain=True/False
+        :returns: a list of tuples representing RGB values
         """
         result = colors.replace(" ", "")
         result = re.findall(fr'#[a-fA-F0-9]{{6}}|\[?\d{{1,3}},\d{{1,3}},\d{{1,3}}\]?|{"|".join(ImageColor.colormap.keys())}', result, re.IGNORECASE)
-
-        if(chain):
-            result = list(itertools.chain.from_iterable(map(self.__parse_palette, result)))
-        else:
-            result = list(map(self.__parse_palette, result))
+        result = list(map(self.__parse_palette, result))
 
         return result
 
@@ -193,16 +188,17 @@ class VirtualEPD:
         else:
             # load palette as string - this is a catch in case it was changed by the user
             colors = self._get_device_option('palette_filter', json.dumps(self.palette_filter))
-            palette = self.__generate_palette(colors)
+            colors = self.__generate_palette(colors)
 
-            # check if we have too many colors in the palette (*3 values for each color)
-            if (len(palette) > self.max_colors * 3):
-                raise EPDConfigurationError(self.getName(), "palette_filter", f"{int(len(palette)/3)} colors")
+            # check if we have too many colors in the palette
+            if (len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
 
             # create a new image to define the palette
             palette_image = Image.new("P", (1, 1))
 
             # set the palette, set all other colors to 0
+            palette = list(itertools.chain.from_iterable(colors))
             palette_image.putpalette(palette + [0, 0, 0] * (256 - len(colors)))
 
             if (image.mode != 'RGB'):
@@ -238,11 +234,11 @@ class VirtualEPD:
         else:
             # load palette - this is a catch in case it was changed by the user
             colors = self._get_device_option('palette_filter', json.dumps(self.palette_filter))
-            colors = self.__generate_palette(colors, False)
+            colors = self.__generate_palette(colors)
 
-            # check if we have too many colors in the palette (*3 values for each color)
-            if (len(colors) > self.max_colors * 3):
-                raise EPDConfigurationError(self.getName(), "palette_filter", f"{int(len(colors)/3)} colors")
+            # check if we have too many colors in the palette
+            if (len(colors) > self.max_colors):
+                raise EPDConfigurationError(self.getName(), "palette_filter", f"{len(colors)} colors")
 
         # format palette the way didder expects it
         palette = [",".join(map(str, x)) for x in colors]
