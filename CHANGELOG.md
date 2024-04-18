@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Version 0.4.1b1
+## Version 0.4.1
 
 ### Added
 
@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 
 - waveshare 1in displays had wrong device name in README - thanks @rpdom
+- palette filter processing was not working with modes other than black/white - thanks @fardage for the issue
 
 ## [Version 0.4.0](https://github.com/robweber/omni-epd/compare/v0.3.5...robweber:v0.4.0)
 

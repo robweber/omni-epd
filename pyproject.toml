@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omni_epd"
-version = "0.4.1b1"
+version = "0.4.1"
 requires-python = ">=3.7"
 authors = [
   {name = "Rob Weber", email = "robweberjr@gmail.com"}
