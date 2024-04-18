@@ -52,3 +52,4 @@ omni_epd = ["didder"]
 
 [tool.flake8]
 max-line-length = 150
+exclude = [".venv"]
