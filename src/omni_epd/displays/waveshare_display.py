@@ -239,7 +239,7 @@ class WaveshareQuadColorDisplay(WaveshareDisplay):
                  "epd2in36g": {"driver": "epd2in36g", "version": 1},
                  "epd3in0g": {"driver": "epd3in0g", "version": 1},
                  "epd4in37g": {"driver": "epd4in37g", "version": 1},
-                 "epd7in3g": {"driver": "epd3in0g", "version": 1}}
+                 "epd7in3g": {"driver": "epd7in3g", "version": 1}}
 
     def __init__(self, deviceName, config):
         driverName = self.deviceMap[deviceName]['driver']
