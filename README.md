@@ -180,7 +180,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
 |  | [5.83inch e-Paper HAT C](https://www.waveshare.com/5.83inch-e-Paper-HAT-C.htm) | __waveshare_epd.epd5in83c__ | bw, yellow |
 |  | [6inch e-Ink Display](https://www.waveshare.com/6inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
-|  | [7.3inch e-Paper HAT G](https://www.waveshare.com/7.3inch-e-paper-hat-g.htm) | waveshare_epd.epd7in3g | bw, red, yellow, 4color |
+|  | [7.3inch e-Paper HAT G](https://www.waveshare.com/7.3inch-e-paper-hat-g.htm) | __waveshare_epd.epd7in3g__ | bw, red, yellow, 4color |
 |  | [7.3inch e-Paper HAT F](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) | waveshare_epd.epd7in3f | bw, color |
 |  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | waveshare_epd.epd7in5 | bw |
 |  | [7.5inch e-Paper HAT V2](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | __waveshare_epd.epd7in5_V2__ | bw |
@@ -247,6 +247,7 @@ pip3 install -e .[dev] --prefer-binary
 * [@aaronr8684](https://github.com/aaronr8684)
 * [@donbing](https://github.com/donbing)
 * [@evelyndooley](https://github.com/evelyndooley)
+* [@reinharty](https://github.com/reinharty)
 
 ## License
 [GPLv3](/LICENSE)
