@@ -32,6 +32,7 @@ Installing this module installs any required _Python_ library files. Refer to in
 
 ```
 
+pip3 install --upgrade pip setuptools wheel
 pip3 install git+https://github.com/robweber/omni-epd.git#egg=omni-epd
 
 ```
@@ -42,6 +43,7 @@ This will install the abstraction library. The [test utility](#display-testing) 
 
 git clone https://github.com/robweber/omni-epd.git
 cd omni-epd
+pip3 install --upgrade pip setuptools wheel
 pip3 install --prefer-binary .
 
 ```
