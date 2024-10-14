@@ -84,7 +84,7 @@ class WaveshareBWDisplay(WaveshareDisplay):
 
     # devices that use alternate init methods
     deviceMap = {"epd1in54": {"alt_init": True, "lut_init": True, "alt_clear": True, "version": 1},
-                 "epd1in54_V2": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 2},
+                 "epd1in54_V2": {"alt_init": True, "lut_init": False, "alt_clear": True, "version": 3},
                  "epd2in9": {"alt_init": True, "lut_init": True, "alt_clear": True, "version": 1},
                  "epd2in9_V2": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 2},
                  "epd2in9d": {"alt_init": False, "lut_init": False, "alt_clear": True, "version": 1},
