@@ -213,8 +213,6 @@ __Waveshare__
 
 The [Waveshare device library](https://github.com/waveshareteam/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.
 
-__Please note:__ The version of the Waveshare repo used by this library is a [fork](https://github.com/mendhak/waveshare-epaper-sample) of the official repository. This is due to the official repo not having [correct detection support](https://github.com/waveshareteam/e-Paper/pull/307/) for Raspberry Pi OS 12 (Bookworm). Once the official repo is updated the source for the Waveshare drivers will be moved back to the official repo.
-
 __IT8951__
 
 IT8951 devices, such as the [Waveshare 6in EPD](https://www.waveshare.com/6inch-e-paper-hat.htm), are supported via a [separately maintained Python module](https://github.com/GregDMeyer/IT8951) from Greg Kahanamoku-Meyer. This module and it's requirements are downloaded as part of omni-epd setup.
