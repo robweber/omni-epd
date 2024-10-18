@@ -407,13 +407,14 @@ class WaveshareMultiColorDisplay(WaveshareDisplay):
     This class is for the Waveshare 7 color displays
     https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd5in65f.py
     https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in01f.py
+    https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd7in3e.py
     https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd7in3f.py
     """
 
     max_colors = 7
     modes_available = ('bw', 'color')
 
-    deviceList = ["epd5in65f", "epd4in01f", "epd7in3f"]
+    deviceList = ["epd5in65f", "epd4in01f", "epd7in3e", "epd7in3f"]
 
     def __init__(self, deviceName, config):
         super().__init__(deviceName, config)
