@@ -249,6 +249,7 @@ pip3 install -e .[dev] --prefer-binary
 * [@donbing](https://github.com/donbing)
 * [@evelyndooley](https://github.com/evelyndooley)
 * [@reinharty](https://github.com/reinharty)
+* [@antoinecellerier](https://github.com/antoinecellerier)
 
 ## License
 [GPLv3](/LICENSE)

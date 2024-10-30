@@ -6,9 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## Version 0.4.2
 
+## Added
+
+- support for [Waveshare 7.3in E](https://www.waveshare.com/7.3inch-e-paper-hat-e.htm) display - thanks @antoinecellerier
+
 ### Fixed
 
 - Waveshare 7.3 inch was loading the wrong driver - thanks @reinharty
+- Waveshare 1.54in V2 had wrong init() method - thansk @W11T
 
 ## Version 0.4.1
 
