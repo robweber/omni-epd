@@ -182,6 +182,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [5.83inch e-Paper HAT B](https://www.waveshare.com/5.83inch-e-Paper-HAT-B.htm) |waveshare_epd.epd5in83b <br> waveshare_epd.epd5in83b_V2 | bw, red |
 |  | [5.83inch e-Paper HAT C](https://www.waveshare.com/5.83inch-e-Paper-HAT-C.htm) | __waveshare_epd.epd5in83c__ | bw, yellow |
 |  | [6inch e-Ink Display](https://www.waveshare.com/6inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
+|  | [7.3inch e-Paper HAT E](https://www.waveshare.com/7.3inch-e-paper-hat-e.htm) | __waveshare_epd.epd7in3e__ | bw, color |
 |  | [7.3inch e-Paper HAT G](https://www.waveshare.com/7.3inch-e-paper-hat-g.htm) | __waveshare_epd.epd7in3g__ | bw, red, yellow, 4color |
 |  | [7.3inch e-Paper HAT F](https://www.waveshare.com/7.3inch-e-paper-hat-f.htm) | waveshare_epd.epd7in3f | bw, color |
 |  | [7.5inch e-Paper HAT](https://www.waveshare.com/7.5inch-e-Paper-HAT.htm) | waveshare_epd.epd7in5 | bw |
@@ -212,8 +213,6 @@ If installing Inky manually be sure that SPI and I2C are enabled via `sudo raspi
 __Waveshare__
 
 The [Waveshare device library](https://github.com/waveshareteam/e-Paper) requires that [SPI support](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) be enabled on your system prior to use. The `waveshare-epd` module is automatically downloaded and installed as a dependency of this module.
-
-__Please note:__ The version of the Waveshare repo used by this library is a [fork](https://github.com/mendhak/waveshare-epaper-sample) of the official repository. This is due to the official repo not having [correct detection support](https://github.com/waveshareteam/e-Paper/pull/307/) for Raspberry Pi OS 12 (Bookworm). Once the official repo is updated the source for the Waveshare drivers will be moved back to the official repo.
 
 __IT8951__
 
