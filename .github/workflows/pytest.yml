@@ -19,5 +19,6 @@ jobs:
           pip install .[dev]
       - name: Test with pytest
         uses: pguyot/arm-runner-action@v2
-        run: |
+        with:
+          commands: |
           pytest
