@@ -24,6 +24,7 @@ classifiers = [
 ]
 
 dependencies = [
+  "importlib-resources",
   "Pillow>=9.1.0",
   "waveshare-epd @ git+https://github.com/waveshareteam/e-Paper.git#subdirectory=RaspberryPi_JetsonNano/python&egg=waveshare-epd",
   "inky[rpi]>=1.3.1",

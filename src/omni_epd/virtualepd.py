@@ -25,7 +25,7 @@ import subprocess
 import io
 import re
 import itertools
-from importlib import resources
+from importlib_resources import path
 from PIL import Image, ImageEnhance, ImageColor
 from . conf import EPD_CONFIG, IMAGE_DISPLAY, IMAGE_ENHANCEMENTS
 from . errors import EPDConfigurationError
@@ -243,7 +243,7 @@ class VirtualEPD:
         # format palette the way didder expects it
         palette = [",".join(map(str, x)) for x in colors]
         palette = " ".join(palette)
-        with resources.path("omni_epd", "didder") as p:
+        with path("omni_epd", "didder") as p:
             didder = p
 
         cmd = [didder, "--in", "-", "--out", "-", "--palette", palette]
