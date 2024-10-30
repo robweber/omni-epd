@@ -21,4 +21,4 @@ jobs:
         uses: pguyot/arm-runner-action@v2
         with:
           commands: |
-          pytest
+            pytest
