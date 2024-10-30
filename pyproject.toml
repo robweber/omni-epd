@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omni_epd"
-version = "0.4.1"
+version = "0.4.2"
 requires-python = ">=3.7"
 authors = [
   {name = "Rob Weber", email = "robweberjr@gmail.com"}
@@ -53,3 +53,8 @@ omni_epd = ["didder"]
 [tool.flake8]
 max-line-length = 150
 exclude = [".venv"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning"
+]
