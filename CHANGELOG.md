@@ -10,10 +10,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - support for [Waveshare 7.3in E](https://www.waveshare.com/7.3inch-e-paper-hat-e.htm) display - thanks @antoinecellerier
 
+## Changed
+
+- replaced `importlib.resources` with `importlib_resources` per the [migration information](https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy)
+- Waveshare libraries now loaded from [official repo](https://github.com/waveshareteam/e-Paper) again.
+
 ### Fixed
 
 - Waveshare 7.3 inch was loading the wrong driver - thanks @reinharty
-- Waveshare 1.54in V2 had wrong init() method - thansk @W11T
+- Waveshare 1.54in V2 had wrong init() method - thanks @W11T
+- fixed GitHub actions Pytests not working
 
 ## Version 0.4.1
 
