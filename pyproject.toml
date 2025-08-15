@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omni_epd"
-version = "0.4.2"
+version = "0.4.3~beta1"
 requires-python = ">=3.7"
 authors = [
   {name = "Rob Weber", email = "robweberjr@gmail.com"}
@@ -26,7 +26,7 @@ classifiers = [
 dependencies = [
   "importlib-resources",
   "Pillow>=9.1.0",
-  "waveshare-epd @ git+https://github.com/waveshareteam/e-Paper.git#subdirectory=RaspberryPi_JetsonNano/python&egg=waveshare-epd",
+  "waveshare-epd @ git+https://github.com/robweber/e-Paper#subdirectory=RaspberryPi_JetsonNano/python&egg=waveshare-epd",
   "inky[rpi]>=1.3.1",
   "IT8951[rpi] @ git+https://github.com/GregDMeyer/IT8951.git"
 ]

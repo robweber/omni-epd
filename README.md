@@ -194,6 +194,7 @@ Below is a list of displays currently implemented in the library. The Omni Devic
 |  | [7.5inch e-Paper HAT C](https://www.waveshare.com/7.5inch-e-Paper-HAT-C.htm) | waveshare_epd.epd7in5c | bw, yellow |
 |  | [7.8inch e-Ink Display](https://www.waveshare.com/7.8inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
 |  | [9.7inch e-Ink Display](https://www.waveshare.com/9.7inch-e-paper-hat.htm) | waveshare_epd.it8951 | bw, gray16 |
+|  | [10.2inch e-Ink Display](https://www.waveshare.com/10.2inch-e-paper-hat-g.htm) | waveshare_epd.epd10in2 | bw, red, yellow, 4color |
 |  | [10.3inch e-Ink Display](https://www.waveshare.com/10.3inch-e-paper-hat.htm) | __waveshare_epd.it8951__ | bw, gray16 |
 
 ### Display Driver Installation
